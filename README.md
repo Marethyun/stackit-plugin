@@ -1,27 +1,29 @@
-# StackIt v1 - Minecraft 1.7-1.11 (ALPHA)
-## A Powerful Shop for Minecraft.
+# CubikCMS Shop Plugin for Minecraft 1.7-1.11 (ALPHA)
+## Based on the old StackIt plugin by Simon Hamelin
 
-This is the main repository for the stackit-server plugin for Bukkit/Spigot 1.7-1.11.
-(BungeeCord is not yet supported, coming soon)
+This is the main repository for the CubikCMS shop plugin for Bukkit/Spigot 1.7-1.11. BungeeCord is not yet supported, but it's on the way !
 
-THIS PLUGIN IS IN EARLY DEVELOPMENT. USE AT YOUR OWN RISK. I WILL NOT BE HOLD RESPONSABLE FOR ANY DAMAGE DONE TO YOUR SERVER OR YOUR INFRASTRUCTURES. (SSL not included in the present build).
+THIS PLUGIN IS IN EARLY DEVELOPMENT. USE AT YOUR OWN RISK. WE WILL NOT BE HOLD RESPONSABLE FOR ANY DAMAGE DONE TO YOUR SERVER OR YOUR INFRASTRUCTURES.
 
 ### What does this plugin do?
-This plugin open a webserver and create a API for the StackIt CMS (Upcoming 2017).
 
-### I want to add functionnalities to this plugin.
-How awesome is that! Fortunally, StackIt server includes an API that allow you to create new types of purchase (Ex.: roles, permissions, etc.), add database type and create new context on the webserver.
+This plugin open a webserver and create a API for CubikCMS (upcoming 2017).
 
-A complete documentation is available at https://stackit.cf/docs/. (Currently in development)
+### I want to add functionnalities to this plugin!
+
+How awesome is that! Fortunally, the plugin includes an API that allow you to create new types of purchase (roles, permissions, etc.), add database type and create new context on the webserver.
+
+A complete documentation will be available at https://docs.cubikcms.com.
 
 ### This plugin doesn't work!
-If you are a server administrator, please use the StackIt CMS in order to use the full functionalities of the plugin. Without it, the plugin won't do anything, as it is not a standalone system.
+
+If you are a server administrator, please use CubikCMS to use the full functionalities of the plugin. Without it, the plugin won't do anything, as it is not a standalone system.
 
 If you are a developer, please report the errors you encounter in this repository.
 
-#### All credits goes to Simon Hamelin for the development of this plugin.
+## What about plugin licence?
 
-   Copyright 2017 Simon Hamelin & Tardis Project
+   Copyright (c), 2017, Uphoria. Alls rights reserved.
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
