@@ -9,7 +9,7 @@ THIS PLUGIN IS IN EARLY DEVELOPMENT. USE AT YOUR OWN RISK. WE WILL NOT BE HOLD R
 
 This plugin open a webserver and create a API for CubikCMS (upcoming 2017).
 
-### I want to add functionnalities to this plugin!
+### I want to improve this plugin!
 
 How awesome is that! Fortunally, the plugin includes an API that allow you to create new types of purchase (roles, permissions, etc.), add database type and create new context on the webserver.
 
