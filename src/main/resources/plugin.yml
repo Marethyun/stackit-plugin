@@ -1,0 +1,14 @@
+ name: StackIt
+ version: 1.0
+ description: A powerful shop for Minecraft 1.7-1.11
+ 
+ author: StackIt
+ website: https://www.stackit.org/
+ 
+ main: org.stackit.src.StackIt
+ database: true
+ 
+ commands:
+     stackit:
+         description: StackIt main command.
+         aliases: [si, stack]
