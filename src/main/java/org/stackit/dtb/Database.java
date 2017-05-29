@@ -9,7 +9,7 @@ import org.stackit.src.Logger;
 import org.stackit.src.StackIt;
 
 public class Database {
-	protected static HashMap<String, DatabaseType> supported = new HashMap<String, DatabaseType>();
+	protected static HashMap<String, DatabaseType> supported = new HashMap<>();
 	
 	/**
 	 * Initiate the database connection and check if the type of database is supported
