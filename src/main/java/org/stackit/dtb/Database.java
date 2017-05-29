@@ -19,11 +19,11 @@ public class Database {
 	public static boolean init() {
 		// Create the array of supported database types and insert the official ones.
 		Database.addSupportedDatabaseType("mysql", "org.stackit.dtb.MySQLClient");
-		
-		if(StackItConfiguration.isLogEnabled()) System.out.println(" ");
-		if(StackItConfiguration.isLogEnabled()) System.out.println("|=========- StackIt Database Manager -=========|");
-		if(StackItConfiguration.isLogEnabled()) Logger.info(Language.replace(Language.process(LanguageConfiguration.get(Language.getBukkitLanguage(), "dtb_type")), "TYPE", StackItConfiguration.getDatabaseType()));
-		
+		if(StackItConfiguration.isLogEnabled()) {
+			System.out.println(" ");
+			System.out.println("|=========- StackIt Database Manager -=========|");
+			Logger.info(Language.replace(Language.process(LanguageConfiguration.get(Language.getBukkitLanguage(), "dtb_type")), "TYPE", StackItConfiguration.getDatabaseType()));
+		}
 		if(Database.supported(StackItConfiguration.getDatabaseType().toLowerCase())) {
 			Logger.info(Language.process(LanguageConfiguration.get(Language.getBukkitLanguage(), "initiating_dtb_connect")));
 			DatabaseType database = Database.getSupportedDatabaseTypes().get(StackItConfiguration.getDatabaseType().toLowerCase());
