@@ -2,24 +2,23 @@
 ## Based on the old StackIt plugin by Simon Hamelin
 
 This is the main repository for the CubikCMS shop plugin for Bukkit/Spigot 1.7-1.11. BungeeCord is not yet supported, but it's on the way !
+Its name stayed "Stackit" due to technical naming and projects about system integration which involve that. 
 
 THIS PLUGIN IS IN EARLY DEVELOPMENT. USE AT YOUR OWN RISK. WE WILL NOT BE HOLD RESPONSABLE FOR ANY DAMAGE DONE TO YOUR SERVER OR YOUR INFRASTRUCTURES.
 
 ### What does this plugin do?
 
-This plugin open a webserver and create a API for CubikCMS (upcoming 2017).
+This plugin is using HTTP and SSL protocols (HTTPS) to build a web-based API which ensures data transit between Minecraft server and CubikCMS web-based application.
 
 ### I want to improve this plugin!
 
-How awesome is that! Fortunally, the plugin includes an API that allow you to create new types of purchase (roles, permissions, etc.), add database type and create new context on the webserver.
+How awesome is that! We will be happy to receive and discuss your suggestions. Let's post theses in CubikCMS website (upcoming) 
 
 A complete documentation will be available at https://docs.cubikcms.com.
 
 ### This plugin doesn't work!
 
-If you are a server administrator, please use CubikCMS to use the full functionalities of the plugin. Without it, the plugin won't do anything, as it is not a standalone system.
-
-If you are a developer, please report the errors you encounter in this repository.
+Please use CubikCMS and refer to its documentation (https://docs.cubikcms.com/) in order to fully understand how this plugin is working.
 
 ## What about plugin licence?
 
