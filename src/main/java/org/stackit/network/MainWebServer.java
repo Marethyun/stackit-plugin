@@ -27,7 +27,7 @@ public class MainWebServer {
 		if(StackItConfiguration.isLogEnabled()) System.out.println("|=========- StackIt Webserver Manager -=========|");
 		
 		MainWebServer.open();
-		MainWebServer.configurate();
+		MainWebServer.configure();
 		
 		// Start the server
 		MainWebServer.start();
@@ -75,7 +75,7 @@ public class MainWebServer {
 	/**
 	 * Create the links for the web server.
 	 */
-	private static void configurate() {
+	private static void configure() {
 		httpserv.createContext("/", new HandlerWebServer());
 		
 		// Add the minimal pages to the system.
@@ -98,7 +98,7 @@ public class MainWebServer {
 		headers.add("Content-Type", "application/json");
 		headers.add("Application-Name", "StackIt");
 		headers.add("Application-Version", "v1");
-		headers.add("Application-Author", "DedPlay (Tardis Project)");
+		headers.add("Application-Author", "Shamelin && Marethyun (Uphoria.org)");
 		
 		return exchange;
 	}

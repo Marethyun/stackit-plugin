@@ -20,9 +20,9 @@ public class PageConnect implements Page {
 		
 		if(!StackItConfiguration.isInMaintenance()) {
 			
-			// If _GET['user'] or _GET['password'] are present and doesn't equal ""
+			// If _GET['user'] or _GET['password'] are present and doesn't equal to ""
 			if((user = MainWebServer.GETO(exchange, "user")) != null && (pass = MainWebServer.GETO(exchange, "pass")) != null) {
-	
+
 				String result = Database.getActiveDatabase().AuthUser(user, pass);
 				
 				if(result.equalsIgnoreCase("success")) {

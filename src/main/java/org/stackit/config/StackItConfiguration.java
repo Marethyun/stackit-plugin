@@ -51,13 +51,13 @@ public class StackItConfiguration {
 			return false;
 		}
 	}
-	
+
 	/**
 	 * ######################################
 	 * #			   GENERAL  			#
 	 * ######################################
 	 */
-	
+
 	/**
 	 * Check if the plugin is enabled
 	 * @return Boolean
@@ -70,7 +70,7 @@ public class StackItConfiguration {
 	 * Enable or disable the plugin in the configuration file.
 	 * /!\ This will only take effect on the next restart of the server /!\
 	 * 
-	 * @argument Boolean
+	 * @param Boolean
 	 */
 	public static void setEnabled(Boolean enabled) {
 		config.set("StackIt.enabled", enabled);
