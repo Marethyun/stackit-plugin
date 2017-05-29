@@ -26,7 +26,7 @@ public class StackIt extends JavaPlugin {
 	public void onEnable() {
 		plugin = this;
 		
-		// Initiate logger of plugin
+		// Initiate plugin's logger
 		Logger.init();
 		
 		// Load the main configuration file and check if the plugin is enabled

@@ -58,14 +58,10 @@ public class Language {
 			
 			f.setAccessible(true);
 			language = (String) f.get(ep);
-		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-			e.printStackTrace();
-		} catch (NoSuchFieldException e) {
-			e.printStackTrace();
-		} catch (SecurityException e) {
+		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchFieldException | SecurityException e) {
 			e.printStackTrace();
 		}
-		
+
 		return language.substring(0, 2);
 	}
 	
