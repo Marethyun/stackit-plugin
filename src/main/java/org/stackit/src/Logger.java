@@ -7,7 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.stackit.config.StackItConfiguration;
-import org.stackit.dtb.Database;
+import org.stackit.database.Database;
 
 public class Logger {
 	

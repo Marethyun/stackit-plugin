@@ -10,7 +10,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.stackit.config.StackItConfiguration;
-import org.stackit.dtb.Database;
+import org.stackit.database.Database;
 import org.stackit.src.Language;
 import org.stackit.src.StackIt;
 

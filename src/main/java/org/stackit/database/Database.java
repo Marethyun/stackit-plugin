@@ -1,4 +1,4 @@
-package org.stackit.dtb;
+package org.stackit.database;
 
 import java.util.HashMap;
 
@@ -18,7 +18,7 @@ public class Database {
 	 */
 	public static boolean init() {
 		// Create the array of supported database types and insert the official ones.
-		Database.addSupportedDatabaseType("mysql", "org.stackit.dtb.MySQLClient");
+		Database.addSupportedDatabaseType("mysql", "org.stackit.database.MySQLClient");
 		if(StackItConfiguration.isLogEnabled()) {
 			System.out.println(" ");
 			System.out.println("|=========- StackIt Database Manager -=========|");

@@ -8,7 +8,7 @@ import java.util.UUID;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.stackit.config.StackItConfiguration;
-import org.stackit.dtb.Database;
+import org.stackit.database.Database;
 import org.stackit.src.GiveManager;
 import org.stackit.src.PurchaseManager;
 import org.stackit.src.TokenManager;

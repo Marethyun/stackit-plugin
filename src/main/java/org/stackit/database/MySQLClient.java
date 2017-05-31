@@ -1,4 +1,4 @@
-package org.stackit.dtb;
+package org.stackit.database;
 
 import java.math.BigInteger;
 import java.security.SecureRandom;

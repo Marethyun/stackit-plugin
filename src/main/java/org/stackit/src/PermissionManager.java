@@ -1,6 +1,6 @@
 package org.stackit.src;
 
-import org.stackit.dtb.Database;
+import org.stackit.database.Database;
 
 public class PermissionManager {
 	

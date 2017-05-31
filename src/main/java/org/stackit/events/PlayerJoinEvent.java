@@ -5,7 +5,7 @@ import java.util.HashMap;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.stackit.dtb.Database;
+import org.stackit.database.Database;
 import org.stackit.src.GiveManager;
 import org.stackit.src.PurchaseManager;
 import org.stackit.src.StackIt;

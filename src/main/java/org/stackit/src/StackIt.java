@@ -6,7 +6,7 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.stackit.commands.StackItCommand;
 import org.stackit.config.StackItConfiguration;
-import org.stackit.dtb.Database;
+import org.stackit.database.Database;
 import org.stackit.events.PlayerJoinEvent;
 import org.stackit.network.MainWebServer;
 
@@ -58,15 +58,11 @@ public class StackIt extends JavaPlugin {
 				
 				// Register the events
 				registerEvents(new PlayerJoinEvent());
-				
-				System.out.println(" ");
+
 				Logger.info(Language.process(Language.get(Language.getBukkitLanguage(), "plugin_initialized")));
 				Logger.info(Language.process(Language.get(Language.getBukkitLanguage(), "plugin_initialized_2")));
-				System.out.println(" ");
 			} else {
-				System.out.println(" ");
 				Logger.critical(Language.process(Language.get(Language.getBukkitLanguage(), "error_loading_plugin")));
-				System.out.println(" ");
 			}
 		} else {
 			System.out.println(" ");

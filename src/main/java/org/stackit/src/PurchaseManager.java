@@ -2,7 +2,7 @@ package org.stackit.src;
 
 import java.util.HashMap;
 
-import org.stackit.dtb.Database;
+import org.stackit.database.Database;
 
 public class PurchaseManager {
 

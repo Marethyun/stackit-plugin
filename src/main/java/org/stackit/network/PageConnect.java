@@ -3,7 +3,7 @@ package org.stackit.network;
 import java.util.HashMap;
 
 import org.stackit.config.StackItConfiguration;
-import org.stackit.dtb.Database;
+import org.stackit.database.Database;
 import org.stackit.src.Logger;
 
 import com.sun.net.httpserver.HttpExchange;
