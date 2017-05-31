@@ -65,9 +65,7 @@ public class StackIt extends JavaPlugin {
 				Logger.critical(Language.process(Language.get(Language.getBukkitLanguage(), "error_loading_plugin")));
 			}
 		} else {
-			System.out.println(" ");
 			Logger.info(Language.process(Language.get(Language.getBukkitLanguage(), "plugin_disabled")));
-			System.out.println(" ");
 			
 			StackIt.disable();
 		}
