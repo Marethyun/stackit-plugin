@@ -9,6 +9,11 @@
 // Apply the java-library plugin to add support for Java Library
 apply plugin: 'java-library'
 
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
 // Encoding
 compileJava.options.encoding = 'UTF-8'
 
@@ -17,9 +22,21 @@ repositories {
     // Use jcenter for resolving your dependencies.
     // You can declare any Maven/Ivy/file repository here.
     jcenter()
+    mavenCentral()
 
     flatDir {
         dirs '.'
+    }
+}
+
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "com.github.jengelman.gradle.plugins:shadow:1.2.4"
     }
 }
 
@@ -29,8 +46,12 @@ dependencies {
 
     // This dependency is used internally, and not exposed to consumers on their own compile classpath.
     implementation 'com.google.guava:guava:21.0'
-
+    // Spigot API
     compile name: 'spigot-1.8'
+    // JDBI
+    compile 'org.jdbi:jdbi:2.78'
     // Use JUnit test framework
     testImplementation 'junit:junit:4.12'
 }
+
+apply plugin: "com.github.johnrengelman.shadow"
