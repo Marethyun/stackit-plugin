@@ -4,9 +4,7 @@ import org.stackit.config.StackItConfiguration;
 import org.stackit.src.StackIt;
 
 
-// TODO rework this
 public class DatabaseManager {
-//	protected static HashMap<String, DatabaseType> supported = new HashMap<>(); TODO remove this line
 	private static QueueDAO queueDAO;
 	private static UsersDAO usersDAO;
 	private static LogsDAO logsDAO;
