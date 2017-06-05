@@ -2,7 +2,7 @@ package org.stackit.src;
 
 import java.util.HashMap;
 
-import org.stackit.database.Database;
+import org.stackit.database.DatabaseManager;
 
 public class PurchaseManager {
 
@@ -12,7 +12,7 @@ public class PurchaseManager {
 	 * @return HashMap<String, Object> Informations
 	 */
 	public static HashMap<String, Object> getPurchase(String purchaseId) {
-		return Database.getActiveDatabase().GetPurchase(purchaseId);
+		return DatabaseManager.getActiveDatabase().GetPurchase(purchaseId);
 	}
 	
 	/**
@@ -21,7 +21,7 @@ public class PurchaseManager {
 	 * @return HashMap<Integer, String> Purchases
 	 */
 	public static HashMap<Integer, String> getPurchasesInWaitingList(String user, String uuid) {
-		return Database.getActiveDatabase().GetPurchasesInWaitingList(user, uuid);
+		return DatabaseManager.getActiveDatabase().GetPurchasesInWaitingList(user, uuid);
 	}
 	
 	/**
@@ -30,7 +30,7 @@ public class PurchaseManager {
 	 * @return HashMap<Integer, String> Purchases
 	 */
 	public static HashMap<String, Object> getPurchaseArguments(String purchaseId) {
-		return Database.getActiveDatabase().GetPurchaseArguments(purchaseId);
+		return DatabaseManager.getActiveDatabase().GetPurchaseArguments(purchaseId);
 	}
 	
 	/**
@@ -39,7 +39,7 @@ public class PurchaseManager {
 	 * @param String PurchaseId
 	 */
 	public static void addPurchaseToWaitingList(String user, String purchaseId) {
-		Database.getActiveDatabase().AddPurchaseToWaitingList(user, purchaseId);
+		DatabaseManager.getActiveDatabase().AddPurchaseToWaitingList(user, purchaseId);
 	}
 	
 	/**
@@ -48,7 +48,7 @@ public class PurchaseManager {
 	 * @return Boolean Is in the waiting list
 	 */
 	public static Boolean isPurchaseInWaitingList(String purchaseId) {
-		return Database.getActiveDatabase().IsPurchaseInWaitingList(purchaseId);
+		return DatabaseManager.getActiveDatabase().IsPurchaseInWaitingList(purchaseId);
 	}
 	
 	/**
@@ -57,7 +57,7 @@ public class PurchaseManager {
 	 * @return Boolean Has purchases in the waiting list
 	 */
 	public static Boolean hasPurchaseInWaitingList(String user) {
-		return Database.getActiveDatabase().HasPurchaseInWaitingList(user);
+		return DatabaseManager.getActiveDatabase().HasPurchaseInWaitingList(user);
 	}
 	
 	/**
@@ -66,7 +66,7 @@ public class PurchaseManager {
 	 * @return Boolean Has a custom message
 	 */
 	public static Boolean hasCustomMessage(String purchaseId) {
-		return Database.getActiveDatabase().HasPurchaseMessage(purchaseId);
+		return DatabaseManager.getActiveDatabase().HasPurchaseMessage(purchaseId);
 	}
 	
 	/**
@@ -75,7 +75,7 @@ public class PurchaseManager {
 	 * @return String Message
 	 */
 	public static String getCustomMessage(String purchaseId) {
-		return Database.getActiveDatabase().GetPurchaseMessage(purchaseId);
+		return DatabaseManager.getActiveDatabase().GetPurchaseMessage(purchaseId);
 	}
 	
 	/**
@@ -84,7 +84,7 @@ public class PurchaseManager {
 	 * @return Boolean Is a gift
 	 */
 	public static Boolean isAGift(String purchaseId) {
-		return Database.getActiveDatabase().IsAGift(purchaseId);
+		return DatabaseManager.getActiveDatabase().IsAGift(purchaseId);
 	}
 
 }

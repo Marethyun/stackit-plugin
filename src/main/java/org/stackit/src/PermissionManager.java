@@ -1,6 +1,6 @@
 package org.stackit.src;
 
-import org.stackit.database.Database;
+import org.stackit.database.DatabaseManager;
 
 public class PermissionManager {
 	
@@ -10,7 +10,7 @@ public class PermissionManager {
 	 * @param String Permission
 	 */
 	public static void createContext(String context, String permission) {
-		Database.getActiveDatabase().CreateContext(context, permission);
+		DatabaseManager.getActiveDatabase().CreateContext(context, permission);
 	}
 	
 	/**
@@ -18,7 +18,7 @@ public class PermissionManager {
 	 * @param String Context
 	 */
 	public static Boolean contextHasPermissions(String context) {
-		return Database.getActiveDatabase().ContextExist(context);
+		return DatabaseManager.getActiveDatabase().ContextExist(context);
 	}
 	
 	/**
@@ -27,7 +27,7 @@ public class PermissionManager {
 	 * @return String Required permission
 	 */
 	public static String getRequiredPermissionForContext(String context) {
-		return Database.getActiveDatabase().GetContextRequiredPermission(context);
+		return DatabaseManager.getActiveDatabase().GetContextRequiredPermission(context);
 	}
 	
 	/**
@@ -35,7 +35,7 @@ public class PermissionManager {
 	 * @param String User
 	 */
 	public static Boolean userHasAllPermissions(String user) {
-		String userPermissions = Database.getActiveDatabase().GetUserPermissions(user);
+		String userPermissions = DatabaseManager.getActiveDatabase().GetUserPermissions(user);
 		
 		if(userPermissions.contains("*")) {
 			return true;
@@ -49,7 +49,7 @@ public class PermissionManager {
 	 * @param String User
 	 */
 	public static Boolean tokenHasAllPermissions(String user) {
-		String tokenPermissions = Database.getActiveDatabase().GetTokenPermissions(user);
+		String tokenPermissions = DatabaseManager.getActiveDatabase().GetTokenPermissions(user);
 		
 		if(tokenPermissions.contains("*")) {
 			return true;
@@ -65,7 +65,7 @@ public class PermissionManager {
 	 * @return Boolean Enough permissions
 	 */
 	public static Boolean userHasEnoughPermissionsForContext(String context, String user){
-		String userPermissions = Database.getActiveDatabase().GetUserPermissions(user);
+		String userPermissions = DatabaseManager.getActiveDatabase().GetUserPermissions(user);
 		
 		if(userPermissions.contains(getRequiredPermissionForContext(context)) || userHasAllPermissions(user)) {
 			return true;
@@ -81,7 +81,7 @@ public class PermissionManager {
 	 * @return Boolean Enough permissions
 	 */
 	public static Boolean tokenHasEnoughPermissionsForContext(String context, String token){
-		String tokenPermissions = Database.getActiveDatabase().GetTokenPermissions(token);
+		String tokenPermissions = DatabaseManager.getActiveDatabase().GetTokenPermissions(token);
 		
 		if(tokenPermissions.contains(getRequiredPermissionForContext(context)) || tokenHasAllPermissions(token)) {
 			return true;
@@ -96,7 +96,7 @@ public class PermissionManager {
 	 * @return String Required permissions
 	 */
 	public static String getContextRequiredPermission(String context) {
-		return Database.getActiveDatabase().GetContextRequiredPermission(context);
+		return DatabaseManager.getActiveDatabase().GetContextRequiredPermission(context);
 	}
 
 }

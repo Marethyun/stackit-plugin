@@ -8,7 +8,7 @@ import java.util.UUID;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.stackit.config.StackItConfiguration;
-import org.stackit.database.Database;
+import org.stackit.database.DatabaseManager;
 import org.stackit.src.GiveManager;
 import org.stackit.src.PurchaseManager;
 import org.stackit.src.TokenManager;
@@ -57,7 +57,7 @@ public class PageGive implements Page {
 									answer.put("time", new SimpleDateFormat("HH:mm:ss").format(new Date()));
 									answer.put("success", true);
 									
-									Database.getActiveDatabase().RemovePurchase(purchaseId);
+									DatabaseManager.getActiveDatabase().RemovePurchase(purchaseId);
 								} else {
 									answer.put("error", result);
 									answer.put("success", false);

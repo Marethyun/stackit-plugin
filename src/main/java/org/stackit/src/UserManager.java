@@ -1,6 +1,6 @@
 package org.stackit.src;
 
-import org.stackit.database.Database;
+import org.stackit.database.DatabaseManager;
 
 public class UserManager {
 	
@@ -12,7 +12,7 @@ public class UserManager {
 	 * @return String Token
 	 */
 	public static String Auth(String user, String password) {
-		return Database.getActiveDatabase().AuthUser(user, password);
+		return DatabaseManager.getActiveDatabase().AuthUser(user, password);
 	}
 	
 	/**
@@ -22,7 +22,7 @@ public class UserManager {
 	 * @param String Pass
 	 */
 	public static void createUser(String user, String pass) {
-		Database.getActiveDatabase().CreateUser(user, pass);
+		DatabaseManager.getActiveDatabase().CreateUser(user, pass);
 	}
 	
 	/**
@@ -33,8 +33,8 @@ public class UserManager {
 	 * @param Integer Role
 	 */
 	public static void createUser(String user, String pass, Integer role) {
-		Database.getActiveDatabase().CreateUser(user, pass);
-		Database.getActiveDatabase().SetUserRole(user, role);
+		DatabaseManager.getActiveDatabase().CreateUser(user, pass);
+		DatabaseManager.getActiveDatabase().SetUserRole(user, role);
 	}
 	
 	/**
@@ -43,6 +43,6 @@ public class UserManager {
 	 * @return String Permissions
 	 */
 	public static String getUserPermissions(String user) {
-		return Database.getActiveDatabase().GetUserPermissions(user);
+		return DatabaseManager.getActiveDatabase().GetUserPermissions(user);
 	}
 }

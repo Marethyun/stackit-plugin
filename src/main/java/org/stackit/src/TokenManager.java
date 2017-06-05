@@ -1,6 +1,6 @@
 package org.stackit.src;
 
-import org.stackit.database.Database;
+import org.stackit.database.DatabaseManager;
 
 public class TokenManager {
 	
@@ -9,7 +9,7 @@ public class TokenManager {
 	 * @param String Token
 	 */
 	public static String Auth(String token) {
-		return Database.getActiveDatabase().AuthToken(token);
+		return DatabaseManager.getActiveDatabase().AuthToken(token);
 	}
 	
 	/**
@@ -19,7 +19,7 @@ public class TokenManager {
 	 * @return String token
 	 */
 	public static String createToken(String user, String pass) {
-		return Database.getActiveDatabase().AuthUser(user, pass);
+		return DatabaseManager.getActiveDatabase().AuthUser(user, pass);
 	}
 	
 	/**
@@ -28,7 +28,7 @@ public class TokenManager {
 	 * @return Boolean
 	 */
 	public static Boolean tokenExist(String token) {
-		return Database.getActiveDatabase().TokenExist(token);
+		return DatabaseManager.getActiveDatabase().TokenExist(token);
 	}
 	
 	/**
@@ -37,7 +37,7 @@ public class TokenManager {
 	 * @return String
 	 */
 	public static String getRolePermissions(Integer role) {
-		return Database.getActiveDatabase().GetRolePermissions(role);
+		return DatabaseManager.getActiveDatabase().GetRolePermissions(role);
 	}
 	
 	/**
@@ -46,7 +46,7 @@ public class TokenManager {
 	 * @return String
 	 */
 	public static String getTokenPermissions(String token) {
-		return Database.getActiveDatabase().GetTokenPermissions(token);
+		return DatabaseManager.getActiveDatabase().GetTokenPermissions(token);
 	}
 	
 	/**
@@ -55,7 +55,7 @@ public class TokenManager {
 	 * @return String User
 	 */
 	public static String getTokenUser(String token) {
-		return Database.getActiveDatabase().GetTokenUser(token);
+		return DatabaseManager.getActiveDatabase().GetTokenUser(token);
 	}
 
 }

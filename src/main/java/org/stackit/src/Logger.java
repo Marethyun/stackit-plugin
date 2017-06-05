@@ -7,8 +7,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.stackit.config.StackItConfiguration;
-import org.stackit.database.Database;
+import org.stackit.database.DatabaseManager;
 
+// TODO fix database errors
 public class Logger {
 	
 	/**
@@ -73,7 +74,7 @@ public class Logger {
 			String dateOutput = dateFormat.format(date);
 			String timeOutput = timeFormat.format(date);
 			
-			Database.getActiveDatabase().AddLog(dateOutput, timeOutput, log, executor, context, remoteAddress);
+			DatabaseManager.getActiveDatabase().AddLog(dateOutput, timeOutput, log, executor, context, remoteAddress);
 		}
 	}
 	
@@ -94,7 +95,7 @@ public class Logger {
 			
 			String log = "Context \"" + context + "\" executed";
 			
-			Database.getActiveDatabase().AddLog(dateOutput, timeOutput, log, executor, context, remoteAddress);
+			DatabaseManager.getActiveDatabase().AddLog(dateOutput, timeOutput, log, executor, context, remoteAddress);
 		}
 	}
 	
@@ -116,7 +117,7 @@ public class Logger {
 			
 			String log = "User \"" + user + "\" successfully connected to the API";
 			
-			Database.getActiveDatabase().AddLog(dateOutput, timeOutput, log, user, context, remoteAddress);
+			DatabaseManager.getActiveDatabase().AddLog(dateOutput, timeOutput, log, user, context, remoteAddress);
 		}
 	}
 	
@@ -137,7 +138,7 @@ public class Logger {
 			
 			String log = "User \"" + user + "\" tried to connect to the API (Error: " + error + ")";
 			
-			Database.getActiveDatabase().AddLog(dateOutput, timeOutput, log, user, context, remoteAddress);
+			DatabaseManager.getActiveDatabase().AddLog(dateOutput, timeOutput, log, user, context, remoteAddress);
 		}
 	}
 

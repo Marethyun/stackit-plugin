@@ -10,7 +10,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.stackit.config.StackItConfiguration;
-import org.stackit.database.Database;
+import org.stackit.database.DatabaseManager;
 import org.stackit.src.Language;
 import org.stackit.src.StackIt;
 
@@ -102,7 +102,7 @@ public class StackItCommand implements CommandExecutor {
 							}
 						}
 						
-						result = Database.getActiveDatabase().CreateUser(user, pass);
+						result = DatabaseManager.getActiveDatabase().CreateUser(user, pass);
 						
 						if(result == "success") { // If the user has been created
 							sender.sendMessage(ChatColor.DARK_AQUA + "╔" + StringUtils.center(ChatColor.BOLD + "|[ " + ChatColor.AQUA + Language.get(playerLanguage, "congrats") + ChatColor.DARK_AQUA + ChatColor.BOLD + " ]|" + ChatColor.DARK_AQUA, 54, '═'));
@@ -136,7 +136,7 @@ public class StackItCommand implements CommandExecutor {
 							sender.sendMessage(Language.get(playerLanguage, "command_not_enough_arguments"));
 						}
 						
-						result = Database.getActiveDatabase().DeleteUser(args[1]);
+						result = DatabaseManager.getActiveDatabase().DeleteUser(args[1]);
 						
 						if(result == "success") { // If the user has been deleted
 							sender.sendMessage(Language.get(playerLanguage, "api_user_deleted"));

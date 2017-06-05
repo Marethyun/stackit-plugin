@@ -253,7 +253,7 @@ public class StackItConfiguration {
 		config.set("StackIt.database.password", password);;
 		save();
 	}
-	
+
 	/**
 	 * Get the database type.
 	 * @return String

@@ -5,7 +5,7 @@ import java.util.HashMap;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.stackit.database.Database;
+import org.stackit.database.DatabaseManager;
 import org.stackit.src.GiveManager;
 import org.stackit.src.PurchaseManager;
 import org.stackit.src.StackIt;
@@ -33,7 +33,7 @@ public class PlayerJoinEvent implements Listener {
 							String result = GiveManager.execute(type, args, purchase, playerTarget);
 							
 							if(result == "success") {
-								Database.getActiveDatabase().RemovePurchase(purchases.get(i));
+								DatabaseManager.getActiveDatabase().RemovePurchase(purchases.get(i));
 							}
 						}
 					}

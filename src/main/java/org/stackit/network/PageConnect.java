@@ -3,7 +3,7 @@ package org.stackit.network;
 import java.util.HashMap;
 
 import org.stackit.config.StackItConfiguration;
-import org.stackit.database.Database;
+import org.stackit.database.DatabaseManager;
 import org.stackit.src.Logger;
 
 import com.sun.net.httpserver.HttpExchange;
@@ -23,13 +23,13 @@ public class PageConnect implements Page {
 			// If _GET['user'] or _GET['password'] are present and doesn't equal to ""
 			if((user = MainWebServer.GETO(exchange, "user")) != null && (pass = MainWebServer.GETO(exchange, "pass")) != null) {
 
-				String result = Database.getActiveDatabase().AuthUser(user, pass);
+				String result = DatabaseManager.getActiveDatabase().AuthUser(user, pass);
 				
 				if(result.equalsIgnoreCase("success")) {
-					String token = Database.getActiveDatabase().GenerateToken(user);
+					String token = DatabaseManager.getActiveDatabase().GenerateToken(user);
 					
 					answer.put("token", token);
-					answer.put("expire", Database.getActiveDatabase().GetTokenExpiration(token));
+					answer.put("expire", DatabaseManager.getActiveDatabase().GetTokenExpiration(token));
 					answer.put("success", true);
 					
 					Logger.pushUserLoggedInLog(user, "/login", exchange.getRemoteAddress().toString());
