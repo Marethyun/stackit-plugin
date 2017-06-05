@@ -1,6 +1,7 @@
 package org.stackit.events;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -32,7 +33,7 @@ public class PlayerJoinEvent implements Listener {
 						if(GiveManager.isSupported(type)) {
 							String result = GiveManager.execute(type, args, purchase, playerTarget);
 							
-							if(result == "success") {
+							if(result.equals("success")) {
 								DatabaseManager.getActiveDatabase().RemovePurchase(purchases.get(i));
 							}
 						}
