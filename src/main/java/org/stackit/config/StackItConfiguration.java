@@ -304,6 +304,18 @@ public class StackItConfiguration {
 		config.set("StackIt.database.prefix", prefix);
 		save();
 	}
+
+	public static String getQueueDAOClassName(){
+		return config.getString("StackIt.database.dao.queue");
+	}
+
+	public static String getPurchasesDAOClassName(){
+        return config.getString("StackIt.database.dao.purchases");
+    }
+
+    public static String getUsersDAOClassName(){
+        return config.getString("StackIt.database.dao.users");
+    }
 	
 	/**
 	 * ######################################
