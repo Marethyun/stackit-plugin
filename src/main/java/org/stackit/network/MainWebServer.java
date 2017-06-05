@@ -23,8 +23,8 @@ public class MainWebServer {
 	 * @return Boolean
 	 */
 	public static Boolean init() {
-		if(StackItConfiguration.isLogEnabled()) System.out.println(" ");
-		if(StackItConfiguration.isLogEnabled()) System.out.println("|=========- StackIt Webserver Manager -=========|");
+		System.out.println(" ");
+		System.out.println("|=========- StackIt Webserver Manager -=========|");
 		
 		MainWebServer.open();
 		MainWebServer.configure();

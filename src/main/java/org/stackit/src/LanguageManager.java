@@ -65,7 +65,7 @@ public class LanguageManager {
 	 * @param String language
 	 */
 	public static void addLanguage(String language) {
-		if(StackItConfiguration.isLogEnabled()) Logger.info("Adding support of '" + language + "' to the plugin...");
+		Logger.info("Adding support of '" + language + "' to the plugin...");
 		
 		File configFile = new File(getDataFolder(), language + ".yml");
 		

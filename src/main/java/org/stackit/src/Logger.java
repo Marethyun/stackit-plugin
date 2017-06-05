@@ -65,17 +65,15 @@ public class Logger {
 	 * @param String Executor
 	 */
 	public static void pushLog(String log, String executor, String context, String remoteAddress) {
-		if(StackItConfiguration.isLogEnabled()) {
-			Date date = new Date();
-			
-			DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-			DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
-			
-			String dateOutput = dateFormat.format(date);
-			String timeOutput = timeFormat.format(date);
-			
-			DatabaseManager.getActiveDatabase().AddLog(dateOutput, timeOutput, log, executor, context, remoteAddress);
-		}
+		Date date = new Date();
+
+		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+		DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+
+		String dateOutput = dateFormat.format(date);
+		String timeOutput = timeFormat.format(date);
+
+		DatabaseManager.getActiveDatabase().AddLog(dateOutput, timeOutput, log, executor, context, remoteAddress);
 	}
 	
 	/**
@@ -84,19 +82,18 @@ public class Logger {
 	 * @param String Executor
 	 */
 	public static void pushContextLog(String context, String executor, String remoteAddress) {
-		if(StackItConfiguration.isLogEnabled()) {
-			Date date = new Date();
-			
-			DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-			DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
-			
-			String dateOutput = dateFormat.format(date);
-			String timeOutput = timeFormat.format(date);
-			
-			String log = "Context \"" + context + "\" executed";
-			
-			DatabaseManager.getActiveDatabase().AddLog(dateOutput, timeOutput, log, executor, context, remoteAddress);
-		}
+
+		Date date = new Date();
+
+		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+		DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+
+		String dateOutput = dateFormat.format(date);
+		String timeOutput = timeFormat.format(date);
+
+		String log = "Context \"" + context + "\" executed";
+
+		DatabaseManager.getActiveDatabase().AddLog(dateOutput, timeOutput, log, executor, context, remoteAddress);
 	}
 	
 	/**
@@ -106,19 +103,17 @@ public class Logger {
 	 * @param String Executor
 	 */
 	public static void pushUserLoggedInLog(String user, String context, String remoteAddress) {
-		if(StackItConfiguration.isLogEnabled()) {
-			Date date = new Date();
-			
-			DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-			DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
-			
-			String dateOutput = dateFormat.format(date);
-			String timeOutput = timeFormat.format(date);
-			
-			String log = "User \"" + user + "\" successfully connected to the API";
-			
-			DatabaseManager.getActiveDatabase().AddLog(dateOutput, timeOutput, log, user, context, remoteAddress);
-		}
+		Date date = new Date();
+
+		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+		DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+
+		String dateOutput = dateFormat.format(date);
+		String timeOutput = timeFormat.format(date);
+
+		String log = "User \"" + user + "\" successfully connected to the API";
+
+		DatabaseManager.getActiveDatabase().AddLog(dateOutput, timeOutput, log, user, context, remoteAddress);
 	}
 	
 	/**
@@ -127,19 +122,17 @@ public class Logger {
 	 * @param String Executor
 	 */
 	public static void pushUserTriedToLogInLog(String user, String context, String error, String remoteAddress) {
-		if(StackItConfiguration.isLogEnabled()) {
-			Date date = new Date();
-			
-			DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-			DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
-			
-			String dateOutput = dateFormat.format(date);
-			String timeOutput = timeFormat.format(date);
-			
-			String log = "User \"" + user + "\" tried to connect to the API (Error: " + error + ")";
-			
-			DatabaseManager.getActiveDatabase().AddLog(dateOutput, timeOutput, log, user, context, remoteAddress);
-		}
+		Date date = new Date();
+
+		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+		DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+
+		String dateOutput = dateFormat.format(date);
+		String timeOutput = timeFormat.format(date);
+
+		String log = "User \"" + user + "\" tried to connect to the API (Error: " + error + ")";
+
+		DatabaseManager.getActiveDatabase().AddLog(dateOutput, timeOutput, log, user, context, remoteAddress);
 	}
 
 }

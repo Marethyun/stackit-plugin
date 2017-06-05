@@ -39,12 +39,6 @@ public class StackIt extends JavaPlugin {
 			LanguageManager.init();
 			Language.init();
 
-			if (StackItConfiguration.isLogEnabled()) {
-				Logger.info(Language.process(Language.get(Language.getBukkitLanguage(), "debug_enabled")));
-			} else {
-				Logger.info(Language.process(Language.get(Language.getBukkitLanguage(), "debug_disabled")));
-			}
-
 			// Load the give manager
 			GiveManager.init();
 

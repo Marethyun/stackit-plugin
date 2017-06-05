@@ -46,7 +46,7 @@ public class HandlerWebServer implements HttpHandler {
 		if(!pageExist(path)) {
 			pages.put(path, handler);
 			
-			if(StackItConfiguration.isLogEnabled()) Logger.info(Language.replace(Language.process(Language.get(Language.getBukkitLanguage(), "webserver_context_created")), "CONTEXT", path));
+			Logger.info(Language.replace(Language.process(Language.get(Language.getBukkitLanguage(), "webserver_context_created")), "CONTEXT", path));
 		}
 	}
 	

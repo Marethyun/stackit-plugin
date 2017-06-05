@@ -6,7 +6,6 @@
 
 StackIt:
     enabled: true
-    log: true
     prefix: "&e[StackIt]"
     
     ssl:

@@ -95,14 +95,6 @@ public class StackItConfiguration {
 	}
 	
 	/**
-	 * Check if the log system is enabled
-	 * @return Boolean Log system enabled
-	 */
-	public static Boolean isLogEnabled() {
-		return config.getBoolean("StackIt.log");
-	}
-	
-	/**
 	 * Set the status of the log system.
 	 * @param Boolean Enabled
 	 */
