@@ -16,6 +16,7 @@ import org.stackit.src.StackIt;
 
 import net.md_5.bungee.api.ChatColor;
 
+// TODO rework this
 public class StackItCommand implements CommandExecutor {
 	ArrayList<Player> disableWaiting = new ArrayList<Player>();
 
