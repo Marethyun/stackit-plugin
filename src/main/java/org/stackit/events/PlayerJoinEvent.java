@@ -1,7 +1,6 @@
 package org.stackit.events;
 
 import java.util.HashMap;
-import java.util.Objects;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -11,6 +10,8 @@ import org.stackit.src.GiveManager;
 import org.stackit.src.PurchaseManager;
 import org.stackit.src.StackIt;
 
+// TODO rework this
+// TODO items are not given when player is joining.
 public class PlayerJoinEvent implements Listener {
 	
 	@EventHandler
