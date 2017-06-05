@@ -29,8 +29,6 @@ public class StackIt extends JavaPlugin {
 		try {
 			plugin = this;
 
-
-
 			// Initiate plugin's logger
 			Logger.init();
 
