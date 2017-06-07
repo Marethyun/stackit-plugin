@@ -35,7 +35,6 @@ StackIt:
         username: "stackit" # Username of the user able to access the database
         password: "stackit" # Password of the user able to access the database.
         port: 3306 # Port for the database access
-        prefix: "stackit_" # Prefix put before the tables
         dao:
             queue: "org.stackit.database.dao.mysql.MysqlQueueDAO"
             logs: "org.stackit.database.dao.mysql.MysqlLogsDAO"
