@@ -1,10 +1,10 @@
-package org.stackit.database.mysql;
+package org.stackit.database.dao.mysql;
 
 import org.skife.jdbi.v2.sqlobject.Bind;
 import org.skife.jdbi.v2.sqlobject.SqlQuery;
 import org.skife.jdbi.v2.sqlobject.SqlUpdate;
 import org.skife.jdbi.v2.sqlobject.customizers.Mapper;
-import org.stackit.database.QueueDAO;
+import org.stackit.database.dao.templates.QueueDAO;
 import org.stackit.database.entities.QueueElement;
 import org.stackit.database.entities.QueueMapper;
 

@@ -30,7 +30,6 @@ StackIt:
     # - MySQL
     database:
         type: "mysql" # Type of connection/database (has to be supported by the plugin)
-        jdbcdriver:
         host: "localhost" # Hostname of the database
         name: "stackit" # DatabaseManager name
         username: "stackit" # Username of the user able to access the database
@@ -38,9 +37,9 @@ StackIt:
         port: 3306 # Port for the database access
         prefix: "stackit_" # Prefix put before the tables
         dao:
-            queue: "org.stackit.database.dao.mysql.QueueElement"
-            purchases: "org.stackit.database.dao.mysql.Purchases"
-            users: "org.stackit.database.dao.mysql.Users"
+            queue: "org.stackit.database.dao.mysql.MysqlQueueDAO"
+            logs: "org.stackit.database.dao.mysql.MysqlLogsDAO"
+            users: "org.stackit.database.dao.mysql.MysqlUsersDAO"
 
     # Support of multiple language
     internationalization:

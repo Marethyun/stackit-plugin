@@ -301,9 +301,9 @@ public class StackItConfiguration {
 		return config.getString("StackIt.database.dao.queue");
 	}
 
-	public static String getPurchasesDAOClassName(){
-        return config.getString("StackIt.database.dao.purchases");
-    }
+	public static String getLogsDAOClassName() {
+		return config.getString("StackIt.database.dao.logs");
+	}
 
     public static String getUsersDAOClassName(){
         return config.getString("StackIt.database.dao.users");

@@ -1,4 +1,4 @@
-package org.stackit.database;
+package org.stackit.database.dao;
 
 import org.skife.jdbi.v2.sqlobject.SqlQuery;
 import org.skife.jdbi.v2.sqlobject.SqlUpdate;

@@ -1,10 +1,10 @@
-package org.stackit.database.mysql;
+package org.stackit.database.dao.mysql;
 
 import org.skife.jdbi.v2.sqlobject.Bind;
 import org.skife.jdbi.v2.sqlobject.SqlQuery;
 import org.skife.jdbi.v2.sqlobject.SqlUpdate;
 import org.skife.jdbi.v2.sqlobject.customizers.Mapper;
-import org.stackit.database.LogsDAO;
+import org.stackit.database.dao.templates.LogsDAO;
 import org.stackit.database.entities.Log;
 import org.stackit.database.entities.LogMapper;
 
