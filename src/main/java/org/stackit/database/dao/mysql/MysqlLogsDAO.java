@@ -15,9 +15,6 @@ public interface MysqlLogsDAO extends LogsDAO {
     @Override @SqlUpdate("CREATE TABLE `stackit_log` (`id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,`date` DATE NOT NULL,`handler` VARCHAR(255) NOT NULL,`log` VARCHAR(255) NOT NULL,PRIMARY KEY (`id`)ENGINE=InnoDB")
     void createTable();
 
-    @Override
-    void close();
-
     @SqlQuery("SELECT id, date, handler, log FROM stackit_log")
     @Mapper(LogMapper.class)
     List<Log> getAll();

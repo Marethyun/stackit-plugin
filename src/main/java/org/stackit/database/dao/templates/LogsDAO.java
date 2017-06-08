@@ -13,9 +13,6 @@ public interface LogsDAO extends DAO {
     @Override @SqlUpdate
     void createTable();
 
-    @Override
-    void close();
-
     @SqlQuery
     List<Log> getAll();
 

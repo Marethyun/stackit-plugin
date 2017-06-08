@@ -11,7 +11,4 @@ public interface UsersDAO extends DAO {
 
     @Override @SqlUpdate
     void createTable();
-
-    @Override
-    void close();
 }

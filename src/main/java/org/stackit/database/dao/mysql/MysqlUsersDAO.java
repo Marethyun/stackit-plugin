@@ -16,7 +16,4 @@ public interface MysqlUsersDAO extends UsersDAO{
     @SqlQuery("SELECT * FROM users WHERE id = :id")
     @Mapper(UserMapper.class)
     User getById(@Bind("id") int id);
-
-    @Override
-    void close();
 }
