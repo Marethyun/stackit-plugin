@@ -10,4 +10,16 @@ public class QueueElement {
         this.user_id = id;
         this.commands = commands;
     }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public Integer getUser_id() {
+        return user_id;
+    }
+
+    public String getCommands() {
+        return commands;
+    }
 }

@@ -12,4 +12,20 @@ public class User {
         this.email = email;
         this.ingots = ingots;
     }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public String getUUID() {
+        return UUID;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public int getIngots() {
+        return ingots;
+    }
 }
