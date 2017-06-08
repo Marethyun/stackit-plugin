@@ -28,5 +28,4 @@ public class UsersProxy implements UsersDAO, Proxy {
         h.attach(substituted.getClass()).createTable();
         h.close();
     }
-
 }
