@@ -10,16 +10,16 @@ import java.util.List;
 
 public class QueueProxy implements QueueDAO, Proxy {
 
-    QueueDAO substitued;
+    private QueueDAO substituted;
 
-    public QueueProxy(QueueDAO substitued) {
-        this.substitued = substitued;
+    public QueueProxy(QueueDAO substituted) {
+        this.substituted = substituted;
     }
 
     @Override
     public List<QueueElement> getByUserId(int user_id) {
         Handle h = DatabaseManager.getDatabaseHandle();
-        List<QueueElement> elements = h.attach(substitued.getClass()).getByUserId(user_id);
+        List<QueueElement> elements = h.attach(substituted.getClass()).getByUserId(user_id);
         h.close();
         return elements;
     }
@@ -27,14 +27,14 @@ public class QueueProxy implements QueueDAO, Proxy {
     @Override
     public void createTable() {
         Handle h = DatabaseManager.getDatabaseHandle();
-        h.attach(substitued.getClass()).createTable();
+        h.attach(substituted.getClass()).createTable();
         h.close();
     }
 
     @Override
     public void delete(int id) {
         Handle h = DatabaseManager.getDatabaseHandle();
-        h.attach(substitued.getClass()).delete(id);
+        h.attach(substituted.getClass()).delete(id);
         h.close();
     }
 }

@@ -8,16 +8,16 @@ import org.stackit.database.entities.User;
 
 public class UsersProxy implements UsersDAO, Proxy {
 
-    private UsersDAO substitued;
+    private UsersDAO substituted;
 
-    public UsersProxy(UsersDAO substitued) {
-        this.substitued = substitued;
+    public UsersProxy(UsersDAO substituted) {
+        this.substituted = substituted;
     }
 
     @Override
     public User getById(int id) {
         Handle h = DatabaseManager.getDatabaseHandle();
-        User user = h.attach(substitued.getClass()).getById(id);
+        User user = h.attach(substituted.getClass()).getById(id);
         h.close();
         return user;
     }
@@ -25,7 +25,7 @@ public class UsersProxy implements UsersDAO, Proxy {
     @Override
     public void createTable() {
         Handle h = DatabaseManager.getDatabaseHandle();
-        h.attach(substitued.getClass()).createTable();
+        h.attach(substituted.getClass()).createTable();
         h.close();
     }
 
