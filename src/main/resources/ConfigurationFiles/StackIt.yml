@@ -11,16 +11,16 @@ StackIt:
     ssl:
         passphrase: "stackit-test" # CHANGE THIS
     
-    # Maintenance system of the plugin (If the server is in maintenance or the plugin has to be repaired)
+    # Plugin's maintenance system
     maintenance:
         enabled: false
         messages:
-            api: "The API is currently disabled."
+            api: "The StackIt API is currently disabled."
             ingame:
                 fr: "&cStackIt est actuellement désactivé. Veuillez réessayer plus tard."
                 en: "&cStackIt is currently disabled. Please try again later."
     
-    # The values below will modify the functionalities of the API.
+    # API port
     api:
         port: 5446
         
@@ -29,16 +29,17 @@ StackIt:
     # COMPATIBLE WITH:
     # - MySQL
     database:
-        type: "mysql" # Type of connection/database (has to be supported by the plugin)
-        host: "localhost" # Hostname of the database
-        name: "stackit" # DatabaseManager name
-        username: "stackit" # Username of the user able to access the database
-        password: "stackit" # Password of the user able to access the database.
-        port: 3306 # Port for the database access
         dao:
             queue: "org.stackit.database.dao.mysql.MysqlQueueDAO"
             logs: "org.stackit.database.dao.mysql.MysqlLogsDAO"
             users: "org.stackit.database.dao.mysql.MysqlUsersDAO"
+        type: "mysql" # Connection type (DAO must be loaded)
+        host: "localhost" # Hostname of the database
+        name: "stackit" # Database name
+        username: "stackit" # Username of the user able to access the database
+        password: "stackit" # Password of the user able to access the database.
+        port: 3306 # Port for the database access
+
 
     # Support of multiple language
     internationalization:
