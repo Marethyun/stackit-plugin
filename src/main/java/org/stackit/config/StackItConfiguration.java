@@ -1,9 +1,6 @@
 package org.stackit.config;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-
+import net.md_5.bungee.api.ChatColor;
 import org.apache.commons.io.FileUtils;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -11,7 +8,9 @@ import org.stackit.src.Language;
 import org.stackit.src.Logger;
 import org.stackit.src.StackIt;
 
-import net.md_5.bungee.api.ChatColor;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
 
 public class StackItConfiguration {
 	public static File configFile = new File(StackIt.getPlugin().getDataFolder(), "StackIt.yml");
@@ -42,13 +41,11 @@ public class StackItConfiguration {
 	 * Require when setting the value of an argument in the configuration file.
 	 * @return Boolean
 	 */
-	public static Boolean save() {
+	public static void save() {
 		try {
 			config.save(configFile);
-			return true;
 		} catch (IOException e) {
 			e.printStackTrace();
-			return false;
 		}
 	}
 
