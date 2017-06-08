@@ -25,13 +25,6 @@ public class LogsProxy implements LogsDAO, Proxy {
     }
 
     @Override
-    public void close() {
-        Handle h = DatabaseManager.getDatabaseHandle();
-        h.attach(substituted.getClass()).close();
-        h.close();
-    }
-
-    @Override
     public List<Log> getAll() {
         Handle h = DatabaseManager.getDatabaseHandle();
         List<Log> logs = h.attach(substituted.getClass()).getAll();
