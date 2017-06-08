@@ -6,7 +6,7 @@ import org.skife.jdbi.v2.sqlobject.SqlUpdate;
 import org.skife.jdbi.v2.sqlobject.customizers.Mapper;
 import org.stackit.database.dao.templates.LogsDAO;
 import org.stackit.database.entities.Log;
-import org.stackit.database.entities.LogMapper;
+import org.stackit.database.mappers.LogMapper;
 
 import java.sql.Date;
 import java.util.List;

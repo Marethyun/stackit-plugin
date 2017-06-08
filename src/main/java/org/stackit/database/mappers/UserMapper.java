@@ -1,7 +1,8 @@
-package org.stackit.database.entities;
+package org.stackit.database.mappers;
 
 import org.skife.jdbi.v2.StatementContext;
 import org.skife.jdbi.v2.tweak.ResultSetMapper;
+import org.stackit.database.entities.User;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

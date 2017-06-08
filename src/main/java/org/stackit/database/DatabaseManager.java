@@ -59,4 +59,5 @@ public class DatabaseManager {
                 + "&password=" + StackItConfiguration.getDatabasePassword();
     	return new DBI(url).open();
 	}
+
 }
