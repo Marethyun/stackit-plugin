@@ -52,7 +52,7 @@ public class StackItConfiguration {
 		}
 	}
 
-	/**
+	/*
 	 * ######################################
 	 * #			   GENERAL  			#
 	 * ######################################
@@ -171,7 +171,7 @@ public class StackItConfiguration {
 		save();
 	}
 	
-	/**
+	/*
 	 * ######################################
 	 * #			   DATABASE  			#
 	 * ######################################
@@ -309,7 +309,7 @@ public class StackItConfiguration {
         return config.getString("StackIt.database.dao.users");
     }
 	
-	/**
+	/*
 	 * ######################################
 	 * #			     API    			#
 	 * ######################################
@@ -332,7 +332,7 @@ public class StackItConfiguration {
 		save();
 	}
 	
-	/**
+	/*
 	 * ######################################
 	 * #	     INTERNATIONALIZATION    	#
 	 * ######################################
