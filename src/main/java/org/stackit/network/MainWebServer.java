@@ -1,17 +1,18 @@
 package org.stackit.network;
 
-import java.net.InetSocketAddress;
-import java.util.HashMap;
-
+import com.sun.net.httpserver.Headers;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpsServer;
 import org.json.simple.JSONObject;
 import org.stackit.config.LanguageConfiguration;
 import org.stackit.config.StackItConfiguration;
 import org.stackit.src.Language;
 import org.stackit.src.Logger;
 import org.stackit.src.PermissionManager;
-import com.sun.net.httpserver.Headers;
-import com.sun.net.httpserver.HttpExchange;
-import com.sun.net.httpserver.HttpsServer;
+import org.stackit.src.StackIt;
+
+import java.net.InetSocketAddress;
+import java.util.HashMap;
 
 public class MainWebServer {
 	private static HttpsServer httpserv = null;
@@ -22,9 +23,8 @@ public class MainWebServer {
 	 * 
 	 * @return Boolean
 	 */
-	public static Boolean init() {
-		System.out.println(" ");
-		System.out.println("|=========- StackIt Webserver Manager -=========|");
+	public static void init() {
+        StackIt.getPlugin().getLogger().info("Initializing API server..");
 		
 		MainWebServer.open();
 		MainWebServer.configure();
@@ -32,8 +32,6 @@ public class MainWebServer {
 		// Start the server
 		MainWebServer.start();
 		Logger.info(Language.process(LanguageConfiguration.get(Language.getBukkitLanguage(), "webserver_started")));
-		
-		return true;
 	}
 	
 	/**
@@ -57,19 +55,16 @@ public class MainWebServer {
 	 * Initiate the web server variable and verifies if the port is available for use.
 	 * @return Boolean
 	 */
-	private static Boolean open() {
+	private static void open() {
 		try {
 			// Create the web server at the said port.
 			httpserv = HttpsServer.create(new InetSocketAddress(StackItConfiguration.getAPIPort()), 0);
-			
-			return true;
+
 		} catch (Exception e) {
 			// If an error occur, report it in the console.
 			Logger.critical(Language.process(LanguageConfiguration.get(Language.getBukkitLanguage(), "error_initiating_webserver")));
 			e.printStackTrace();
 		}
-		
-		return false;
 	}
 
 	/**
@@ -81,7 +76,6 @@ public class MainWebServer {
 		// Add the minimal pages to the system.
 		HandlerWebServer.addHandler("/login", new PageConnect());
 		HandlerWebServer.addHandler("/debug", new PageDebug());
-		HandlerWebServer.addHandler("/give", new PageGive());
 		
 		if(!PermissionManager.contextHasPermissions("/debug")) {
 			PermissionManager.createContext("/debug", "debug");
@@ -98,7 +92,7 @@ public class MainWebServer {
 		headers.add("Content-Type", "application/json");
 		headers.add("Application-Name", "StackIt");
 		headers.add("Application-Version", "v1");
-		headers.add("Application-Author", "Shamelin && Marethyun (Uphoria.org)");
+		headers.add("Application-Author", "Shamelin & Marethyun (Uphoria.org)");
 		
 		return exchange;
 	}

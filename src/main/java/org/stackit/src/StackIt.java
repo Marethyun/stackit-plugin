@@ -41,9 +41,6 @@ public class StackIt extends JavaPlugin {
 			LanguageManager.init();
 			Language.init();
 
-			// Load the give manager
-			GiveManager.init();
-
 			// Start the API
 			MainWebServer.init();
 
