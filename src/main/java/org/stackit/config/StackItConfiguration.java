@@ -59,8 +59,10 @@ public class StackItConfiguration {
 	 * Check if the plugin is enabled
 	 * @return Boolean
 	 */
-	public static boolean isEnabled() {
-		return config.getBoolean("StackIt.enabled");
+	public static void checksEnabled() throws StackitDisabledException {
+	    if (!config.getBoolean("StackIt.enabled")) {
+            throw new StackitDisabledException("Plugin disabled");
+        }
 	}
 	
 	/**

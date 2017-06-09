@@ -7,6 +7,7 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.stackit.commands.StackItCommand;
 import org.stackit.config.StackItConfiguration;
+import org.stackit.config.StackitDisabledException;
 import org.stackit.database.DatabaseManager;
 import org.stackit.events.PlayerJoinEvent;
 import org.stackit.network.MainWebServer;
@@ -33,7 +34,8 @@ public class StackIt extends JavaPlugin {
 			Logger.init();
 
 			// Load the main configuration file and check if the plugin is enabled
-			StackItConfiguration.init(); // TODO check if config is loaded
+			StackItConfiguration.init();
+			StackItConfiguration.checksEnabled();
 
 			// Load language configuration files
 			LanguageManager.init();
@@ -54,6 +56,9 @@ public class StackIt extends JavaPlugin {
 			Logger.info(Language.process(Language.get(Language.getBukkitLanguage(), "plugin_initialized")));
 			Logger.info(Language.process(Language.get(Language.getBukkitLanguage(), "plugin_initialized_2")));
 			Logger.critical(Language.process(Language.get(Language.getBukkitLanguage(), "error_loading_plugin")));
+		} catch (StackitDisabledException e){
+		    Logger.info(Language.process(Language.get(Language.getBukkitLanguage(), "plugin_disabled")));
+		    StackIt.disable();
 		} catch (Exception e){
 			StackIt.disable();
 		}
