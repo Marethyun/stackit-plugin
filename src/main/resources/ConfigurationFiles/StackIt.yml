@@ -1,8 +1,8 @@
 # StackIt Configuration File
-# A Powerful Shop in Minecraft (1.7-1.11)
+# A Powerful linking plugin for CubikCMS (1.7-1.11)
 
 # This is the main configuration file for the plugin. For the documentation of the plugin, please visit https://www.stackit.cf/docs/
-# DO NOT MODIFY THE VALUE OF A FIELD IF YOU DO NOT KNOW WHAT IT MAY DO.
+# MODIFY AT YOUR OWN RISK, MAKE SURE YOU KNOW FIELD USAGE BEFORE MODIFY IT
 
 StackIt:
     enabled: true
@@ -38,7 +38,12 @@ StackIt:
         name: "stackit" # Database name
         username: "stackit" # Username of the user able to access the database
         password: "stackit" # Password of the user able to access the database.
-        port: 3306 # Port for the database access
+        port: 3306 # Database port
+
+    # API accounts under syntax:
+    # username:password
+    accounts:
+        - "stackit:secret"
 
 
     # Support of multiple language
