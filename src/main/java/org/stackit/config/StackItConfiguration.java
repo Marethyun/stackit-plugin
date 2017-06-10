@@ -307,6 +307,10 @@ public class StackItConfiguration {
     public static String getUsersDAOClassName(){
         return config.getString("StackIt.database.dao.users");
     }
+
+    public static String getTokensDAOClassName(){
+        return config.getString("StackIt.database.dao.tokens");
+    }
 	
 	/*
 	 * ######################################

@@ -5,9 +5,11 @@ import org.skife.jdbi.v2.Handle;
 import org.stackit.config.StackItConfiguration;
 import org.stackit.database.dao.proxy.LogsProxy;
 import org.stackit.database.dao.proxy.QueueProxy;
+import org.stackit.database.dao.proxy.TokensProxy;
 import org.stackit.database.dao.proxy.UsersProxy;
 import org.stackit.database.dao.templates.LogsDAO;
 import org.stackit.database.dao.templates.QueueDAO;
+import org.stackit.database.dao.templates.TokensDAO;
 import org.stackit.database.dao.templates.UsersDAO;
 import org.stackit.src.StackIt;
 
@@ -16,10 +18,12 @@ public class DatabaseManager {
 	private static QueueDAO queueDAO;
 	private static UsersDAO usersDAO;
 	private static LogsDAO logsDAO;
+	private static TokensDAO tokensDAO;
 
 	private static QueueProxy queueProxy;
 	private static UsersProxy usersProxy;
 	private static LogsProxy logsProxy;
+	private static TokensProxy tokensProxy;
 
 	/**
 	 * Initiate the database connection and check if the type of database is supported
@@ -34,10 +38,12 @@ public class DatabaseManager {
 			queueDAO = (QueueDAO) loader.loadClass(StackItConfiguration.getQueueDAOClassName()).newInstance();
 			usersDAO = (UsersDAO) loader.loadClass(StackItConfiguration.getUsersDAOClassName()).newInstance();
 			logsDAO = (LogsDAO) loader.loadClass(StackItConfiguration.getLogsDAOClassName()).newInstance();
+			tokensDAO = (TokensDAO) loader.loadClass(StackItConfiguration.getTokensDAOClassName()).newInstance();
 
 			queueProxy = new QueueProxy(queueDAO);
 			usersProxy = new UsersProxy(usersDAO);
 			logsProxy = new LogsProxy(logsDAO);
+			tokensProxy = new TokensProxy(tokensDAO);
 
 		} catch (InstantiationException | IllegalAccessException e){
 			e.printStackTrace();
@@ -56,6 +62,10 @@ public class DatabaseManager {
 
     public static LogsDAO getLogs(){
         return logsProxy;
+    }
+
+    public static TokensDAO getTokensDAO(){
+        return tokensProxy;
     }
 
     public static Handle getDatabaseHandle(){

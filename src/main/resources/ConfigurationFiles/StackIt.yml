@@ -33,6 +33,7 @@ StackIt:
             queue: "org.stackit.database.dao.mysql.MysqlQueueDAO"
             logs: "org.stackit.database.dao.mysql.MysqlLogsDAO"
             users: "org.stackit.database.dao.mysql.MysqlUsersDAO"
+            tokens: "org.stackit.database.dao.mysql.MysqlTokensDAO"
         type: "mysql" # Connection type (DAO must be loaded)
         host: "localhost" # Hostname of the database
         name: "stackit" # Database name
