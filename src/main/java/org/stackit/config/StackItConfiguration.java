@@ -4,9 +4,9 @@ import net.md_5.bungee.api.ChatColor;
 import org.apache.commons.io.FileUtils;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.stackit.src.Language;
-import org.stackit.src.Logger;
-import org.stackit.src.StackIt;
+import org.stackit.Language;
+import org.stackit.Logger;
+import org.stackit.StackIt;
 
 import java.io.File;
 import java.io.IOException;

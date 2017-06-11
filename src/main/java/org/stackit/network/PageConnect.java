@@ -1,9 +1,9 @@
 package org.stackit.network;
 
 import com.sun.net.httpserver.HttpExchange;
+import org.stackit.Logger;
 import org.stackit.config.StackItConfiguration;
 import org.stackit.database.DatabaseManager;
-import org.stackit.src.Logger;
 
 import java.util.HashMap;
 import java.util.Map;

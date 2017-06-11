@@ -1,4 +1,9 @@
-package org.stackit.src;
+package org.stackit;
+
+import net.md_5.bungee.api.ChatColor;
+import org.bukkit.entity.Player;
+import org.stackit.config.LanguageConfiguration;
+import org.stackit.config.StackItConfiguration;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -6,12 +11,6 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.bukkit.entity.Player;
-import org.stackit.config.LanguageConfiguration;
-import org.stackit.config.StackItConfiguration;
-
-import net.md_5.bungee.api.ChatColor;
 
 public class Language {
 	public static String userLanguage = null;

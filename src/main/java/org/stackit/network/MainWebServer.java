@@ -4,11 +4,11 @@ import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpsServer;
 import org.json.simple.JSONObject;
+import org.stackit.Language;
+import org.stackit.Logger;
+import org.stackit.StackIt;
 import org.stackit.config.LanguageConfiguration;
 import org.stackit.config.StackItConfiguration;
-import org.stackit.src.Language;
-import org.stackit.src.Logger;
-import org.stackit.src.StackIt;
 
 import java.net.InetSocketAddress;
 import java.util.HashMap;

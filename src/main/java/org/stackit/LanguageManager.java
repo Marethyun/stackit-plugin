@@ -1,12 +1,12 @@
-package org.stackit.src;
-
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
+package org.stackit;
 
 import org.apache.commons.io.FileUtils;
 import org.stackit.config.LanguageConfiguration;
 import org.stackit.config.StackItConfiguration;
+
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
 
 public class LanguageManager {
 	

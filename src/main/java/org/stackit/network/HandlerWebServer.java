@@ -1,17 +1,15 @@
 package org.stackit.network;
 
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpHandler;
+import org.json.simple.JSONObject;
+import org.stackit.Language;
+import org.stackit.Logger;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URI;
 import java.util.HashMap;
-
-import org.json.simple.JSONObject;
-import org.stackit.config.StackItConfiguration;
-import org.stackit.src.Language;
-import org.stackit.src.Logger;
-
-import com.sun.net.httpserver.HttpExchange;
-import com.sun.net.httpserver.HttpHandler;
 
 public class HandlerWebServer implements HttpHandler {
 	public static HashMap<String, Page> pages = new HashMap<String, Page>();

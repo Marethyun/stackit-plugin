@@ -1,4 +1,4 @@
-package org.stackit.src;
+package org.stackit;
 
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;

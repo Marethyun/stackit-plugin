@@ -1,4 +1,4 @@
-package org.stackit.src;
+package org.stackit;
 
 import org.stackit.database.DatabaseManager;
 

@@ -2,6 +2,7 @@ package org.stackit.database;
 
 import org.skife.jdbi.v2.DBI;
 import org.skife.jdbi.v2.Handle;
+import org.stackit.StackIt;
 import org.stackit.config.StackItConfiguration;
 import org.stackit.database.dao.proxy.LogsProxy;
 import org.stackit.database.dao.proxy.QueueProxy;
@@ -11,7 +12,6 @@ import org.stackit.database.dao.templates.LogsDAO;
 import org.stackit.database.dao.templates.QueueDAO;
 import org.stackit.database.dao.templates.TokensDAO;
 import org.stackit.database.dao.templates.UsersDAO;
-import org.stackit.src.StackIt;
 
 
 public class DatabaseManager {
