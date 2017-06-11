@@ -55,7 +55,6 @@ public class StackIt extends JavaPlugin {
 
 			Logger.info(Language.process(Language.get(Language.getBukkitLanguage(), "plugin_initialized")));
 			Logger.info(Language.process(Language.get(Language.getBukkitLanguage(), "plugin_initialized_2")));
-			Logger.critical(Language.process(Language.get(Language.getBukkitLanguage(), "error_loading_plugin")));
 		} catch (StackitDisabledException e){
 		    Logger.info(Language.process(Language.get(Language.getBukkitLanguage(), "plugin_disabled")));
 		    StackIt.disable();
@@ -102,10 +101,13 @@ public class StackIt extends JavaPlugin {
             @Override
             public void run() {
                 List<Token> tokens = DatabaseManager.getTokens().getAll();
-                long expiration = StackItConfiguration.getTokensExpiration();
-                for (Token token : tokens) {
-                    if (token.getTime() + expiration >= System.currentTimeMillis()) {
-                        DatabaseManager.getTokens().deleteByValue(token.getValue());
+                if (!tokens.isEmpty()) {
+                    long expiration = StackItConfiguration.getTokensExpiration();
+                    System.out.println(expiration);
+                    for (Token token : tokens) {
+                        if (token.getTime() + expiration >= System.currentTimeMillis()) {
+                            DatabaseManager.getTokens().deleteByValue(token.getValue());
+                        }
                     }
                 }
             }
