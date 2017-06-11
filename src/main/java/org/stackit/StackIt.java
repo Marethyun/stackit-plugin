@@ -100,15 +100,19 @@ public class StackIt extends JavaPlugin {
         task = getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
             @Override
             public void run() {
-                List<Token> tokens = DatabaseManager.getTokens().getAll();
-                if (!tokens.isEmpty()) {
-                    long expiration = StackItConfiguration.getTokensExpiration();
-                    System.out.println(expiration);
-                    for (Token token : tokens) {
-                        if (token.getTime() + expiration >= System.currentTimeMillis()) {
-                            DatabaseManager.getTokens().deleteByValue(token.getValue());
+                try {
+                    List<Token> tokens = DatabaseManager.getTokens().getAll();
+                    if (!tokens.isEmpty()) {
+                        long expiration = StackItConfiguration.getTokensExpiration();
+                        System.out.println(expiration);
+                        for (Token token : tokens) {
+                            if (token.getTime() + expiration >= System.currentTimeMillis()) {
+                                DatabaseManager.getTokens().deleteByValue(token.getValue());
+                            }
                         }
                     }
+                } catch (Exception e){
+                    e.printStackTrace();
                 }
             }
         }, 0L, 10L);
