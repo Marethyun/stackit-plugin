@@ -11,6 +11,9 @@ import org.stackit.src.StackIt;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class StackItConfiguration {
 	public static File configFile = new File(StackIt.getPlugin().getDataFolder(), "StackIt.yml");
@@ -334,6 +337,20 @@ public class StackItConfiguration {
 		config.set("StackIt.api.port", port);
 		save();
 	}
+
+	public static Map<String, String> getAccounts(){
+        Map<String, String> accounts = new HashMap<>();
+	    List<String> stringList = config.getStringList("StackIt.api.accounts");
+	    for (String string : stringList){
+            String[] credentials = string.split(":", 2);
+            accounts.put(credentials[0], credentials[1]);
+        }
+	    return accounts;
+    }
+
+    public static long getTokensExpiration(){
+        return config.getLong("StackIt.api.sessionexpire");
+    }
 	
 	/*
 	 * ######################################
