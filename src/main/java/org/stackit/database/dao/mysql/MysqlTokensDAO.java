@@ -26,7 +26,7 @@ public interface MysqlTokensDAO extends TokensDAO {
     List<Token> getAll();
 
     @Override
-    @SqlQuery("INSERT INTO stackit_tokens (time, value) VALUES (:time, :value)")
+    @SqlUpdate("INSERT INTO stackit_tokens (time, value) VALUES (:time, :value)")
     void add(@Bind("time") long time, @Bind("value") String value);
 
     @Override

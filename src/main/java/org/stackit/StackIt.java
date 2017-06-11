@@ -42,6 +42,8 @@ public class StackIt extends JavaPlugin {
 			LanguageManager.init();
 			Language.init();
 
+			DatabaseManager.init();
+
 			// Start the API
 			MainWebServer.init();
 
@@ -104,7 +106,6 @@ public class StackIt extends JavaPlugin {
                     List<Token> tokens = DatabaseManager.getTokens().getAll();
                     if (!tokens.isEmpty()) {
                         long expiration = StackItConfiguration.getTokensExpiration();
-                        System.out.println(expiration);
                         for (Token token : tokens) {
                             if (token.getTime() + expiration >= System.currentTimeMillis()) {
                                 DatabaseManager.getTokens().deleteByValue(token.getValue());
@@ -113,6 +114,7 @@ public class StackIt extends JavaPlugin {
                     }
                 } catch (Exception e){
                     e.printStackTrace();
+                    StackIt.disable();
                 }
             }
         }, 0L, 10L);

@@ -11,23 +11,23 @@ import java.util.List;
 
 public class LogsProxy implements LogsDAO, Proxy {
 
-    private LogsDAO substituted;
+    private Class<LogsDAO> substituted;
 
-    public LogsProxy(LogsDAO substituted) {
+    public LogsProxy(Class<LogsDAO> substituted) {
         this.substituted = substituted;
     }
 
     @Override
     public void createTable() {
         Handle h = DatabaseManager.getDatabaseHandle();
-        h.attach(substituted.getClass()).createTable();
+        h.attach(substituted).createTable();
         h.close();
     }
 
     @Override
     public List<Log> getAll() {
         Handle h = DatabaseManager.getDatabaseHandle();
-        List<Log> logs = h.attach(substituted.getClass()).getAll();
+        List<Log> logs = h.attach(substituted).getAll();
         h.close();
         return logs;
     }
@@ -35,7 +35,7 @@ public class LogsProxy implements LogsDAO, Proxy {
     @Override
     public void addLog(Date date, String log, String handler) {
         Handle h = DatabaseManager.getDatabaseHandle();
-        h.attach(substituted.getClass()).addLog(date, log, handler);
+        h.attach(substituted).addLog(date, log, handler);
         h.close();
     }
 }

@@ -16,10 +16,10 @@ import org.stackit.database.dao.templates.UsersDAO;
 
 
 public class DatabaseManager {
-	private static QueueDAO queueDAO;
-	private static UsersDAO usersDAO;
-	private static LogsDAO logsDAO;
-	private static TokensDAO tokensDAO;
+	private static Class<QueueDAO> queueDAO;
+	private static Class<UsersDAO> usersDAO;
+	private static Class<LogsDAO> logsDAO;
+	private static Class<TokensDAO> tokensDAO;
 
 	private static QueueProxy queueProxy;
 	private static UsersProxy usersProxy;
@@ -31,6 +31,7 @@ public class DatabaseManager {
 	 * by the plugin.
 	 * @return boolean
 	 */
+	@SuppressWarnings("unchecked")
 	public static void init() throws Exception {
 
         Logger.info("Initializing database interface..");
@@ -39,17 +40,17 @@ public class DatabaseManager {
 
 		try {
 
-			queueDAO = (QueueDAO) loader.loadClass(StackItConfiguration.getQueueDAOClassName()).newInstance();
-			usersDAO = (UsersDAO) loader.loadClass(StackItConfiguration.getUsersDAOClassName()).newInstance();
-			logsDAO = (LogsDAO) loader.loadClass(StackItConfiguration.getLogsDAOClassName()).newInstance();
-			tokensDAO = (TokensDAO) loader.loadClass(StackItConfiguration.getTokensDAOClassName()).newInstance();
+			queueDAO = (Class<QueueDAO>) loader.loadClass(StackItConfiguration.getQueueDAOClassName());
+			usersDAO = (Class<UsersDAO>) loader.loadClass(StackItConfiguration.getUsersDAOClassName());
+			logsDAO = (Class<LogsDAO>) loader.loadClass(StackItConfiguration.getLogsDAOClassName());
+			tokensDAO = (Class<TokensDAO>) loader.loadClass(StackItConfiguration.getTokensDAOClassName());
 
 			queueProxy = new QueueProxy(queueDAO);
 			usersProxy = new UsersProxy(usersDAO);
 			logsProxy = new LogsProxy(logsDAO);
 			tokensProxy = new TokensProxy(tokensDAO);
 
-		} catch (InstantiationException | IllegalAccessException e){
+		} catch (Exception e){
 			e.printStackTrace();
 			StackIt.disable();
 		}
