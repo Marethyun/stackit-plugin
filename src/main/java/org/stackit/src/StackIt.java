@@ -1,11 +1,9 @@
 package org.stackit.src;
 
-// TODO fix database errors
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.stackit.commands.StackItCommand;
 import org.stackit.config.StackItConfiguration;
 import org.stackit.config.StackitDisabledException;
 import org.stackit.database.DatabaseManager;
@@ -48,7 +46,7 @@ public class StackIt extends JavaPlugin {
 			MainWebServer.init();
 
 			// Set the commands
-			getCommand("stackit").setExecutor(new StackItCommand());
+            // getCommand("stackit").setExecutor(new StackItCommand()); TODO REWORK THIS
 
 			// Register the events
             // registerEvents(new PlayerJoinEvent()); TODO REWORK THIS
