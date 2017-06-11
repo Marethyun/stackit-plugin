@@ -64,7 +64,7 @@ public class DatabaseManager {
         return logsProxy;
     }
 
-    public static TokensDAO getTokensDAO(){
+    public static TokensDAO getTokens(){
         return tokensProxy;
     }
 

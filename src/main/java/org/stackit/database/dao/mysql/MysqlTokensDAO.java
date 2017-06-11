@@ -18,10 +18,18 @@ public interface MysqlTokensDAO extends TokensDAO {
     @Override
     @SqlQuery("SELECT * FROM stackit_tokens WHERE value = :value")
     @Mapper(TokenMapper.class)
-    Token getByValue(@Bind("value")String value);
+    Token getByValue(@Bind("value") String value);
 
     @Override
     @SqlQuery("SELECT * FROM stackit_tokens")
     @Mapper(TokenMapper.class)
     List<Token> getAll();
+
+    @Override
+    @SqlQuery("INSERT INTO stackit_tokens (time, value) VALUES (:time, :value)")
+    void add(@Bind("time") long time, @Bind("value") String value);
+
+    @Override
+    @SqlUpdate("DELETE FROM stackit_tokens WHERE value = :value")
+    void deleteByValue(@Bind("value") String value);
 }
