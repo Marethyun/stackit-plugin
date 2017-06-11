@@ -20,9 +20,17 @@ StackIt:
                 fr: "&cStackIt est actuellement désactivé. Veuillez réessayer plus tard."
                 en: "&cStackIt is currently disabled. Please try again later."
     
-    # API port
+
     api:
+        # API port
         port: 5446
+        # Tokens expiration (in milliseconds)
+        # Default to 12 seconds (12000 milliseconds)
+        sessionexpire: 12000
+        # API accounts under syntax:
+        # username:password
+        accounts:
+            - "stackit:secret"
         
     # The values below will modify the credentials to connect to the database.
     #
@@ -41,10 +49,7 @@ StackIt:
         password: "stackit" # Password of the user able to access the database.
         port: 3306 # Database port
 
-    # API accounts under syntax:
-    # username:password
-    accounts:
-        - "stackit:secret"
+
 
 
     # Support of multiple language

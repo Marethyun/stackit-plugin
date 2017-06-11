@@ -8,7 +8,6 @@ import org.stackit.config.LanguageConfiguration;
 import org.stackit.config.StackItConfiguration;
 import org.stackit.src.Language;
 import org.stackit.src.Logger;
-import org.stackit.src.PermissionManager;
 import org.stackit.src.StackIt;
 
 import java.net.InetSocketAddress;
@@ -53,7 +52,6 @@ public class MainWebServer {
 	
 	/**
 	 * Initiate the web server variable and verifies if the port is available for use.
-	 * @return Boolean
 	 */
 	private static void open() {
 		try {
@@ -75,15 +73,6 @@ public class MainWebServer {
 		
 		// Add the minimal pages to the system.
 		HandlerWebServer.addHandler("/login", new PageConnect());
-		HandlerWebServer.addHandler("/debug", new PageDebug());
-		
-		if(!PermissionManager.contextHasPermissions("/debug")) {
-			PermissionManager.createContext("/debug", "debug");
-		}
-		
-		if(!PermissionManager.contextHasPermissions("/give")) {
-			PermissionManager.createContext("/give", "give");
-		}
 	}
 	
 	public static HttpExchange setHeaders(HttpExchange exchange) {

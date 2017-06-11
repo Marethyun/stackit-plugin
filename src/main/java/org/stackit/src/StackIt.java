@@ -9,8 +9,10 @@ import org.stackit.commands.StackItCommand;
 import org.stackit.config.StackItConfiguration;
 import org.stackit.config.StackitDisabledException;
 import org.stackit.database.DatabaseManager;
-import org.stackit.events.PlayerJoinEvent;
+import org.stackit.database.entities.Token;
 import org.stackit.network.MainWebServer;
+
+import java.util.List;
 
 /**
  * StackIt: A powerful shop for Minecraft 1.7-1.11
@@ -20,6 +22,7 @@ import org.stackit.network.MainWebServer;
 public class StackIt extends JavaPlugin {
 	static Plugin plugin = null;
 	static DatabaseManager dbManager;
+	static int task;
 
 	/**
 	 * Initiate the plugin. Do not modify unless you are adding functionalities.
@@ -48,7 +51,9 @@ public class StackIt extends JavaPlugin {
 			getCommand("stackit").setExecutor(new StackItCommand());
 
 			// Register the events
-			registerEvents(new PlayerJoinEvent());
+            // registerEvents(new PlayerJoinEvent()); TODO REWORK THIS
+
+			startTokensScheduler();
 
 			Logger.info(Language.process(Language.get(Language.getBukkitLanguage(), "plugin_initialized")));
 			Logger.info(Language.process(Language.get(Language.getBukkitLanguage(), "plugin_initialized_2")));
@@ -67,7 +72,8 @@ public class StackIt extends JavaPlugin {
 	public void onDisable() {
 		// Stop the web server
 		MainWebServer.stop();
-		
+		stopTokensScheduler();
+
 		plugin = null;
 	}
 	
@@ -88,6 +94,29 @@ public class StackIt extends JavaPlugin {
 	public static Plugin getPlugin() {
 		return plugin;
 	}
+
+    /**
+     * For each token: Checks token' expiration time and delete it when it's outdated.
+     * Every 10 minecraft ticks (average 500ms)
+     */
+	private void startTokensScheduler(){
+        task = getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
+            @Override
+            public void run() {
+                List<Token> tokens = DatabaseManager.getTokens().getAll();
+                long expiration = StackItConfiguration.getTokensExpiration();
+                for (Token token : tokens) {
+                    if (token.getTime() + expiration >= System.currentTimeMillis()) {
+                        DatabaseManager.getTokens().deleteByValue(token.getValue());
+                    }
+                }
+            }
+        }, 0L, 10L);
+    }
+
+    private void stopTokensScheduler(){
+	    getServer().getScheduler().cancelTask(task);
+    }
 	
 	/**
 	 * Register all the events of the plugin.

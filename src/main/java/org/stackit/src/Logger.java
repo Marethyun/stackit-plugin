@@ -1,10 +1,10 @@
 package org.stackit.src;
 
+import org.stackit.database.DatabaseManager;
+
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 import java.sql.Date;
-
-import org.stackit.database.DatabaseManager;
 
 // TODO rework this
 public class Logger {
@@ -61,33 +61,19 @@ public class Logger {
 	 * @param String Log
 	 * @param String Executor
 	 */
-	public static void pushLog(String log, String executor, String context, String remoteAddress) {
+	public static void pushLog(String log, String executor, String context) {
         Date date = new Date(System.currentTimeMillis());
 
         DatabaseManager.getLogs().addLog(date, log, context);
 	}
 	
 	/**
-	 * Add a context executed log to the database.
-	 * @param String Context executed
-	 * @param String Executor
-	 */
-	public static void pushContextLog(String context, String executor, String remoteAddress) {
-
-		Date date = new Date(System.currentTimeMillis());
-
-		String log = "Context \"" + context + "\" executed";
-
-        DatabaseManager.getLogs().addLog(date, log, context);
-	}
-	
-	/**
 	 * Add a user connected log to the database.
-	 * @param remoteAddress 
-	 * @param String Context executed
-	 * @param String Executor
-	 */
-	public static void pushUserLoggedInLog(String user, String context, String remoteAddress) {
+     * @param remoteAddress
+     * @param String Context executed
+     * @param String Executor
+     */
+	public static void userLoggedIn(String user, String context) {
 		Date date = new Date(System.currentTimeMillis());
 
 		String log = "User \"" + user + "\" successfully connected to the API";
@@ -97,10 +83,10 @@ public class Logger {
 	
 	/**
 	 * Add a user tried to log in log to the database.
-	 * @param String Context executed
-	 * @param String Executor
-	 */
-	public static void pushUserTriedToLogInLog(String user, String context, String error, String remoteAddress) {
+     * @param String Context executed
+     * @param String Executor
+     */
+	public static void userTriedToLog(String user, String context, String error) {
 		Date date = new Date(System.currentTimeMillis());
 		String log = "User \"" + user + "\" tried to connect to the API (Error: " + error + ")";
 		DatabaseManager.getLogs().addLog(date, log, context);
