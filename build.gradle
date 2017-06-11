@@ -47,7 +47,7 @@ dependencies {
     // This dependency is used internally, and not exposed to consumers on their own compile classpath.
     implementation 'com.google.guava:guava:21.0'
     // Spigot API
-    compile name: 'spigot-1.8'
+    compileOnly name: 'spigot-1.8'
     // JDBI
     compile 'org.jdbi:jdbi:2.78'
     // Use JUnit test framework
