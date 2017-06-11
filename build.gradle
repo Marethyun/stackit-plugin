@@ -40,6 +40,17 @@ buildscript {
     }
 }
 
+task moveToServer(type: movePlugin)
+
+class movePlugin extends DefaultTask {
+    @TaskAction
+    def move(){
+        def src = new File('build/libs/cubikcms-plugin-all.jar')
+        def dst = new File('E:/M/serveurs/SERVEUR_TESTS/plugins/stackit.jar')
+        dst << src.bytes
+    }
+}
+
 dependencies {
     // This dependency is exported to consumers, that is to say found on their compile classpath.
     api 'org.apache.commons:commons-math3:3.6.1'
