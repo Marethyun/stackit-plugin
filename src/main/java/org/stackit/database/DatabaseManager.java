@@ -2,6 +2,7 @@ package org.stackit.database;
 
 import org.skife.jdbi.v2.DBI;
 import org.skife.jdbi.v2.Handle;
+import org.stackit.Logger;
 import org.stackit.StackIt;
 import org.stackit.config.StackItConfiguration;
 import org.stackit.database.dao.proxy.LogsProxy;
@@ -31,6 +32,9 @@ public class DatabaseManager {
 	 * @return boolean
 	 */
 	public static void init() throws Exception {
+
+        Logger.info("Initializing database interface..");
+
 		ClassLoader loader = StackIt.class.getClassLoader();
 
 		try {
