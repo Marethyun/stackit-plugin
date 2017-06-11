@@ -31,6 +31,20 @@ public class TokensProxy implements Proxy, TokensDAO {
     }
 
     @Override
+    public void add(long time, String value) {
+        Handle h = DatabaseManager.getDatabaseHandle();
+        h.attach(substituted.getClass()).add(time, value);
+        h.close();
+    }
+
+    @Override
+    public void deleteByValue(String value) {
+        Handle h = DatabaseManager.getDatabaseHandle();
+        h.attach(substituted.getClass()).deleteByValue(value);
+        h.close();
+    }
+
+    @Override
     public List<Token> getAll() {
         Handle h = DatabaseManager.getDatabaseHandle();
         List<Token> tokenList = h.attach(substituted.getClass()).getAll();
