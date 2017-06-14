@@ -9,7 +9,7 @@ StackIt:
     prefix: "&e[StackIt]"
     
     ssl:
-        passphrase: "stackit-test" # CHANGE THIS
+        passphrase: "stackit-sslpath" # CHANGE THIS
     
     # Plugin's maintenance system
     maintenance:

@@ -1,8 +1,6 @@
 package org.stackit.network;
 
-import com.sun.net.httpserver.Headers;
-import com.sun.net.httpserver.HttpExchange;
-import com.sun.net.httpserver.HttpsServer;
+import com.sun.net.httpserver.*;
 import org.json.simple.JSONObject;
 import org.stackit.Language;
 import org.stackit.Logger;
@@ -10,7 +8,12 @@ import org.stackit.StackIt;
 import org.stackit.config.LanguageConfiguration;
 import org.stackit.config.StackItConfiguration;
 
+import javax.net.ssl.*;
+import java.io.File;
+import java.io.FileInputStream;
 import java.net.InetSocketAddress;
+import java.security.KeyStore;
+import java.security.SecureRandom;
 import java.util.HashMap;
 
 public class MainWebServer {
@@ -55,8 +58,48 @@ public class MainWebServer {
 	 */
 	private static void open() {
 		try {
-			// Create the web server at the said port.
-			httpserv = HttpsServer.create(new InetSocketAddress(StackItConfiguration.getAPIPort()), 0);
+
+            char[] password = StackItConfiguration.getSSLPassphrase().toCharArray();
+            KeyStore ks = KeyStore.getInstance("JKS");
+
+            // Create the web server at the said port.
+            httpserv = HttpsServer.create(new InetSocketAddress(StackItConfiguration.getAPIPort()), 0);
+            File keyFile = new File(StackIt.getPlugin().getDataFolder(), "ssl.keystore");
+            if (!keyFile.exists()){
+                throw new Exception("Failed to find keyStore file, please add one");
+            }
+            FileInputStream fis = new FileInputStream(keyFile);
+            ks.load(fis, password);
+
+            KeyManagerFactory kmf = KeyManagerFactory.getInstance("SunX509");
+            kmf.init(ks, password);
+
+            TrustManagerFactory tmf = TrustManagerFactory.getInstance("SunX509");
+            tmf.init(ks);
+
+            SSLContext sslContext = SSLContext.getInstance("SSL");
+            sslContext.init(kmf.getKeyManagers(), tmf.getTrustManagers(), new SecureRandom());
+            httpserv.setHttpsConfigurator(new HttpsConfigurator(sslContext){
+                @Override
+                public void configure(HttpsParameters httpsParameters) {
+                    try {
+                        SSLEngine engine = sslContext.createSSLEngine();
+                        engine.setEnabledProtocols(new String[] {"SSLv3"});
+                        httpsParameters.setNeedClientAuth(false);
+                        httpsParameters.setCipherSuites(engine.getEnabledCipherSuites());
+                        httpsParameters.setProtocols(engine.getEnabledProtocols());
+
+                        SSLParameters defaultSSLParameters = sslContext.getDefaultSSLParameters();
+                        httpsParameters.setSSLParameters(defaultSSLParameters);
+
+                    } catch (Exception e){
+                        e.printStackTrace();
+                        Logger.error(Language.process(LanguageConfiguration.get(Language.getBukkitLanguage(), "error_initiating_webserver")));
+                        StackIt.disable();
+                    }
+                }
+            });
+
 
 		} catch (Exception e) {
 			// If an error occur, report it in the console.
@@ -69,6 +112,7 @@ public class MainWebServer {
 	 * Create the links for the web server.
 	 */
 	private static void configure() {
+	    Logger.info("Initializing webserver routes..");
 	    // Set handler
 		httpserv.createContext("/", new HandlerWebServer());
 
@@ -77,11 +121,13 @@ public class MainWebServer {
 	}
 	
 	public static HttpExchange setHeaders(HttpExchange exchange) {
-		Headers headers = exchange.getResponseHeaders();
-		
+	    HttpsExchange httpsExchange = (HttpsExchange) exchange;
+		Headers headers = httpsExchange.getResponseHeaders();
+
+		headers.add("Access-Control-Allow-Origin", "*");
 		headers.add("Content-Type", "application/json");
 		headers.add("Application-Name", "StackIt");
-		headers.add("Application-Version", "v1");
+		headers.add("Application-Version", "1.3.14");
 		headers.add("Application-Author", "Shamelin & Marethyun (Uphoria.org)");
 		
 		return exchange;
