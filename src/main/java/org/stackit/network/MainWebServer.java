@@ -8,10 +8,10 @@ import org.stackit.Language;
 import org.stackit.Logger;
 import org.stackit.StackIt;
 import org.stackit.config.LanguageConfiguration;
-import org.stackit.config.StackItConfiguration;
 
-import java.net.InetSocketAddress;
 import java.util.HashMap;
+
+import static spark.Spark.*;
 
 public class MainWebServer {
 	private static HttpsServer httpserv = null;
@@ -26,28 +26,18 @@ public class MainWebServer {
         StackIt.getPlugin().getLogger().info("Initializing API server..");
 		
 		MainWebServer.open();
-		MainWebServer.configure();
+//		MainWebServer.configure(); TODO REWORK THIS
 		
 		// Start the server
-		MainWebServer.start();
 		Logger.info(Language.process(LanguageConfiguration.get(Language.getBukkitLanguage(), "webserver_started")));
 	}
-	
-	/**
-	 * Start the web server.
-	 */
-	public static void start() {
-		httpserv.setExecutor(null);
-		httpserv.start();
-	}
+
 	
 	/**
 	 * Stop the web server.
 	 */
 	public static void stop() {
-		if(httpserv != null) {
-			httpserv.stop(0);	
-		}
+        stop();
 	}
 	
 	/**
@@ -56,7 +46,9 @@ public class MainWebServer {
 	private static void open() {
 		try {
 			// Create the web server at the said port.
-			httpserv = HttpsServer.create(new InetSocketAddress(StackItConfiguration.getAPIPort()), 0);
+			secure("ssl.keystore", "stackit-sslpass", null, null);
+			port(25177);
+			get("/hello", ((request, response) -> "Hello world"));
 
 		} catch (Exception e) {
 			// If an error occur, report it in the console.
@@ -65,17 +57,6 @@ public class MainWebServer {
 		}
 	}
 
-	/**
-	 * Create the links for the web server.
-	 */
-	private static void configure() {
-	    // Set handler
-		httpserv.createContext("/", new HandlerWebServer());
-
-		// Routes
-		HandlerWebServer.addHandler("/connect", new PageConnect());
-	}
-	
 	public static HttpExchange setHeaders(HttpExchange exchange) {
 		Headers headers = exchange.getResponseHeaders();
 		
