@@ -70,7 +70,8 @@ public class MainWebServer {
 	 */
 	private static void configure() {
 		httpserv.createContext("/", new HandlerWebServer());
-		
+		httpserv.createContext("/connect", new HandlerWebServer());
+
 		// Add the minimal pages to the system.
 		HandlerWebServer.addHandler("/login", new PageConnect());
 	}
@@ -93,7 +94,7 @@ public class MainWebServer {
 	 * @return JSONObject
 	 */
 	@SuppressWarnings("unchecked")
-	public static JSONObject output(HashMap<String, Object> args) {
+	public static JSONObject translateJson(HashMap<String, Object> args) {
 		JSONObject output = new JSONObject();
 		
 		output.put("result", args);

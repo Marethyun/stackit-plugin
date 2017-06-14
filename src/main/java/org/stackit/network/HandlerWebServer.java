@@ -5,6 +5,7 @@ import com.sun.net.httpserver.HttpHandler;
 import org.json.simple.JSONObject;
 import org.stackit.Language;
 import org.stackit.Logger;
+import org.stackit.config.StackItConfiguration;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -71,22 +72,46 @@ public class HandlerWebServer implements HttpHandler {
 	 */
 	@Override
 	public void handle(HttpExchange exchange) throws IOException {
-		URI query = exchange.getRequestURI();
-		
-		// If the page exist and has been set in the script.
-		if(pageExist(query.getPath())) {
-			Page page = getHandler(query.getPath());
-			HashMap<String, Object> response = page.handle(exchange, new HashMap<String, Object>());
-			
-			JSONObject content = MainWebServer.output(response);
-			exchange.sendResponseHeaders(200, content.toJSONString().length());
-			
-			OutputStream os = exchange.getResponseBody();
-			os.write(content.toJSONString().getBytes());
-			os.close();
-		} else { // Page not found.
-			new PageNotFound().handle(exchange);
-		}
-	}
+	    if (!StackItConfiguration.isInMaintenance()) {
+            URI query = exchange.getRequestURI();
+            // If the page exist and has been set in the script.
+            if (pageExist(query.getPath())) {
+                Page page = getHandler(query.getPath());
+                HashMap<String, Object> answer = page.handle(exchange, new HashMap<String, Object>());
 
+                JSONObject content = MainWebServer.translateJson(answer);
+                exchange.sendResponseHeaders(200, content.toJSONString().length());
+
+                OutputStream os = exchange.getResponseBody();
+                os.write(content.toJSONString().getBytes());
+                os.close();
+            } else { // Page not found.
+                HashMap<String, Object> answer = new HashMap<String, Object>();
+                exchange = MainWebServer.setHeaders(exchange);
+
+                answer.put("status", StatusType.ERROR);
+                answer.put("message", "The requested route not found");
+
+                JSONObject content = MainWebServer.translateJson(answer);
+                exchange.sendResponseHeaders(404, content.toJSONString().length());
+
+                OutputStream os = exchange.getResponseBody();
+                os.write(content.toJSONString().getBytes());
+                os.close();
+            }
+        } else {
+            HashMap<String, Object> answer = new HashMap<String, Object>();
+            exchange = MainWebServer.setHeaders(exchange);
+
+            answer.put("status", StatusType.ERROR);
+            answer.put("message", "The Stackit's API is under maintenance, please retry later");
+
+            JSONObject content = MainWebServer.translateJson(answer);
+            exchange.sendResponseHeaders(200, content.toJSONString().length());
+
+            OutputStream os = exchange.getResponseBody();
+            os.write(content.toJSONString().getBytes());
+            os.close();
+        }
+	}
 }
