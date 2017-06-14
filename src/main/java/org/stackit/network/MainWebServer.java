@@ -69,11 +69,11 @@ public class MainWebServer {
 	 * Create the links for the web server.
 	 */
 	private static void configure() {
+	    // Set handler
 		httpserv.createContext("/", new HandlerWebServer());
-		httpserv.createContext("/connect", new HandlerWebServer());
 
-		// Add the minimal pages to the system.
-		HandlerWebServer.addHandler("/login", new PageConnect());
+		// Routes
+		HandlerWebServer.addHandler("/connect", new PageConnect());
 	}
 	
 	public static HttpExchange setHeaders(HttpExchange exchange) {
