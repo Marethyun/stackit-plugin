@@ -6,7 +6,6 @@ import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 import java.sql.Date;
 
-// TODO rework this
 public class Logger {
 	
 	/**
