@@ -1,18 +1,15 @@
 package org.stackit.network;
 
-import com.sun.net.httpserver.HttpExchange;
-import com.sun.net.httpserver.HttpHandler;
-import org.json.simple.JSONObject;
 import org.stackit.Language;
 import org.stackit.Logger;
 import org.stackit.config.StackItConfiguration;
+import spark.Request;
+import spark.Response;
 
 import java.io.IOException;
-import java.io.OutputStream;
-import java.net.URI;
 import java.util.HashMap;
 
-public class HandlerWebServer implements HttpHandler {
+public class HandlerWebServer {
 	public static HashMap<String, Page> pages = new HashMap<String, Page>();
 	
 	/**
@@ -67,51 +64,40 @@ public class HandlerWebServer implements HttpHandler {
 	 * use the method addHandler(). The method below will automati-
 	 * ally redirect the user to the handler you've created.
 	 * 
-	 * @param HttpExchange Exchange
 	 * @throws IOException
 	 */
-	@Override
-	public void handle(HttpExchange exchange) throws IOException {
+	protected static String handle(Request request, Response response) {
 	    if (!StackItConfiguration.isInMaintenance()) {
-            URI query = exchange.getRequestURI();
             // If the page exist and has been set in the script.
-            if (pageExist(query.getPath())) {
-                Page page = getHandler(query.getPath());
-                HashMap<String, Object> answer = page.handle(exchange, new HashMap<String, Object>());
+            if (pageExist(request.uri())) {
+            	response = MainWebServer.setHeaders(response);
+                Page page = getHandler(request.uri());
+                HashMap<String, Object> answer = page.handle(request, response, new HashMap<String, Object>());
 
-                JSONObject content = MainWebServer.translateJson(answer);
-                exchange.sendResponseHeaders(200, content.toJSONString().length());
-
-                OutputStream os = exchange.getResponseBody();
-                os.write(content.toJSONString().getBytes());
-                os.close();
+                String content = MainWebServer.translateJson(answer);
+                response.status(200);
+                return content;
             } else { // Page not found.
                 HashMap<String, Object> answer = new HashMap<String, Object>();
-                exchange = MainWebServer.setHeaders(exchange);
+            	response = MainWebServer.setHeaders(response);
 
                 answer.put("status", StatusType.ERROR);
                 answer.put("message", "The requested route not found");
 
-                JSONObject content = MainWebServer.translateJson(answer);
-                exchange.sendResponseHeaders(404, content.toJSONString().length());
-
-                OutputStream os = exchange.getResponseBody();
-                os.write(content.toJSONString().getBytes());
-                os.close();
+                String content = MainWebServer.translateJson(answer);
+                response.status(404);
+                return content;
             }
         } else {
             HashMap<String, Object> answer = new HashMap<String, Object>();
-            exchange = MainWebServer.setHeaders(exchange);
+        	response = MainWebServer.setHeaders(response);
 
             answer.put("status", StatusType.ERROR);
             answer.put("message", "The Stackit's API is under maintenance, please retry later");
 
-            JSONObject content = MainWebServer.translateJson(answer);
-            exchange.sendResponseHeaders(200, content.toJSONString().length());
-
-            OutputStream os = exchange.getResponseBody();
-            os.write(content.toJSONString().getBytes());
-            os.close();
+            String content = MainWebServer.translateJson(answer);
+            response.status(200);
+            return content;
         }
 	}
 }

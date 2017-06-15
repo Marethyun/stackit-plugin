@@ -1,20 +1,18 @@
 package org.stackit.network;
 
-import com.sun.net.httpserver.Headers;
-import com.sun.net.httpserver.HttpExchange;
-import com.sun.net.httpserver.HttpsServer;
 import org.json.simple.JSONObject;
 import org.stackit.Language;
 import org.stackit.Logger;
 import org.stackit.StackIt;
 import org.stackit.config.LanguageConfiguration;
+import org.stackit.config.StackItConfiguration;
+import spark.Response;
+import spark.Spark;
 
 import java.util.HashMap;
 
-import static spark.Spark.*;
-
 public class MainWebServer {
-	private static HttpsServer httpserv = null;
+	private static Spark spark;
 	
 	/**
 	 * Initiate the web server of the plugin.
@@ -37,7 +35,7 @@ public class MainWebServer {
 	 * Stop the web server.
 	 */
 	public static void stop() {
-        stop();
+        spark.stop();
 	}
 	
 	/**
@@ -45,10 +43,17 @@ public class MainWebServer {
 	 */
 	private static void open() {
 		try {
+			spark = new Spark(false);
+			
 			// Create the web server at the said port.
-			secure("ssl.keystore", "stackit-sslpass", null, null);
-			port(25177);
-			get("/hello", ((request, response) -> "Hello world"));
+			spark.secure("ssl.keystore", "stackit-sslpass", null, null);
+			spark.port(StackItConfiguration.getAPIPort());
+			spark.init();
+
+			spark.get("*", (req, res) -> {
+				//return "Hello world!";
+				return HandlerWebServer.handle(req, res);
+			});
 
 		} catch (Exception e) {
 			// If an error occur, report it in the console.
@@ -57,15 +62,13 @@ public class MainWebServer {
 		}
 	}
 
-	public static HttpExchange setHeaders(HttpExchange exchange) {
-		Headers headers = exchange.getResponseHeaders();
+	public static Response setHeaders(Response response) {
+		response.header("Content-Type", "application/json");
+		response.header("Application-Name", "StackIt");
+		response.header("Application-Version", "v1");
+		response.header("Application-Author", "DedPlay & Marethyun (Uphoria.org)");
 		
-		headers.add("Content-Type", "application/json");
-		headers.add("Application-Name", "StackIt");
-		headers.add("Application-Version", "v1");
-		headers.add("Application-Author", "Shamelin & Marethyun (Uphoria.org)");
-		
-		return exchange;
+		return response;
 	}
 	
 	/**
@@ -75,60 +78,9 @@ public class MainWebServer {
 	 * @return JSONObject
 	 */
 	@SuppressWarnings("unchecked")
-	public static JSONObject translateJson(HashMap<String, Object> args) {
+	public static String translateJson(HashMap<String, Object> args) {
 		JSONObject output = new JSONObject();
-		
-		output.put("result", args);
-		output.put("Application-Name", "StackIt");
-		output.put("Application-Version", "v1");
-		output.put("Application-Author", "DedPlay (Tardis Project)");
-		
-		return output;
-	}
-	
-	/**
-	 * Get one argument of the exchange.
-	 * @param exchange
-	 * @param key
-	 * @return String
-	 */
-	public static String GETO(HttpExchange exchange, String key) {
-		String query = exchange.getRequestURI().getQuery();
-		
-		if(query != null) {
-			for(String param : query.split("&")) {
-			  String pair[] = param.split("=");
-			  
-			  if(pair.length >= 2 && pair[0].equalsIgnoreCase(key)) {
-				  return pair[1];
-			  }
-			}
-		}
-		
-		return null;
-	}
-	
-	/**
-	 * Get all the _GET arguments of the exchange.
-	 * @param exchange
-	 * @return HashMap<String, String>
-	 */
-	public static HashMap<String, String> GETALL(HttpExchange exchange) {
-		String query = exchange.getRequestURI().getQuery();
-		HashMap<String, String> GET = new HashMap<String, String>();
-		
-		if(query != null) {
-			for(String param : query.split("&")) {
-				String pair[] = param.split("=");
-				
-				if(pair.length >= 2) {
-					GET.put(pair[0], pair[1]);
-				} else {
-					GET.put(pair[0], "");
-				}
-			}
-		}
-		
-		return GET;
+		output.put("query", args);
+		return output.toJSONString();
 	}
 }

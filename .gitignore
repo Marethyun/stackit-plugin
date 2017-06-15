@@ -2,3 +2,4 @@
 /.idea/
 /build/
 cubikcms-plugin.iml
+.classpath
