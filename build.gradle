@@ -61,7 +61,7 @@ dependencies {
     compileOnly name: 'spigot-1.8'
     // JDBI
     compile 'org.jdbi:jdbi:2.78'
-    compile name: 'spark-core-2.5.5.jar'
+    compile name: 'spark-core-2.5.5'
     // Use JUnit test framework
     testImplementation 'junit:junit:4.12'
 }
