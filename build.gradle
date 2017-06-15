@@ -64,6 +64,14 @@ dependencies {
     compile name: 'spark-core-2.5.5'
     // Use JUnit test framework
     testImplementation 'junit:junit:4.12'
+
+    compile 'org.apache.logging.log4j:log4j-api:2.7'
+    compile 'org.apache.logging.log4j:log4j-core:2.7'
+    compile 'org.apache.logging.log4j:log4j-1.2-api:2.2'
+    compile 'org.eclipse.jetty:jetty-server:9.3.6.v20151106'
+    compile 'org.eclipse.jetty:jetty-webapp:9.3.6.v20151106'
+    compile "org.eclipse.jetty.websocket:websocket-server:9.3.6.v20151106"
+    compile "org.eclipse.jetty.websocket:websocket-servlet:9.3.6.v20151106"
 }
 
 apply plugin: "com.github.johnrengelman.shadow"
