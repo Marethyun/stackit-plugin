@@ -3,9 +3,9 @@ package org.stackit.network;
 import org.stackit.Language;
 import org.stackit.Logger;
 import org.stackit.config.StackItConfiguration;
-
 import spark.Request;
 import spark.Response;
+
 import java.io.IOException;
 import java.util.HashMap;
 

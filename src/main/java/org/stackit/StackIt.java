@@ -99,7 +99,7 @@ public class StackIt extends JavaPlugin {
      * Every 10 minecraft ticks (average 500ms)
      */
 	private void startTokensScheduler(){
-        task = getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
+        /*task = getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
             @Override
             public void run() {
                 try {
@@ -117,7 +117,7 @@ public class StackIt extends JavaPlugin {
                     StackIt.disable();
                 }
             }
-        }, 0L, 10L);
+        }, 0L, 10L);*/
     }
 
     private void stopTokensScheduler(){

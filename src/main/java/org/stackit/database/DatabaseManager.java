@@ -32,7 +32,7 @@ public class DatabaseManager {
 	 * @return boolean
 	 */
 	@SuppressWarnings("unchecked")
-	public static void init() throws Exception {
+	public static void init() throws Exception { // TODO HANDLE EXCEPTIONS WHEN DBS IS DOWN
 
         Logger.info("Initializing database interface..");
 

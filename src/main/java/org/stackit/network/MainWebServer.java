@@ -1,11 +1,11 @@
 package org.stackit.network;
+
 import org.json.simple.JSONObject;
 import org.stackit.Language;
 import org.stackit.Logger;
 import org.stackit.StackIt;
 import org.stackit.config.LanguageConfiguration;
 import org.stackit.config.StackItConfiguration;
-
 import spark.Response;
 import spark.Spark;
 
@@ -35,7 +35,7 @@ public class MainWebServer {
 	 * Stop the web server.
 	 */
 	public static void stop() {
-        stop();
+        spark.stop();
 	}
 	
 	/**
@@ -43,16 +43,16 @@ public class MainWebServer {
 	 */
 	private static void open() {
 		try {
-			spark = new Spark(false);
+			//spark = new Spark(false);
 			
 			// Create the web server at the said port.
-			spark.secure("ssl.keystore", "stackit-sslpass", null, null);
+			spark = new Spark(false);
+//			spark.secure(StackIt.getPlugin().getDataFolder().getPath() + "/ssl.jks", StackItConfiguration.getSSLPassphrase(), null, null);
 			spark.port(StackItConfiguration.getAPIPort());
-			spark.init();
 
-			spark.get("*", (req, res) -> {
-				//return "Hello world!";
-				return HandlerWebServer.handle(req, res);
+			spark.get("/", (req, res) -> {
+				return "Hello world!";
+//				return HandlerWebServer.handle(req, res);
 			});
 
 		} catch (Exception e) {

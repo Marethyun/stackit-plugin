@@ -1,9 +1,9 @@
 package org.stackit.network;
 
-import java.util.HashMap;
-
 import spark.Request;
 import spark.Response;
+
+import java.util.HashMap;
 
 public interface Page {
 	/**
