@@ -45,7 +45,7 @@ public class MainWebServer {
 			spark = new Spark(false);
 			
 			// Create the web server at the said port.
-//			spark.secure("ssl.keystore", "stackit-sslpass", null, null);
+			spark.secure("ssl.keystore", "stackit-sslpass", null, null);
 			spark.port(StackItConfiguration.getAPIPort());
 			spark.init();
 
