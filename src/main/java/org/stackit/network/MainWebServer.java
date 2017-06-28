@@ -50,10 +50,7 @@ public class MainWebServer {
 //			spark.secure(StackIt.getPlugin().getDataFolder().getPath() + "/ssl.jks", StackItConfiguration.getSSLPassphrase(), null, null);
 			spark.port(StackItConfiguration.getAPIPort());
 
-			spark.get("/", (req, res) -> {
-				return "Hello world!";
-//				return HandlerWebServer.handle(req, res);
-			});
+			spark.get("/", (req, res) -> HandlerWebServer.handle(req, res));
 
 		} catch (Exception e) {
 			// If an error occur, report it in the console.
