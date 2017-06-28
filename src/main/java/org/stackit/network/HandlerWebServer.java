@@ -82,7 +82,7 @@ public class HandlerWebServer {
             	response = MainWebServer.setHeaders(response);
 
                 answer.put("status", StatusType.ERROR);
-                answer.put("message", "The requested route not found");
+                answer.put("message", "Requested route not found");
 
                 String content = MainWebServer.translateJson(answer);
                 response.status(404);
