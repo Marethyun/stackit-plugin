@@ -24,7 +24,6 @@ public class MainWebServer {
         StackIt.getPlugin().getLogger().info("Initializing API server..");
 		
 		MainWebServer.open();
-//		MainWebServer.configure(); TODO REWORK THIS
 		
 		// Start the server
 		Logger.info(Language.process(LanguageConfiguration.get(Language.getBukkitLanguage(), "webserver_started")));
