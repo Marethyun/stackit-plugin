@@ -3,9 +3,9 @@ package org.stackit.network;
 import org.stackit.Logger;
 import org.stackit.config.StackItConfiguration;
 import org.stackit.database.DatabaseManager;
-
 import spark.Request;
 import spark.Response;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
