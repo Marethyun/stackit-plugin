@@ -9,5 +9,5 @@ public interface Page {
 	/**
 	 * Return a response to the user.
 	 */
-	public HashMap<String, Object> handle(Request request, Response response, HashMap<String, Object> answer);
+	HashMap<String, Object> handle(Request request, Response response, HashMap<String, Object> answer) throws Exception;
 }

@@ -20,6 +20,6 @@ public interface MysqlLogsDAO extends LogsDAO {
     List<Log> getAll();
 
     @Override
-    @SqlQuery("INSERT INTO stackit_log (date, log, handler) VALUES (:date, :log, :handler)")
+    @SqlUpdate("INSERT INTO stackit_log (date, log, handler) VALUES (:date, :log, :handler)")
     void addLog(@Bind("date") Date date, @Bind("log") String log, @Bind("handler") String handler);
 }

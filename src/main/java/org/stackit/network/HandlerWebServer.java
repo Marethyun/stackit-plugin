@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.HashMap;
 
 public class HandlerWebServer {
-	public static HashMap<String, Page> pages = new HashMap<String, Page>();
+	public static HashMap<String, Page> pages = new HashMap<>();
 	
 	/**
 	 * Get all the pages available on the webserver.
@@ -26,12 +26,8 @@ public class HandlerWebServer {
 	 * @return Boolean Exists
 	 */
 	public static Boolean pageExist(String path) {
-		if(pages.containsKey(path)) {
-			return true;
-		}
-		
-		return false;
-	}
+        return pages.containsKey(path);
+    }
 	
 	/**
 	 * Add a page to the webserver.
@@ -66,14 +62,13 @@ public class HandlerWebServer {
 	 * 
 	 * @throws IOException
 	 */
-	protected static String handle(Request request, Response response) {
+	protected static String handle(Request request, Response response) throws Exception {
 	    if (!StackItConfiguration.isInMaintenance()) {
             // If the page exist and has been set in the script.
             if (pageExist(request.uri())) {
             	response = MainWebServer.setHeaders(response);
                 Page page = getHandler(request.uri());
-                HashMap<String, Object> answer = page.handle(request, response, new HashMap<String, Object>());
-
+                HashMap<String, Object> answer = page.handle(request, response, new HashMap<>());
                 String content = MainWebServer.translateJson(answer);
                 response.status(200);
                 return content;
@@ -93,7 +88,7 @@ public class HandlerWebServer {
         	response = MainWebServer.setHeaders(response);
 
             answer.put("status", StatusType.ERROR);
-            answer.put("message", "The Stackit's API is under maintenance, please retry later");
+            answer.put("message", "The Stackit API is under maintenance, please retry later");
 
             String content = MainWebServer.translateJson(answer);
             response.status(200);

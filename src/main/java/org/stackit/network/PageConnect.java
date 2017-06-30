@@ -13,41 +13,38 @@ import java.util.UUID;
 public class PageConnect implements Page {
 
     /**
-     * Handler for the page /login.
+     * Handler for the page /connect.
      */
     @Override
-    public HashMap<String, Object> handle(Request request, Response response, HashMap<String, Object> answer) {
-	    String user = null, pass = null;
-	
+    public HashMap<String, Object> handle(Request request, Response response, HashMap<String, Object> answer) throws Exception {
+	    String pass, user;
 	    if (!StackItConfiguration.isInMaintenance()) {
-	
-	        // If _GET['user'] or _GET['password'] are present and doesn't equal to ""
-	        if ((user = request.queryParams("user")) != null && (pass = request.queryParams("pass")) != null) {
+
+            if (request.queryParams().contains("pass") && request.queryParams().contains("user")) {
+                pass = request.queryParams("pass");
+                user = request.queryParams("user");
 	            Map<String, String> accounts = StackItConfiguration.getAccounts();
-	
 	            if (accounts.containsKey(user)) {
-	                if (accounts.get("user").equals(pass)) {
+	                if (accounts.get(user).equals(pass)) {
 	                    String token = UUID.randomUUID().toString();
 	                    long expireTimeStamp = System.currentTimeMillis() + StackItConfiguration.getTokensExpiration();
-	
 	                    DatabaseManager.getTokens().add(System.currentTimeMillis(), token);
-	
 	                    answer.put("status", StatusType.SUCCESS);
 	                    answer.put("token", token);
 	                    answer.put("expire", Long.toString(expireTimeStamp));
 	                    answer.put("message", "Token successfully generated");
-	
+
 	                    Logger.userLoggedIn(user, "login");
 	                } else {
 	                    answer.put("status", "error");
 	                    answer.put("message", "Invalid password");
-	
+
 	                    Logger.userTriedToLog(user, "login", "Invalid password");
 	                }
 	            } else {
 	                answer.put("status", StatusType.ERROR);
 	                answer.put("message", "Invalid username");
-	
+
 	                Logger.userTriedToLog(user, "login", "Invalid username");
 	            }
 	        } else {

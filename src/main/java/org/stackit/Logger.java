@@ -74,9 +74,7 @@ public class Logger {
      */
 	public static void userLoggedIn(String user, String context) {
 		Date date = new Date(System.currentTimeMillis());
-
 		String log = "User \"" + user + "\" successfully connected to the API";
-
 		DatabaseManager.getLogs().addLog(date, log, context);
 	}
 	
