@@ -8,7 +8,10 @@ import org.stackit.config.StackItConfiguration;
 import org.stackit.config.StackitDisabledException;
 import org.stackit.database.DatabaseManager;
 import org.stackit.database.entities.Token;
+import org.stackit.network.HandlerWebServer;
 import org.stackit.network.MainWebServer;
+import org.stackit.network.PageConnect;
+import org.stackit.network.PageDebug;
 
 import java.util.List;
 
@@ -46,6 +49,11 @@ public class StackIt extends JavaPlugin {
 
 			// Start the API
 			MainWebServer.init();
+
+			// Init routes
+
+            HandlerWebServer.addHandler("/connect", new PageConnect());
+            HandlerWebServer.addHandler("/debug", new PageDebug());
 
 			// Set the commands
             // getCommand("stackit").setExecutor(new StackItCommand()); TODO REWORK THIS
@@ -99,25 +107,19 @@ public class StackIt extends JavaPlugin {
      * Every 10 minecraft ticks (average 500ms)
      */
 	private void startTokensScheduler(){
-        /*task = getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    List<Token> tokens = DatabaseManager.getTokens().getAll();
-                    if (!tokens.isEmpty()) {
-                        long expiration = StackItConfiguration.getTokensExpiration();
-                        for (Token token : tokens) {
-                            if (token.getTime() + expiration >= System.currentTimeMillis()) {
-                                DatabaseManager.getTokens().deleteByValue(token.getValue());
-                            }
-                        }
+        task = getServer().getScheduler().scheduleSyncRepeatingTask(this, () -> {
+            try {
+                List<Token> tokens = DatabaseManager.getTokens().getAll();
+                if (!tokens.isEmpty()) {
+                    for (Token token : tokens) {
+                        DatabaseManager.getTokens().deleteByValue(token.getValue());
                     }
-                } catch (Exception e){
-                    e.printStackTrace();
-                    StackIt.disable();
                 }
+            } catch (Exception e){
+                e.printStackTrace();
+                StackIt.disable();
             }
-        }, 0L, 10L);*/
+        }, 6000L, 6000L);
     }
 
     private void stopTokensScheduler(){
