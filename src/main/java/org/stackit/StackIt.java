@@ -54,9 +54,9 @@ public class StackIt extends JavaPlugin {
 
 			// Init routes
 
-            HandlerWebServer.addHandler("/connect", new ConnectPage());
-            HandlerWebServer.addHandler("/gpi", new GeneralPurposeInfoPage());
-            HandlerWebServer.addHandler("/debug", new DebugPage());
+            HandlerWebServer.addHandler("/connect", ConnectPage.class);
+            HandlerWebServer.addHandler("/gpi", GeneralPurposeInfoPage.class);
+            HandlerWebServer.addHandler("/debug", DebugPage.class);
 
 			// Set the commands
             // getCommand("stackit").setExecutor(new StackItCommand()); TODO REWORK THIS

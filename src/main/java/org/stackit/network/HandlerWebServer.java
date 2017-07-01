@@ -11,13 +11,13 @@ import java.io.IOException;
 import java.util.HashMap;
 
 public class HandlerWebServer {
-	public static HashMap<String, Page> pages = new HashMap<>();
+	public static HashMap<String, Class<? extends Page>> pages = new HashMap<>();
 	
 	/**
 	 * Get all the pages available on the webserver.
 	 * @return HashMap<String, Page> Pages
 	 */
-	public static HashMap<String, Page> getPages() {
+	public static HashMap<String, Class<? extends Page>> getPages() {
 		return pages;
 	}
 	
@@ -35,7 +35,7 @@ public class HandlerWebServer {
 	 * @param String Path
 	 * @param Page Handler
 	 */
-	public static void addHandler(String path, Page handler) {
+	public static void addHandler(String path, Class<? extends Page> handler) {
 		if(!pageExist(path)) {
 			pages.put(path, handler);
 			
@@ -48,7 +48,7 @@ public class HandlerWebServer {
 	 * @param String Path
 	 * @return Page Handler
 	 */
-	public static Page getHandler(String path) {
+	public static Class<? extends Page> getHandler(String path) {
 		return pages.get(path);
 	}
 
@@ -68,22 +68,24 @@ public class HandlerWebServer {
             // If the page exist and has been set in the script.
             if (pageExist(request.uri())) {
             	response = MainWebServer.setHeaders(response);
-                Page page = getHandler(request.uri());
+                Page page = getHandler(request.uri()).newInstance();
 
-                HashMap<String, Object> content = new HashMap<>();
-                HashMap<String, Object> responseContent = new HashMap<>();
-                content.put("content", responseContent);
+                page.setContent(new HashMap<>());
 
-                HashMap<String, Object> answer = page.handle(request, response, content, responseContent);
+                page.handle(request, response);
 
-                if (responseContent.isEmpty()){
-                    content.remove("content");
+                if (page.haveNullContent()){
+                    page.removeContent();
                 }
 
-                String json = MainWebServer.translateJson(answer);
+                String json = MainWebServer.translateJson(page.getResponseContent().get());
+
                 response.status(200);
+
                 return json;
+
             } else { // Page not found.
+
                 HashMap<String, Object> answer = new HashMap<String, Object>();
             	response = MainWebServer.setHeaders(response);
 

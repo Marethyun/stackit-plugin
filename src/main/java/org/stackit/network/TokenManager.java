@@ -26,12 +26,6 @@ abstract public class TokenManager {
     }
 
     private static boolean verify(long timestamp){
-        Logger.info(Boolean.toString(timestamp + StackItConfiguration.getTokensExpiration() <= System.currentTimeMillis()));
-        System.out.println(timestamp);
-        System.out.println("+");
-        System.out.println(StackItConfiguration.getTokensExpiration());
-        System.out.println(timestamp + StackItConfiguration.getTokensExpiration());
-        System.out.println(System.currentTimeMillis());
         return timestamp + StackItConfiguration.getTokensExpiration() >= System.currentTimeMillis();
     }
 }

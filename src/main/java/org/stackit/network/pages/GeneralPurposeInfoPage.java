@@ -9,12 +9,11 @@ import spark.Request;
 import spark.Response;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
-public class GeneralPurposeInfoPage implements Page {
+public class GeneralPurposeInfoPage extends Page {
 
     @Override
-    public HashMap<String, Object> handle(Request request, Response response, HashMap<String, Object> answer, HashMap<String, Object> responseContent) throws Exception {
+    public void handle(Request request, Response response) throws Exception {
         if (request.queryParams().contains("token")){
             String token = request.queryParams("token");
             if (token != null) {
@@ -26,25 +25,25 @@ public class GeneralPurposeInfoPage implements Page {
                         players.add(player.getUniqueId().toString());
                     }
 
-                    responseContent.put("players", players);
-                    responseContent.put("maxplayers", server.getMaxPlayers());
-                    responseContent.put("motd", server.getMotd());
-                    responseContent.put("version", server.getVersion());
+                    getContent().get().put("players", players);
+                    getContent().get().put("maxplayers", server.getMaxPlayers());
+                    getContent().get().put("motd", server.getMotd());
+                    getContent().get().put("version", server.getVersion());
 
-                    answer.put("status", StatusType.SUCCESS);
-                    answer.put("message", "Data successfully got");
+                    setAPIState(StatusType.SUCCESS);
+                    setMessage("Data successfully got");
+
                 } else {
-                    answer.put("status", StatusType.ERROR);
-                    answer.put("message", "The provided token is invalid");
+                    setAPIState(StatusType.ERROR);
+                    addErrorMessage("Provided token is invalid");
                 }
             } else {
-                answer.put("status", StatusType.ERROR);
-                answer.put("message", "Bad request");
+                setAPIState(StatusType.ERROR);
+                addErrorMessage("Bad request");
             }
         } else {
-            answer.put("status", StatusType.ERROR);
-            answer.put("message", "Bad request");
+            setAPIState(StatusType.ERROR);
+            addErrorMessage("Bad request");
         }
-        return answer;
     }
 }

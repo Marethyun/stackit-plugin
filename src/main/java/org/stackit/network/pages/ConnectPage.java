@@ -7,17 +7,16 @@ import org.stackit.network.StatusType;
 import spark.Request;
 import spark.Response;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class ConnectPage implements Page {
+public class ConnectPage extends Page {
 
     /**
      * Handler for the page /connect.
      */
     @Override
-    public HashMap<String, Object> handle(Request request, Response response, HashMap<String, Object> answer, HashMap<String, Object> responseContent) throws Exception {
+    public void handle(Request request, Response response) throws Exception {
 	    String pass, user;
         if (request.queryParams().contains("pass") && request.queryParams().contains("user")) {
             pass = request.queryParams("pass");
@@ -29,26 +28,27 @@ public class ConnectPage implements Page {
                     long expireTimeStamp = System.currentTimeMillis() + StackItConfiguration.getTokensExpiration();
                     DatabaseManager.getTokens().add(System.currentTimeMillis(), token);
 
-                    answer.put("status", StatusType.SUCCESS);
-                    responseContent.put("token", token);
-                    responseContent.put("expire", Long.toString(expireTimeStamp));
-                    answer.put("message", "Token successfully generated");
+
+                    getContent().get().put("token", token);
+                    getContent().get().put("expire", Long.toString(expireTimeStamp));
+
+                    setAPIState(StatusType.SUCCESS);
+                    setMessage("Token successfully generated");
                     Logger.userLoggedIn(user, "login");
+
                 } else {
-                    answer.put("status", "error");
-                    answer.put("message", "Invalid password");
+                    setAPIState(StatusType.ERROR);
+                    addErrorMessage("Invalid password");
                     Logger.userTriedToLog(user, "login", "Invalid password");
                 }
             } else {
-                answer.put("status", StatusType.ERROR);
-                answer.put("message", "Invalid username");
+                setAPIState(StatusType.ERROR);
+                addErrorMessage("Invalid username");
                 Logger.userTriedToLog(user, "login", "Invalid username");
             }
         } else {
-            answer.put("status", StatusType.ERROR);
-            answer.put("message", "Bad request");
+            setAPIState(StatusType.ERROR);
+            addErrorMessage("Bad request");
         }
-	        
-	    return answer;
     }
 }
