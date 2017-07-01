@@ -10,8 +10,10 @@ import org.stackit.database.DatabaseManager;
 import org.stackit.database.entities.Token;
 import org.stackit.network.HandlerWebServer;
 import org.stackit.network.MainWebServer;
-import org.stackit.network.PageConnect;
-import org.stackit.network.PageDebug;
+import org.stackit.network.TokenManager;
+import org.stackit.network.pages.ConnectPage;
+import org.stackit.network.pages.DebugPage;
+import org.stackit.network.pages.GeneralPurposeInfoPage;
 
 import java.util.List;
 
@@ -52,8 +54,9 @@ public class StackIt extends JavaPlugin {
 
 			// Init routes
 
-            HandlerWebServer.addHandler("/connect", new PageConnect());
-            HandlerWebServer.addHandler("/debug", new PageDebug());
+            HandlerWebServer.addHandler("/connect", new ConnectPage());
+            HandlerWebServer.addHandler("/gpi", new GeneralPurposeInfoPage());
+            HandlerWebServer.addHandler("/debug", new DebugPage());
 
 			// Set the commands
             // getCommand("stackit").setExecutor(new StackItCommand()); TODO REWORK THIS
@@ -103,8 +106,7 @@ public class StackIt extends JavaPlugin {
 	}
 
     /**
-     * For each token: Checks token' expiration time and delete it when it's outdated.
-     * Every 10 minecraft ticks (average 500ms)
+     *  Token's list emptying when tokens are outdated
      */
 	private void startTokensScheduler(){
         task = getServer().getScheduler().scheduleSyncRepeatingTask(this, () -> {
@@ -112,7 +114,9 @@ public class StackIt extends JavaPlugin {
                 List<Token> tokens = DatabaseManager.getTokens().getAll();
                 if (!tokens.isEmpty()) {
                     for (Token token : tokens) {
-                        DatabaseManager.getTokens().deleteByValue(token.getValue());
+                        if (!TokenManager.isTokenValid(token)) {
+                            DatabaseManager.getTokens().deleteByValue(token.getValue());
+                        }
                     }
                 }
             } catch (Exception e){

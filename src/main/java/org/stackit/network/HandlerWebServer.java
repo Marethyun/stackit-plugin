@@ -3,6 +3,7 @@ package org.stackit.network;
 import org.stackit.Language;
 import org.stackit.Logger;
 import org.stackit.config.StackItConfiguration;
+import org.stackit.network.pages.Page;
 import spark.Request;
 import spark.Response;
 
@@ -68,10 +69,20 @@ public class HandlerWebServer {
             if (pageExist(request.uri())) {
             	response = MainWebServer.setHeaders(response);
                 Page page = getHandler(request.uri());
-                HashMap<String, Object> answer = page.handle(request, response, new HashMap<>());
-                String content = MainWebServer.translateJson(answer);
+
+                HashMap<String, Object> content = new HashMap<>();
+                HashMap<String, Object> responseContent = new HashMap<>();
+                content.put("content", responseContent);
+
+                HashMap<String, Object> answer = page.handle(request, response, content, responseContent);
+
+                if (responseContent.isEmpty()){
+                    content.remove("content");
+                }
+
+                String json = MainWebServer.translateJson(answer);
                 response.status(200);
-                return content;
+                return json;
             } else { // Page not found.
                 HashMap<String, Object> answer = new HashMap<String, Object>();
             	response = MainWebServer.setHeaders(response);
