@@ -12,9 +12,6 @@ import java.util.UUID;
 
 public class ConnectPage extends Page {
 
-    /**
-     * Handler for the page /connect.
-     */
     @Override
     public void handle(Request request, Response response) throws Exception {
 	    String pass, user;
@@ -28,9 +25,8 @@ public class ConnectPage extends Page {
                     long expireTimeStamp = System.currentTimeMillis() + StackItConfiguration.getTokensExpiration();
                     DatabaseManager.getTokens().add(System.currentTimeMillis(), token);
 
-
-                    getContent().get().put("token", token);
-                    getContent().get().put("expire", Long.toString(expireTimeStamp));
+                    getContent().put("token", token);
+                    getContent().put("expire", Long.toString(expireTimeStamp));
 
                     setAPIState(StatusType.SUCCESS);
                     setMessage("Token successfully generated");

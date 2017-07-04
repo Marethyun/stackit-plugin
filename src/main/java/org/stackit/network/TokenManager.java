@@ -1,6 +1,5 @@
 package org.stackit.network;
 
-import org.stackit.Logger;
 import org.stackit.config.StackItConfiguration;
 import org.stackit.database.DatabaseManager;
 import org.stackit.database.entities.Token;
@@ -10,11 +9,12 @@ import java.util.List;
 abstract public class TokenManager {
     public static boolean isTokenValid(String token){
         List<Token> tokens = DatabaseManager.getTokens().getAll();
-        if (tokens != null){
-            for (Token t : tokens) {
-                if (t.getValue().equals(token)){
-                    Logger.info("A");
-                    return verify(t.getTime());
+        if (token != null) {
+            if (tokens != null) {
+                for (Token t : tokens) {
+                    if (t.getValue().equals(token)) {
+                        return verify(t.getTime());
+                    }
                 }
             }
         }

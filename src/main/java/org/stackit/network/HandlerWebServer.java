@@ -15,7 +15,7 @@ public class HandlerWebServer {
 	
 	/**
 	 * Get all the pages available on the webserver.
-	 * @return HashMap<String, Page> Pages
+	 * @return HashMap<String, Class<? extends Page> Pages
 	 */
 	public static HashMap<String, Class<? extends Page>> getPages() {
 		return pages;
@@ -78,7 +78,7 @@ public class HandlerWebServer {
                     page.removeContent();
                 }
 
-                String json = MainWebServer.translateJson(page.getResponseContent().get());
+                String json = MainWebServer.translateJson(page.getResponseContent());
 
                 response.status(200);
 

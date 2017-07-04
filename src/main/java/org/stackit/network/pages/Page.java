@@ -8,48 +8,47 @@ import java.util.HashMap;
 
 public abstract class Page {
 
-    private PageContent response;
-    protected PageContent content;
+    private HashMap<String, Object> response;
+    protected HashMap<String, Object> content;
 
     public void setContent(HashMap<String, Object> responseContent){
-        this.response = new PageContent(responseContent);
-        HashMap<String, Object> futureContent = new HashMap<>();
+        this.response = responseContent;
 
-        this.content = new PageContent(futureContent);
+        this.content = new HashMap<>();
 
-        this.getResponseContent().get().put("content", futureContent);
+        this.getResponseContent().put("content", this.content);
     }
 
-    public PageContent getResponseContent() {
+    public HashMap<String, Object> getResponseContent() {
         return response;
     }
 
     public boolean haveNullContent(){
-        return this.getContent().get().isEmpty();
+        return this.getContent().isEmpty();
     }
 
     public void removeContent(){
-        this.getResponseContent().get().remove("content");
+        this.getResponseContent().remove("content");
     }
 
-    public PageContent getContent(){
+    public HashMap<String, Object> getContent(){
         return this.content;
     }
 
     public void setAPIState(StatusType type){
-        this.getResponseContent().get().put("status", type);
+        this.getResponseContent().put("status", type);
     }
 
     public void setMessage(String message){
-        this.getResponseContent().get().put("message", message);
+        this.getResponseContent().put("message", message);
     }
 
     public void addErrorMessage(String message){
         HashMap<String, Object> errorMessages;
-        if (!this.getResponseContent().get().containsKey("error")){
-            this.getResponseContent().get().put("error", new HashMap<String, Object>());
+        if (!this.getResponseContent().containsKey("error")){
+            this.getResponseContent().put("error", new HashMap<String, Object>());
         }
-        errorMessages = (HashMap<String, Object>) this.getResponseContent().get().get("error");
+        errorMessages = (HashMap<String, Object>) this.getResponseContent().get("error");
         errorMessages.put(serializeError(message), message);
     }
 
