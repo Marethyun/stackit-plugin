@@ -1,7 +1,7 @@
 package org.stackit.network.pages;
 
+import org.bukkit.OfflinePlayer;
 import org.bukkit.Server;
-import org.bukkit.entity.Player;
 import org.stackit.StackIt;
 import org.stackit.network.TokenManager;
 import spark.Request;
@@ -9,7 +9,7 @@ import spark.Response;
 
 import java.util.ArrayList;
 
-public class PlayersPage extends Page {
+public class WhitelistPage extends Page {
 
     @Override
     public void handle(Request request, Response response) throws Exception {
@@ -17,11 +17,12 @@ public class PlayersPage extends Page {
             if (TokenManager.isTokenValid(request.queryParams("token"))){
                 Server server = StackIt.getPlugin().getServer();
                 ArrayList<String> players = new ArrayList<>();
-                for (Player player : server.getOnlinePlayers()) {
+                for (OfflinePlayer player : server.getWhitelistedPlayers()) {
                     players.add(player.getUniqueId().toString());
                 }
 
                 getContent().put("players", players);
+                getContent().put("activated", server.hasWhitelist());
 
                 success("Data successfully got");
             } else {

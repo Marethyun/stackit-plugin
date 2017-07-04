@@ -11,9 +11,7 @@ import org.stackit.database.entities.Token;
 import org.stackit.network.HandlerWebServer;
 import org.stackit.network.MainWebServer;
 import org.stackit.network.TokenManager;
-import org.stackit.network.pages.ConnectPage;
-import org.stackit.network.pages.DebugPage;
-import org.stackit.network.pages.GeneralPurposeInfoPage;
+import org.stackit.network.pages.*;
 
 import java.util.List;
 
@@ -56,6 +54,9 @@ public class StackIt extends JavaPlugin {
 
             HandlerWebServer.addHandler("/connect", ConnectPage.class);
             HandlerWebServer.addHandler("/gpi", GeneralPurposeInfoPage.class);
+            HandlerWebServer.addHandler("/players", PlayersPage.class);
+            HandlerWebServer.addHandler("/banlist", BanlistPage.class);
+            HandlerWebServer.addHandler("/whitelist", WhitelistPage.class);
             HandlerWebServer.addHandler("/debug", DebugPage.class);
 
 			// Set the commands

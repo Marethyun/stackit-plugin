@@ -44,6 +44,7 @@ public abstract class Page {
         this.getResponseContent().put("message", message);
     }
 
+    @SuppressWarnings("unchecked")
     public void error(String message){
         setAPIState(StatusType.ERROR);
         HashMap<String, Object> errorMessages;
