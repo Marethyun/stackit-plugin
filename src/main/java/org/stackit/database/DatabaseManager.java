@@ -8,21 +8,17 @@ import org.stackit.config.StackItConfiguration;
 import org.stackit.database.dao.proxy.LogsProxy;
 import org.stackit.database.dao.proxy.QueueProxy;
 import org.stackit.database.dao.proxy.TokensProxy;
-import org.stackit.database.dao.proxy.UsersProxy;
 import org.stackit.database.dao.templates.LogsDAO;
 import org.stackit.database.dao.templates.QueueDAO;
 import org.stackit.database.dao.templates.TokensDAO;
-import org.stackit.database.dao.templates.UsersDAO;
 
 
 public class DatabaseManager {
 	private static Class<QueueDAO> queueDAO;
-	private static Class<UsersDAO> usersDAO;
 	private static Class<LogsDAO> logsDAO;
 	private static Class<TokensDAO> tokensDAO;
 
 	private static QueueProxy queueProxy;
-	private static UsersProxy usersProxy;
 	private static LogsProxy logsProxy;
 	private static TokensProxy tokensProxy;
 
@@ -41,12 +37,10 @@ public class DatabaseManager {
 		try {
 
 			queueDAO = (Class<QueueDAO>) loader.loadClass(StackItConfiguration.getQueueDAOClassName());
-			usersDAO = (Class<UsersDAO>) loader.loadClass(StackItConfiguration.getUsersDAOClassName());
 			logsDAO = (Class<LogsDAO>) loader.loadClass(StackItConfiguration.getLogsDAOClassName());
 			tokensDAO = (Class<TokensDAO>) loader.loadClass(StackItConfiguration.getTokensDAOClassName());
 
 			queueProxy = new QueueProxy(queueDAO);
-			usersProxy = new UsersProxy(usersDAO);
 			logsProxy = new LogsProxy(logsDAO);
 			tokensProxy = new TokensProxy(tokensDAO);
 
@@ -59,10 +53,6 @@ public class DatabaseManager {
 
     public static QueueDAO getQueue(){
 	    return queueProxy;
-    }
-
-    public static UsersDAO getUsers(){
-        return usersProxy;
     }
 
     public static LogsDAO getLogs(){
