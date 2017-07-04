@@ -324,17 +324,17 @@ public class StackItConfiguration {
 	public static Integer getAPIPort() {
 		return config.getInt("StackIt.api.port");
 	}
-	
+
 	/**
 	 * Set the port of the API.
-	 * @argument INteger
+	 * @argument Integer
 	 */
 	public static void setAPIPort(Integer port) {
 		config.set("StackIt.api.port", port);
 		save();
 	}
 
-	public static Map<String, String> getAccounts(){
+    public static Map<String, String> getAccounts(){
         Map<String, String> accounts = new HashMap<>();
 	    List<String> stringList = config.getStringList("StackIt.api.accounts");
 	    for (String string : stringList){
