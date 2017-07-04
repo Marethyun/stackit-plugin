@@ -3,7 +3,6 @@ package org.stackit.network.pages;
 import org.stackit.Logger;
 import org.stackit.config.StackItConfiguration;
 import org.stackit.database.DatabaseManager;
-import org.stackit.network.StatusType;
 import spark.Request;
 import spark.Response;
 
@@ -28,23 +27,22 @@ public class ConnectPage extends Page {
                     getContent().put("token", token);
                     getContent().put("expire", Long.toString(expireTimeStamp));
 
-                    setAPIState(StatusType.SUCCESS);
-                    setMessage("Token successfully generated");
+                    success("Token successfully generated");
                     Logger.userLoggedIn(user, "login");
 
                 } else {
-                    setAPIState(StatusType.ERROR);
-                    addErrorMessage("Invalid password");
+                    response.status(401);
+                    error("Invalid password");
                     Logger.userTriedToLog(user, "login", "Invalid password");
                 }
             } else {
-                setAPIState(StatusType.ERROR);
-                addErrorMessage("Invalid username");
+                response.status(401);
+                error("Invalid username");
                 Logger.userTriedToLog(user, "login", "Invalid username");
             }
         } else {
-            setAPIState(StatusType.ERROR);
-            addErrorMessage("Bad request");
+            response.status(400);
+            error("Bad request");
         }
     }
 }

@@ -35,15 +35,17 @@ public abstract class Page {
         return this.content;
     }
 
-    public void setAPIState(StatusType type){
+    private void setAPIState(StatusType type){
         this.getResponseContent().put("status", type);
     }
 
-    public void setMessage(String message){
+    public void success(String message){
+        setAPIState(StatusType.SUCCESS);
         this.getResponseContent().put("message", message);
     }
 
-    public void addErrorMessage(String message){
+    public void error(String message){
+        setAPIState(StatusType.ERROR);
         HashMap<String, Object> errorMessages;
         if (!this.getResponseContent().containsKey("error")){
             this.getResponseContent().put("error", new HashMap<String, Object>());

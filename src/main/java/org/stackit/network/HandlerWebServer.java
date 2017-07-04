@@ -80,7 +80,9 @@ public class HandlerWebServer {
 
                 String json = MainWebServer.translateJson(page.getResponseContent());
 
-                response.status(200);
+                if (page.getResponseContent().get("status").equals("success")) {
+                    response.status(200);
+                }
 
                 return json;
 

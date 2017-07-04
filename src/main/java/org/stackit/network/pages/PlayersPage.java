@@ -9,14 +9,12 @@ import spark.Response;
 
 import java.util.ArrayList;
 
-public class GeneralPurposeInfoPage extends Page {
+public class PlayersPage extends Page {
 
     @Override
     public void handle(Request request, Response response) throws Exception {
         if (request.queryParams().contains("token")){
-            String token = request.queryParams("token");
-            if (TokenManager.isTokenValid(token)) {
-
+            if (TokenManager.isTokenValid(request.queryParams("token"))){
                 Server server = StackIt.getPlugin().getServer();
                 ArrayList<String> players = new ArrayList<>();
                 for (Player player : server.getOnlinePlayers()) {
@@ -24,18 +22,12 @@ public class GeneralPurposeInfoPage extends Page {
                 }
 
                 getContent().put("players", players);
-                getContent().put("maxplayers", server.getMaxPlayers());
-                getContent().put("motd", server.getMotd());
-                getContent().put("version", server.getVersion());
 
                 success("Data successfully got");
-
             } else {
-                response.status(401);
-                error("Provided token is invalid");
+                error("The provided token is invalid");
             }
         } else {
-            response.status(400);
             error("Bad request");
         }
     }
