@@ -1,13 +1,10 @@
 package org.stackit.network.pages;
 
 import org.bukkit.Server;
-import org.bukkit.entity.Player;
 import org.stackit.StackIt;
 import org.stackit.network.TokenManager;
 import spark.Request;
 import spark.Response;
-
-import java.util.ArrayList;
 
 public class GeneralPurposeInfoPage extends Page {
 
@@ -18,12 +15,7 @@ public class GeneralPurposeInfoPage extends Page {
             if (TokenManager.isTokenValid(token)) {
 
                 Server server = StackIt.getPlugin().getServer();
-                ArrayList<String> players = new ArrayList<>();
-                for (Player player : server.getOnlinePlayers()) {
-                    players.add(player.getUniqueId().toString());
-                }
 
-                getContent().put("players", players);
                 getContent().put("maxplayers", server.getMaxPlayers());
                 getContent().put("motd", server.getMotd());
                 getContent().put("version", server.getVersion());
