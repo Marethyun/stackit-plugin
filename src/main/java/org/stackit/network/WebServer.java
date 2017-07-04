@@ -11,7 +11,7 @@ import spark.Spark;
 
 import java.util.HashMap;
 
-public class MainWebServer {
+public class WebServer {
 	private static Spark spark;
 	
 	/**
@@ -23,7 +23,7 @@ public class MainWebServer {
 	public static void init() {
         StackIt.getPlugin().getLogger().info("Initializing API server..");
 		
-		MainWebServer.open();
+		WebServer.open();
 		
 		// Start the server
 		Logger.info(Language.process(LanguageConfiguration.get(Language.getBukkitLanguage(), "webserver_started")));
@@ -51,7 +51,7 @@ public class MainWebServer {
 
 			spark.get("*", (req, res) -> {
 				//return "Hello world!";
-				return HandlerWebServer.handle(req, res);
+				return WebHandler.handle(req, res);
 			});
 
 		} catch (Exception e) {

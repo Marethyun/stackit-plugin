@@ -8,9 +8,9 @@ import org.stackit.config.StackItConfiguration;
 import org.stackit.config.StackitDisabledException;
 import org.stackit.database.DatabaseManager;
 import org.stackit.database.entities.Token;
-import org.stackit.network.HandlerWebServer;
-import org.stackit.network.MainWebServer;
 import org.stackit.network.TokenManager;
+import org.stackit.network.WebHandler;
+import org.stackit.network.WebServer;
 import org.stackit.network.pages.*;
 
 import java.util.List;
@@ -48,16 +48,16 @@ public class StackIt extends JavaPlugin {
 			DatabaseManager.init();
 
 			// Start the API
-			MainWebServer.init();
+			WebServer.init();
 
 			// Init routes
 
-            HandlerWebServer.addHandler("/connect", ConnectPage.class);
-            HandlerWebServer.addHandler("/gpi", GeneralPurposeInfoPage.class);
-            HandlerWebServer.addHandler("/players", PlayersPage.class);
-            HandlerWebServer.addHandler("/banlist", BanlistPage.class);
-            HandlerWebServer.addHandler("/whitelist", WhitelistPage.class);
-            HandlerWebServer.addHandler("/debug", DebugPage.class);
+            WebHandler.addHandler("/connect", ConnectPage.class);
+            WebHandler.addHandler("/gpi", GeneralPurposeInfoPage.class);
+            WebHandler.addHandler("/players", PlayersPage.class);
+            WebHandler.addHandler("/banlist", BanlistPage.class);
+            WebHandler.addHandler("/whitelist", WhitelistPage.class);
+            WebHandler.addHandler("/debug", DebugPage.class);
 
 			// Set the commands
             // getCommand("stackit").setExecutor(new StackItCommand()); TODO REWORK THIS
@@ -82,7 +82,7 @@ public class StackIt extends JavaPlugin {
 	 */
 	public void onDisable() {
 		// Stop the web server
-		MainWebServer.stop();
+		WebServer.stop();
 		stopTokensScheduler();
 
 		plugin = null;

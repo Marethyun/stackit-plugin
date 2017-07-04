@@ -10,7 +10,7 @@ import spark.Response;
 import java.io.IOException;
 import java.util.HashMap;
 
-public class HandlerWebServer {
+public class WebHandler {
 	public static HashMap<String, Class<? extends Page>> pages = new HashMap<>();
 	
 	/**
@@ -67,7 +67,7 @@ public class HandlerWebServer {
 	    if (!StackItConfiguration.isInMaintenance()) {
             // If the page exist and has been set in the script.
             if (pageExist(request.uri())) {
-            	response = MainWebServer.setHeaders(response);
+            	response = WebServer.setHeaders(response);
                 Page page = getHandler(request.uri()).newInstance();
 
                 page.setContent(new HashMap<>());
@@ -78,7 +78,7 @@ public class HandlerWebServer {
                     page.removeContent();
                 }
 
-                String json = MainWebServer.translateJson(page.getResponseContent());
+                String json = WebServer.translateJson(page.getResponseContent());
 
                 if (page.getResponseContent().get("status").equals("success")) {
                     response.status(200);
@@ -89,23 +89,23 @@ public class HandlerWebServer {
             } else { // Page not found.
 
                 HashMap<String, Object> answer = new HashMap<String, Object>();
-            	response = MainWebServer.setHeaders(response);
+            	response = WebServer.setHeaders(response);
 
                 answer.put("status", StatusType.ERROR);
                 answer.put("message", "Requested route not found");
 
-                String content = MainWebServer.translateJson(answer);
+                String content = WebServer.translateJson(answer);
                 response.status(404);
                 return content;
             }
         } else {
             HashMap<String, Object> answer = new HashMap<String, Object>();
-        	response = MainWebServer.setHeaders(response);
+        	response = WebServer.setHeaders(response);
 
             answer.put("status", StatusType.ERROR);
             answer.put("message", "The Stackit API is under maintenance, please retry later");
 
-            String content = MainWebServer.translateJson(answer);
+            String content = WebServer.translateJson(answer);
             response.status(200);
             return content;
         }
