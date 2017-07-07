@@ -4,7 +4,6 @@ import net.md_5.bungee.api.ChatColor;
 import org.apache.commons.io.FileUtils;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.stackit.Language;
 import org.stackit.Logger;
 import org.stackit.StackIt;
 
@@ -31,7 +30,8 @@ public class StackItConfiguration {
 				URL originalFile = StackIt.class.getResource("/ConfigurationFiles/StackIt.yml");
 				FileUtils.copyURLToFile(originalFile, configFile);
 			} catch (IOException e) {
-				Logger.error(Language.process(Language.get(Language.getBukkitLanguage(), "main_config_error")));
+				Logger.critical("Error while loading configuration file");
+				StackIt.disable();
 				e.printStackTrace();
 			}
 		}
@@ -377,16 +377,6 @@ public class StackItConfiguration {
 	 */
 	public static String getForcedLanguage() {
 		return config.getString("StackIt.internationalization.forced_language");
-	}
-	
-	/**
-	 * Set the forced language
-	 * @return Boolean Forced
-	 */
-	public static void setForcedLanguage(String language) {
-		config.set("StackIt.internationalization.forced_language", language);
-		Language.userLanguage = language;
-		save();
 	}
 	
 	/**

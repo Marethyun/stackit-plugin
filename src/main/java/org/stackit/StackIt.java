@@ -4,8 +4,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.stackit.commands.MainCommand;
 import org.stackit.config.StackItConfiguration;
-import org.stackit.config.StackitDisabledException;
 import org.stackit.database.DatabaseManager;
 import org.stackit.database.entities.Token;
 import org.stackit.network.TokenManager;
@@ -14,6 +14,7 @@ import org.stackit.network.WebServer;
 import org.stackit.network.pages.*;
 
 import java.util.List;
+import java.util.UUID;
 
 /**
  * StackIt: A powerful shop for Minecraft 1.7-1.11
@@ -25,33 +26,25 @@ public class StackIt extends JavaPlugin {
 	static DatabaseManager dbManager;
 	static int task;
 
-	/**
-	 * Initiate the plugin. Do not modify unless you are adding functionalities.
-	 * 
-	 * @author shamelin
-	 */
-	public void onEnable() {
-		try {
-			plugin = this;
+    @Override
+    public void onLoad() {
+        try {
+            plugin = this;
 
-			// Initiate plugin's logger
-			Logger.init();
+            // Initiate plugin's logger
+            Logger.init();
 
-			// Load the main configuration file and check if the plugin is enabled
-			StackItConfiguration.init();
-			StackItConfiguration.checksEnabled();
+            // Load the main configuration file and check if the plugin is enabled
+            StackItConfiguration.init();
+            StackItConfiguration.checksEnabled();
 
-			// Load language configuration files
-			LanguageManager.init();
-			Language.init();
+            // Start database managing
+            DatabaseManager.init();
 
-			DatabaseManager.init();
+            // Start the API
+            WebServer.init();
 
-			// Start the API
-			WebServer.init();
-
-			// Init routes
-
+            // Init routes
             WebHandler.addHandler("/connect", ConnectPage.class);
             WebHandler.addHandler("/gpi", GeneralPurposeInfoPage.class);
             WebHandler.addHandler("/players", PlayersPage.class);
@@ -59,22 +52,27 @@ public class StackIt extends JavaPlugin {
             WebHandler.addHandler("/whitelist", WhitelistPage.class);
             WebHandler.addHandler("/debug", DebugPage.class);
 
-			// Set the commands
-            // getCommand("stackit").setExecutor(new StackItCommand()); TODO REWORK THIS
-
-			// Register the events
+            // Register the events
             // registerEvents(new PlayerJoinEvent()); TODO REWORK THIS
 
-			startTokensScheduler();
+            Logger.info("Plugin successfully loaded");
+        } catch (Exception e){
+            StackIt.disable();
+        }
+    }
 
-			Logger.info(Language.process(Language.get(Language.getBukkitLanguage(), "plugin_initialized")));
-			Logger.info(Language.process(Language.get(Language.getBukkitLanguage(), "plugin_initialized_2")));
-		} catch (StackitDisabledException e){
-		    Logger.info(Language.process(Language.get(Language.getBukkitLanguage(), "plugin_disabled")));
-		    StackIt.disable();
-		} catch (Exception e){
-			StackIt.disable();
-		}
+    /**
+	 * Initiate the plugin. Do not modify unless you are adding functionalities.
+	 * 
+	 * @author shamelin
+	 */
+	public void onEnable() {
+        // Add command executor
+        getCommand("stackit").setExecutor(new MainCommand());
+
+        // Start scheduler
+        startTokensScheduler();
+        Logger.info("Plugin successfully started");
 	}
 	
 	/**
@@ -92,7 +90,7 @@ public class StackIt extends JavaPlugin {
 	 * Disable the plugin.
 	 */
 	public static void disable() {
-		Logger.warn(Language.process(Language.get(Language.getBukkitLanguage(), "disabling_plugin")));
+		Logger.warn("Disabling...");
 		
 		Bukkit.getPluginManager().disablePlugin(StackIt.getPlugin());
 	}
@@ -133,10 +131,19 @@ public class StackIt extends JavaPlugin {
 	
 	/**
 	 * Register all the events of the plugin.
+     * @Deprecated
 	 */
 	public void registerEvents(Listener... listener) {
 		for(Integer i = 0 ; i < listener.length ; i++) {
 			Bukkit.getPluginManager().registerEvents(listener[i], getPlugin());
 		}
 	}
+
+	public static UUID UUIDbyPlayerName(String playerName){
+	    return StackIt.getPlugin().getServer().getOfflinePlayer(playerName).getUniqueId();
+    }
+
+    public static boolean isPlayerOnline(UUID uuid){
+        return StackIt.getPlugin().getServer().getOfflinePlayer(uuid).isOnline();
+    }
 }

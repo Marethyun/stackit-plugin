@@ -26,7 +26,7 @@ public class Logger {
 	 * @param message
 	 */
 	public static void info(String message) {
-		System.out.println("[StackIt] [INFO] " + message);
+		System.out.println("[StackIt] " + message);
 	}
 	
 	/**
@@ -44,7 +44,7 @@ public class Logger {
 	 * @param message
 	 */
 	public static void error(String message) {
-		System.out.println("[StackIt] [ERROR] " + message);
+		System.out.println("[StackIt] " + message);
 	}
 	
 	/**

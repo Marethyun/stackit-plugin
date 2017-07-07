@@ -1,10 +1,7 @@
 package org.stackit.network;
 
 import org.json.simple.JSONObject;
-import org.stackit.Language;
 import org.stackit.Logger;
-import org.stackit.StackIt;
-import org.stackit.config.LanguageConfiguration;
 import org.stackit.config.StackItConfiguration;
 import spark.Response;
 import spark.Spark;
@@ -21,12 +18,7 @@ public class WebServer {
 	 * @return Boolean
 	 */
 	public static void init() {
-        StackIt.getPlugin().getLogger().info("Initializing API server..");
-		
 		WebServer.open();
-		
-		// Start the server
-		Logger.info(Language.process(LanguageConfiguration.get(Language.getBukkitLanguage(), "webserver_started")));
 	}
 
 	
@@ -41,6 +33,7 @@ public class WebServer {
 	 * Initiate the web server variable and verifies if the port is available for use.
 	 */
 	private static void open() {
+	    Logger.info("Initializing web interface..");
 		try {
 			spark = new Spark(false);
 			
@@ -56,7 +49,7 @@ public class WebServer {
 
 		} catch (Exception e) {
 			// If an error occur, report it in the console.
-			Logger.critical(Language.process(LanguageConfiguration.get(Language.getBukkitLanguage(), "error_initiating_webserver")));
+			Logger.critical("Error while initializing web interface..");
 			e.printStackTrace();
 		}
 	}

@@ -1,6 +1,5 @@
 package org.stackit.network;
 
-import org.stackit.Language;
 import org.stackit.Logger;
 import org.stackit.config.StackItConfiguration;
 import org.stackit.network.pages.Page;
@@ -36,11 +35,13 @@ public class WebHandler {
 	 * @param Page Handler
 	 */
 	public static void addHandler(String path, Class<? extends Page> handler) {
-		if(!pageExist(path)) {
-			pages.put(path, handler);
-			
-			Logger.info(Language.replace(Language.process(Language.get(Language.getBukkitLanguage(), "webserver_context_created")), "CONTEXT", path));
-		}
+	    try {
+            if (!pageExist(path)) {
+                pages.put(path, handler);
+            }
+        } catch (Exception e){
+	        Logger.error("Error while loading context '" + path + "'");
+        }
 	}
 	
 	/**
