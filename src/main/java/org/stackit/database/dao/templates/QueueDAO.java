@@ -8,10 +8,10 @@ import java.util.List;
 
 public interface QueueDAO extends DAO {
 
-    List<QueueElement> getByUserId(@Bind("user_id") int user_id);
+    List<QueueElement> getByUserUuid(@Bind("user_uuid") String uuid);
 
     @Override
     void createTable();
 
-    void delete(@Bind("id") int id);
+    void delete(@Bind("id") String uuid);
 }

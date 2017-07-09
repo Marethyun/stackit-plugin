@@ -2,24 +2,42 @@ package org.stackit.database.entities;
 
 public class QueueElement {
     private Integer id;
-    private Integer user_id;
+    private String uid;
+    private String playerUuid;
     private String commands;
+    private int slotNumber;
+    private String name;
 
-    public QueueElement(Integer id, Integer user_id, String commands){
+    public QueueElement(Integer id, String uid, String playerUuid, String commands, Integer slotNumber, String name){
         this.id = id;
-        this.user_id = id;
+        this.uid = uid;
+        this.playerUuid = playerUuid;
         this.commands = commands;
+        this.slotNumber = slotNumber;
+        this.name = name;
     }
 
     public Integer getId() {
         return id;
     }
 
-    public Integer getUser_id() {
-        return user_id;
+    public String getUid() {
+        return uid;
+    }
+
+    public String getPlayerUuid() {
+        return playerUuid;
     }
 
     public String getCommands() {
         return commands;
+    }
+
+    public int getSlotNumber() {
+        return slotNumber;
+    }
+
+    public String getName() {
+        return name;
     }
 }

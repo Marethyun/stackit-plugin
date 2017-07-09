@@ -17,9 +17,9 @@ public class QueueProxy implements QueueDAO, Proxy {
     }
 
     @Override
-    public List<QueueElement> getByUserId(int user_id) {
+    public List<QueueElement> getByUserUuid(String user_id) {
         Handle h = DatabaseManager.getDatabaseHandle();
-        List<QueueElement> elements = h.attach(substituted).getByUserId(user_id);
+        List<QueueElement> elements = h.attach(substituted).getByUserUuid(user_id);
         h.close();
         return elements;
     }
@@ -32,9 +32,9 @@ public class QueueProxy implements QueueDAO, Proxy {
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(String uid) {
         Handle h = DatabaseManager.getDatabaseHandle();
-        h.attach(substituted).delete(id);
+        h.attach(substituted).delete(uid);
         h.close();
     }
 }

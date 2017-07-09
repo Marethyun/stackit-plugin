@@ -13,16 +13,18 @@ import java.util.List;
 public interface MysqlQueueDAO extends QueueDAO {
 
     @Override
-    List<QueueElement> getByUserId(@Bind("user_id") int user_id);
+    @Mapper(QueueMapper.class)
+    @SqlQuery("SELECT * FROM stackit_queue WHERE player_uuid = :uuid")
+    List<QueueElement> getByUserUuid(@Bind("uuid") String uuid);
 
-    @Override @SqlUpdate("CREATE TABLE `stackit_queue` (`id` INT(11) NOT NULL AUTO_INCREMENT,`user_id` INT(11) NOT NULL,`commands` TEXT NOT NULL,PRIMARY KEY (`id`))COLLATE='utf8_general_ci'ENGINE=InnoDB")
+    @Override @SqlUpdate("CREATE TABLE `stackit_queue` (`id` INT(11) NOT NULL AUTO_INCREMENT,`player_uuid` VARCHAR(255) NOT NULL,`commands` TEXT NOT NULL,PRIMARY KEY (`id`))COLLATE='utf8_general_ci'ENGINE=InnoDB")
     void createTable();
 
     @Mapper(QueueMapper.class)
-    @SqlQuery("SELECT id, user_id, commands FROM stackit_queue")
+    @SqlQuery("SELECT * FROM stackit_queue")
     List<QueueElement> getAll();
 
     @Override
-    @SqlUpdate("DELETE FROM stackit_queue WHERE id = :id")
-    void delete(@Bind("id") int id);
+    @SqlUpdate("DELETE FROM stackit_queue WHERE uid = :uid")
+    void delete(@Bind("uid") String uid);
 }
