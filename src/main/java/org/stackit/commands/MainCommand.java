@@ -292,7 +292,7 @@ public class MainCommand implements CommandExecutor{
 
             default:
                 sendInfo("'" + option + "' option not found.");
-                sendInfo("Type '/stackit help options for an exhaustive option list.");
+                sendInfo("Type '/stackit help options for an exhaustive options list.");
         }
     }
 
@@ -300,6 +300,6 @@ public class MainCommand implements CommandExecutor{
         sendInfoHeader("===== StackIt help: =====");
         sendInfo("Command usage: /stackit <option> [argument]");
         sendInfo("Or with alias 'st': /st <option> [argument]");
-        sendInfo("Type '/stackit help options' for a exhaustive option list.");
+        sendInfo("Type '/stackit help options' for a exhaustive options list.");
     }
 }
