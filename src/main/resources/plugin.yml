@@ -11,4 +11,5 @@
  commands:
      stackit:
          description: StackIt main command.
-         aliases: [si, stack]
+         usage: /stackit <option>
+         aliases: [st, stack]
