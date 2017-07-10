@@ -1,13 +1,14 @@
 package org.stackit;
 
 import org.bukkit.Bukkit;
-import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.stackit.commands.MainCommand;
 import org.stackit.config.StackItConfiguration;
 import org.stackit.database.DatabaseManager;
 import org.stackit.database.entities.Token;
+import org.stackit.events.PlayerJoin;
 import org.stackit.network.TokenManager;
 import org.stackit.network.WebHandler;
 import org.stackit.network.WebServer;
@@ -26,8 +27,12 @@ public class StackIt extends JavaPlugin {
 	static DatabaseManager dbManager;
 	static int task;
 
-    @Override
-    public void onLoad() {
+    /**
+	 * Initiate the plugin. Do not modify unless you are adding functionalities.
+	 * 
+	 * @author shamelin
+	 */
+	public void onEnable() {
         try {
             plugin = this;
 
@@ -53,26 +58,24 @@ public class StackIt extends JavaPlugin {
             WebHandler.addHandler("/debug", DebugPage.class);
 
             // Register the events
-            // registerEvents(new PlayerJoinEvent()); TODO REWORK THIS
+            PluginManager pm = Bukkit.getPluginManager();
+
+            pm.registerEvents(new PlayerJoin(), this);
 
             Logger.info("Plugin successfully loaded");
+
+            // Add command executor
+            getCommand("stackit").setExecutor(new MainCommand());
+
+            // Start scheduler
+            startTokensScheduler();
+            Logger.info("Plugin successfully started");
+
         } catch (Exception e){
+            e.printStackTrace();
             StackIt.disable();
         }
-    }
 
-    /**
-	 * Initiate the plugin. Do not modify unless you are adding functionalities.
-	 * 
-	 * @author shamelin
-	 */
-	public void onEnable() {
-        // Add command executor
-        getCommand("stackit").setExecutor(new MainCommand());
-
-        // Start scheduler
-        startTokensScheduler();
-        Logger.info("Plugin successfully started");
 	}
 	
 	/**
@@ -91,6 +94,7 @@ public class StackIt extends JavaPlugin {
 	 */
 	public static void disable() {
 		Logger.warn("Disabling...");
+		Logger.critical("WHY");
 		
 		Bukkit.getPluginManager().disablePlugin(StackIt.getPlugin());
 	}
@@ -128,16 +132,6 @@ public class StackIt extends JavaPlugin {
     private void stopTokensScheduler(){
 	    getServer().getScheduler().cancelTask(task);
     }
-	
-	/**
-	 * Register all the events of the plugin.
-     * @Deprecated
-	 */
-	public void registerEvents(Listener... listener) {
-		for(Integer i = 0 ; i < listener.length ; i++) {
-			Bukkit.getPluginManager().registerEvents(listener[i], getPlugin());
-		}
-	}
 
 	public static UUID UUIDbyPlayerName(String playerName){
 	    return StackIt.getPlugin().getServer().getOfflinePlayer(playerName).getUniqueId();
