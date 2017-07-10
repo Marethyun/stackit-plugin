@@ -225,7 +225,7 @@ public class MainCommand implements CommandExecutor{
         if (!queueElements.isEmpty()){
             sendInfoHeader(playerName + "'s packages:");
             for (QueueElement element : queueElements) {
-                sendInfo(element.getUid() + " - With name: " + element.getName());
+                sendInfo(element.getUid() + " - With name: '" + element.getName() + "'");
             }
         } else {
             if (this.sender.getName().equals(playerName)){
