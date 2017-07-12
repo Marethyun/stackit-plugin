@@ -140,7 +140,7 @@ public class MainCommand implements CommandExecutor{
     }
 
     private void sendInfoHeader(String message){
-        this.sender.sendMessage(prefix + ChatColor.AQUA  + message);
+        this.sender.sendMessage(StackIt.getInfoMessage(message));
     }
 
     private void sendInfo(String message){
@@ -174,9 +174,10 @@ public class MainCommand implements CommandExecutor{
                 } else {
                     sendError("You don't have enough space in your inventory to receive this package.");
                 }
-                break;
+                return;
             }
         }
+        sendError("Could not find package with code " + uid);
     }
 
     private int freeInventorySlots(Inventory inventory){

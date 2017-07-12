@@ -26,7 +26,8 @@ public class Logger {
 	 * @param message
 	 */
 	public static void info(String message) {
-		System.out.println("[StackIt] " + message);
+	    message = "[StackIt] " + message;
+		System.out.println(message);
 	}
 	
 	/**
@@ -35,7 +36,8 @@ public class Logger {
 	 * @param message
 	 */
 	public static void warn(String message) {
-		System.out.println("[StackIt] [WARN] " + message);
+        message = "[StackIt] [WARN] " + message;
+        System.out.println(message);
 	}
 	
 	/**
@@ -44,7 +46,8 @@ public class Logger {
 	 * @param message
 	 */
 	public static void error(String message) {
-		System.out.println("[StackIt] " + message);
+        message = "[StackIt] [ERROR] " + message;
+        System.out.println(message);
 	}
 	
 	/**
@@ -52,23 +55,12 @@ public class Logger {
 	 * @param message
 	 */
 	public static void critical(String message) {
-		System.out.println("[StackIt] [CRITICAL] " + message);
-	}
-	
-	/**
-	 * Add a simple log to the database.
-	 * @param String Log
-	 * @param String Executor
-	 */
-	public static void pushLog(String log, String executor, String context) {
-        Date date = new Date(System.currentTimeMillis());
-
-        DatabaseManager.getLogs().addLog(date, log, context);
+        message = "[StackIt] [CRITICAL] " + message;
+        System.out.println(message);
 	}
 	
 	/**
 	 * Add a user connected log to the database.
-     * @param remoteAddress
      * @param String Context executed
      * @param String Executor
      */
@@ -88,5 +80,9 @@ public class Logger {
 		String log = "User \"" + user + "\" tried to connect to the API (Error: " + error + ")";
 		DatabaseManager.getLogs().addLog(date, log, context);
 	}
+
+	private static Date getDate(){
+	    return new Date(System.currentTimeMillis());
+    }
 
 }

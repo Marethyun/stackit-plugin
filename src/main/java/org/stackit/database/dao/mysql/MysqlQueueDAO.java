@@ -17,7 +17,7 @@ public interface MysqlQueueDAO extends QueueDAO {
     @SqlQuery("SELECT * FROM stackit_queue WHERE player_uuid = :uuid")
     List<QueueElement> getByUserUuid(@Bind("uuid") String uuid);
 
-    @Override @SqlUpdate("CREATE TABLE `stackit_queue` (`id` INT(11) NOT NULL AUTO_INCREMENT,`player_uuid` VARCHAR(255) NOT NULL,`commands` TEXT NOT NULL,PRIMARY KEY (`id`))COLLATE='utf8_general_ci'ENGINE=InnoDB")
+    @Override @SqlUpdate("CREATE TABLE IF NOT EXISTS `stackit_queue`( `id` INT(11) NOT NULL AUTO_INCREMENT, `uid` VARCHAR(8) NULL, `player_uuid` VARCHAR(255) NOT NULL, `commands` VARCHAR(1500) NOT NULL, `slotnumber` INT(11) UNSIGNED NOT NULL, `name` VARCHAR(255) NOT NULL, PRIMARY KEY (`id`)) COLLATE='utf8_general_ci' ENGINE=InnoDB AUTO_INCREMENT=4 ; ")
     void createTable();
 
     @Mapper(QueueMapper.class)

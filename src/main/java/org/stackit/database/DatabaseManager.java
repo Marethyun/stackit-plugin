@@ -1,9 +1,12 @@
 package org.stackit.database;
 
+import com.mysql.jdbc.exceptions.jdbc4.CommunicationsException;
 import org.skife.jdbi.v2.DBI;
 import org.skife.jdbi.v2.Handle;
+import org.skife.jdbi.v2.exceptions.UnableToObtainConnectionException;
 import org.stackit.Logger;
 import org.stackit.StackIt;
+import org.stackit.StackitException;
 import org.stackit.config.StackItConfiguration;
 import org.stackit.database.dao.proxy.LogsProxy;
 import org.stackit.database.dao.proxy.QueueProxy;
@@ -44,12 +47,45 @@ public class DatabaseManager {
 			logsProxy = new LogsProxy(logsDAO);
 			tokensProxy = new TokensProxy(tokensDAO);
 
-		} catch (Exception e){
-			e.printStackTrace();
-			StackIt.disable();
-		}
+			queueProxy.createTable();
+			logsProxy.createTable();
+			tokensProxy.createTable();
 
-	}
+		} catch (UnableToObtainConnectionException e){
+		    Exception cause = (Exception) e.getCause();
+		    if (cause.getMessage().matches("Unknown database '(.*)'")){
+                throw new StackitException(
+                        "Unable to find database '"
+                                + StackItConfiguration.getDatabaseName()
+                                + "' at " + StackItConfiguration.getDatabaseHost()
+                                + ":" + StackItConfiguration.getDatabasePort()
+                );
+            } else if (cause.getMessage().matches("Access denied for user (.*)")) {
+                throw new StackitException(
+                        "Bad credentials: "
+                                + StackItConfiguration.getDatabaseUser()
+                                + ":"
+                                + StackItConfiguration.getDatabasePassword()
+                                + " at "
+                                + StackItConfiguration.getDatabaseHost()
+                                + ":"
+                                + StackItConfiguration.getDatabasePort()
+                );
+            } else if (cause instanceof CommunicationsException) {
+                throw new StackitException(
+                        "Unable to establish link to "
+                                + StackItConfiguration.getDatabaseType()
+                                + " services at "
+                                + StackItConfiguration.getDatabaseHost()
+                                + ":"
+                                + StackItConfiguration.getDatabasePort()
+                );
+            } else {
+                throw e;
+            }
+        }
+
+    }
 
     public static QueueDAO getQueue(){
 	    return queueProxy;

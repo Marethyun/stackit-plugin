@@ -1,6 +1,7 @@
 package org.stackit;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -23,20 +24,23 @@ import java.util.UUID;
  * @author shamelin
  */
 public class StackIt extends JavaPlugin {
-	static Plugin plugin = null;
-	static DatabaseManager dbManager;
-	static int task;
+	private static Plugin plugin = null;
+	private static int task;
+	private static String prefix = ChatColor.AQUA + "[StackIt] ";
 
     /**
 	 * Initiate the plugin. Do not modify unless you are adding functionalities.
 	 * 
 	 * @author shamelin
 	 */
-	public void onEnable() {
-        try {
-            plugin = this;
+    @Override
+	public void onLoad() {
+        plugin = this;
+	}
 
-            // Initiate plugin's logger
+    @Override
+    public void onEnable() {
+        try {
             Logger.init();
 
             // Load the main configuration file and check if the plugin is enabled
@@ -45,7 +49,6 @@ public class StackIt extends JavaPlugin {
 
             // Start database managing
             DatabaseManager.init();
-
             // Start the API
             WebServer.init();
 
@@ -55,30 +58,32 @@ public class StackIt extends JavaPlugin {
             WebHandler.addHandler("/players", PlayersPage.class);
             WebHandler.addHandler("/banlist", BanlistPage.class);
             WebHandler.addHandler("/whitelist", WhitelistPage.class);
+            WebHandler.addHandler("/update", UpdatePage.class);
+            WebHandler.addHandler("/dictionary", DictionaryPage.class);
             WebHandler.addHandler("/debug", DebugPage.class);
 
             // Register the events
             PluginManager pm = Bukkit.getPluginManager();
-
             pm.registerEvents(new PlayerJoin(), this);
-
-            Logger.info("Plugin successfully loaded");
 
             // Add command executor
             getCommand("stackit").setExecutor(new MainCommand());
 
             // Start scheduler
             startTokensScheduler();
-            Logger.info("Plugin successfully started");
 
+            Logger.info("Plugin successfully loaded");
+
+        } catch (StackitException e){
+            Logger.critical(e.getMessage());
+            StackIt.disable();
         } catch (Exception e){
             e.printStackTrace();
             StackIt.disable();
         }
+    }
 
-	}
-	
-	/**
+    /**
 	 * Stop the plugin.
 	 */
 	public void onDisable() {
@@ -93,9 +98,6 @@ public class StackIt extends JavaPlugin {
 	 * Disable the plugin.
 	 */
 	public static void disable() {
-		Logger.warn("Disabling...");
-		Logger.critical("WHY");
-		
 		Bukkit.getPluginManager().disablePlugin(StackIt.getPlugin());
 	}
 	
@@ -139,5 +141,9 @@ public class StackIt extends JavaPlugin {
 
     public static boolean isPlayerOnline(UUID uuid){
         return StackIt.getPlugin().getServer().getOfflinePlayer(uuid).isOnline();
+    }
+
+    public static String getInfoMessage(String message){
+        return prefix + ChatColor.AQUA + message;
     }
 }

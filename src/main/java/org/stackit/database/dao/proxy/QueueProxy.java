@@ -25,6 +25,14 @@ public class QueueProxy implements QueueDAO, Proxy {
     }
 
     @Override
+    public List<QueueElement> getAll() {
+        Handle h = DatabaseManager.getDatabaseHandle();
+        List<QueueElement> elements = h.attach(substituted).getAll();
+        h.close();
+        return elements;
+    }
+
+    @Override
     public void createTable() {
         Handle h = DatabaseManager.getDatabaseHandle();
         h.attach(substituted).createTable();

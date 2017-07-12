@@ -12,7 +12,7 @@ import java.util.List;
 
 public interface MysqlTokensDAO extends TokensDAO {
     @Override
-    @SqlUpdate("CREATE TABLE `stackit_tokens`(`id` INT(11) NOT NULL AUTO_INCREMENT,`time` BIGINT(20) NULL DEFAULT NULL,`value` VARCHAR(255) NULL DEFAULT NULL,PRIMARY KEY (`id`))ENGINE=InnoDB")
+    @SqlUpdate("CREATE TABLE IF NOT EXISTS `stackit_tokens`( `id` INT(11) NOT NULL AUTO_INCREMENT, `time` BIGINT(20) NULL DEFAULT NULL, `value` VARCHAR(255) NULL DEFAULT NULL, PRIMARY KEY (`id`)) COLLATE='utf8_general_ci' ENGINE=InnoDB AUTO_INCREMENT=28 ; ")
     void createTable();
 
     @Override
