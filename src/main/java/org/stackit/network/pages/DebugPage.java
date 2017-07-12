@@ -1,18 +1,13 @@
 package org.stackit.network.pages;
 
-import org.stackit.StackIt;
-import spark.Request;
-import spark.Response;
+import org.stackit.network.Page;
+import org.stackit.network.StatusMessage;
+import org.stackit.network.StatusType;
 
 public class DebugPage extends Page {
 
     @Override
-    public void handle(Request request, Response response) throws Exception {
-        try {
-            getContent().put("uuid", StackIt.getPlugin().getServer().getOfflinePlayer("florentlife").getUniqueId().toString());
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-        success("Hello, World");
+    public void handle() {
+        status(StatusMessage.SUCCESS, StatusType.SUCCESS);
     }
 }

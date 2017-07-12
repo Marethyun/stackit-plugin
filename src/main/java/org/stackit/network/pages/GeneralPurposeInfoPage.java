@@ -2,33 +2,22 @@ package org.stackit.network.pages;
 
 import org.bukkit.Server;
 import org.stackit.StackIt;
-import org.stackit.network.TokenManager;
-import spark.Request;
-import spark.Response;
+import org.stackit.network.Authenticate;
+import org.stackit.network.Page;
+import org.stackit.network.StatusMessage;
+import org.stackit.network.StatusType;
 
-public class GeneralPurposeInfoPage extends Page {
+public class GeneralPurposeInfoPage extends Page implements Authenticate {
 
     @Override
-    public void handle(Request request, Response response) throws Exception {
-        if (request.queryParams().contains("token")){
-            String token = request.queryParams("token");
-            if (TokenManager.isTokenValid(token)) {
+    public void handle() {
 
-                Server server = StackIt.getPlugin().getServer();
+        Server server = StackIt.getPlugin().getServer();
 
-                getContent().put("maxplayers", server.getMaxPlayers());
-                getContent().put("motd", server.getMotd());
-                getContent().put("version", server.getVersion());
+        getContent().put("maxplayers", server.getMaxPlayers());
+        getContent().put("motd", server.getMotd());
+        getContent().put("version", server.getVersion());
 
-                success("Data successfully got");
-
-            } else {
-                response.status(401);
-                error("Provided token is invalid");
-            }
-        } else {
-            response.status(400);
-            error("Bad request");
-        }
+        status(StatusMessage.SUCCESS, StatusType.SUCCESS);
     }
 }

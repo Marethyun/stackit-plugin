@@ -26,7 +26,9 @@ public class WebServer {
 	 * Stop the web server.
 	 */
 	public static void stop() {
-        spark.stop();
+	    if (spark != null) {
+            spark.stop();
+        }
 	}
 	
 	/**

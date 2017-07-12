@@ -2,7 +2,6 @@ package org.stackit.network;
 
 import org.stackit.Logger;
 import org.stackit.config.StackItConfiguration;
-import org.stackit.network.pages.Page;
 import spark.Request;
 import spark.Response;
 
@@ -66,26 +65,42 @@ public class WebHandler {
 	 */
 	protected static String handle(Request request, Response response) throws Exception {
 	    if (!StackItConfiguration.isInMaintenance()) {
-            // If the page exist and has been set in the script.
             if (pageExist(request.uri())) {
             	response = WebServer.setHeaders(response);
                 Page page = getHandler(request.uri()).newInstance();
 
                 page.setContent(new HashMap<>());
+                page.setRequest(request);
+                page.setResponse(response);
 
-                page.handle(request, response);
+                if (page instanceof Authenticate){
+                    if (request.queryParams().contains("token")){
+                        if (TokenManager.isTokenValid(request.queryParams("token"))){
+                            page.handle();
+                        } else {
+                            page.status(StatusMessage.INVALID_TOKEN, StatusType.UNAUTHORIZED);
+                        }
+                    } else {
+                        page.status(StatusMessage.BAD_REQUEST, StatusType.BAD_REQUEST);
+                    }
+                } else {
+                    page.handle();
+                }
+
+                if (page.getAPIState().equals(StatusType.SUCCESS)){
+                    Logger.warn(request.ip() + " successfully requested context " + request.uri());
+                } else {
+                    Logger.warn(request.ip() + " unsuccessfully requested context " + request.uri());
+                }
+                for (String s : request.queryParams()) {
+                    Logger.warn("- " + s + " = " + request.queryParams(s));
+                }
 
                 if (page.haveNullContent()){
                     page.removeContent();
                 }
 
-                String json = WebServer.translateJson(page.getResponseContent());
-
-                if (page.getResponseContent().get("status").equals("success")) {
-                    response.status(200);
-                }
-
-                return json;
+                return WebServer.translateJson(page.getResponseContent());
 
             } else { // Page not found.
 
@@ -107,7 +122,7 @@ public class WebHandler {
             answer.put("message", "The Stackit API is under maintenance, please retry later");
 
             String content = WebServer.translateJson(answer);
-            response.status(200);
+            response.status(500);
             return content;
         }
 	}

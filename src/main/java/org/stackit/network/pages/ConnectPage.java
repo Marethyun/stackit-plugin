@@ -1,8 +1,10 @@
 package org.stackit.network.pages;
 
-import org.stackit.Logger;
 import org.stackit.config.StackItConfiguration;
 import org.stackit.database.DatabaseManager;
+import org.stackit.network.Page;
+import org.stackit.network.StatusMessage;
+import org.stackit.network.StatusType;
 import spark.Request;
 import spark.Response;
 
@@ -12,8 +14,10 @@ import java.util.UUID;
 public class ConnectPage extends Page {
 
     @Override
-    public void handle(Request request, Response response) throws Exception {
+    public void handle() {
 	    String pass, user;
+	    Request request = getRequest();
+	    Response response = getResponse();
         if (request.queryParams().contains("pass") && request.queryParams().contains("user")) {
             pass = request.queryParams("pass");
             user = request.queryParams("user");
@@ -27,22 +31,16 @@ public class ConnectPage extends Page {
                     getContent().put("token", token);
                     getContent().put("expire", Long.toString(expireTimeStamp));
 
-                    success("Token successfully generated");
-                    Logger.userLoggedIn(user, "login");
+                    status(StatusMessage.SUCCESS, StatusType.SUCCESS);
 
                 } else {
-                    response.status(401);
-                    error("Invalid password");
-                    Logger.userTriedToLog(user, "login", "Invalid password");
+                    status(StatusMessage.INVALID_CREDENTIALS, StatusType.UNAUTHORIZED);
                 }
             } else {
-                response.status(401);
-                error("Invalid username");
-                Logger.userTriedToLog(user, "login", "Invalid username");
+                status(StatusMessage.INVALID_CREDENTIALS, StatusType.UNAUTHORIZED);
             }
         } else {
-            response.status(400);
-            error("Bad request");
+            status(StatusMessage.BAD_REQUEST, StatusType.BAD_REQUEST);
         }
     }
 }
