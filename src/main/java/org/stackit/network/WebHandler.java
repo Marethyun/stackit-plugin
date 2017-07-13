@@ -107,9 +107,11 @@ public class WebHandler {
                 HashMap<String, Object> answer = new HashMap<String, Object>();
             	response = WebServer.setHeaders(response);
 
-                answer.put("status", StatusType.ERROR);
-                answer.put("message", "Requested route not found");
+                HashMap<String, Object> errors = new HashMap<>();
+                answer.put("status", StatusType.NOT_FOUND.toString());
+                errors.put("not_found", "not_found");
 
+                answer.put("errors", errors);
                 String content = WebServer.translateJson(answer);
                 response.status(404);
                 return content;
@@ -118,8 +120,11 @@ public class WebHandler {
             HashMap<String, Object> answer = new HashMap<String, Object>();
         	response = WebServer.setHeaders(response);
 
-            answer.put("status", StatusType.ERROR);
-            answer.put("message", "The Stackit API is under maintenance, please retry later");
+            answer.put("status", StatusType.ERROR.toString());
+            HashMap<String, Object> errors = new HashMap<>();
+            errors.put("error", "error");
+
+            answer.put("error", errors);
 
             String content = WebServer.translateJson(answer);
             response.status(500);

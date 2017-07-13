@@ -59,7 +59,7 @@ public abstract class Page {
             errorMessages = (HashMap<String, Object>) this.getResponseContent().get("error");
             errorMessages.put(serializeError(message.toString()), message.toString());
         } else {
-            this.getContent().put("message", message.toString());
+            this.getResponseContent().put("message", message.toString());
         }
     }
 
