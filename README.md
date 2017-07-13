@@ -1,24 +1,24 @@
-# CubikCMS Shop Plugin for Minecraft 1.7-1.11 (ALPHA)
-## Based on the old StackIt plugin by Simon Hamelin
+## Based on the old StackItCMS plugin by Simon Hamelin
 
-This is the main repository for the CubikCMS shop plugin for Bukkit/Spigot 1.7-1.11. BungeeCord is not yet supported, but it's on the way !
-Its name stayed "Stackit" due to technical naming and projects about system integration which involve that. 
+This is the main repository for the StackIt's shop plugin for Spigot 1.7-1.11. BungeeCord is not yet supported.
 
 THIS PLUGIN IS IN EARLY DEVELOPMENT. USE AT YOUR OWN RISK. WE WILL NOT BE HOLD RESPONSABLE FOR ANY DAMAGE DONE TO YOUR SERVER OR YOUR INFRASTRUCTURES.
 
 ### What does this plugin do?
 
-This plugin is using HTTP and SSL protocols (HTTPS) to build a web-based API which ensures data transit between Minecraft server and CubikCMS web-based application.
+This plugin is using HTTP protocol (HTTP) to build a web-based API which ensures data transit between Minecraft server and PHP applications.
+PHP is the only language we build a library for, but StackIt is accessible with every HTTP clients. (see https://wiki.uphroria.org/stackit/)
 
 ### I want to improve this plugin!
 
 How awesome is that! We will be happy to receive and discuss your suggestions. Let's post theses in CubikCMS website (upcoming) 
 
-A complete documentation will be available at https://docs.cubikcms.com.
+A complete documentation will be available at https://wiki.uphoria.org/stackit/
 
 ### This plugin doesn't work!
 
-Please use CubikCMS and refer to its documentation (https://docs.cubikcms.com/) in order to fully understand how this plugin is working.
+If you encounter problems with StackIt, refer to its documentation (https://wiki.uphoria.org/stackit/) in order to fully understand how this plugin is working.
+If you don't find yours answers' replies in it, you still can contact us.
 
 ## What about plugin licence?
 
