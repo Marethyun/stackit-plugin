@@ -13,7 +13,7 @@ PHP is the only language we build a library for, but StackIt is accessible with 
 
 How awesome is that! We will be happy to receive and discuss your suggestions. Let's post theses in CubikCMS website (upcoming) 
 
-A complete documentation will be available at https://wiki.uphoria.org/stackit/
+A complete documentation will be available at https://wiki.uphoia.org/stackit/
 
 ### This plugin doesn't work!
 
