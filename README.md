@@ -7,7 +7,7 @@ THIS PLUGIN IS IN EARLY DEVELOPMENT. USE AT YOUR OWN RISK. WE WILL NOT BE HOLD R
 ### What does this plugin do?
 
 This plugin is using HTTP protocol (HTTP) to build a web-based API which ensures data transit between Minecraft server and PHP applications.
-PHP is the only language we build a library for, but StackIt is accessible with every HTTP clients. (see https://wiki.uphroria.org/stackit/)
+PHP is the only language we build a library for, but StackIt is accessible with every HTTP clients. (see https://wiki.uphoria.org/stackit/)
 
 ### I want to improve this plugin!
 
