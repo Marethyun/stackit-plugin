@@ -3,7 +3,7 @@
  description: A powerful API for Minecraft 1.7-1.11
  
  author: StackIt
- website: https://wiki.uphoria.org/stackit/
+ website: https://docs.uphoria.org/stackit/
  
  main: org.stackit.StackIt
  database: true
