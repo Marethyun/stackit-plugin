@@ -8,6 +8,6 @@ public class DebugPage extends Page {
 
     @Override
     public void handle() {
-        status(StatusMessage.SUCCESS, StatusType.SUCCESS);
+        status(StatusMessage.HELLO_WORLD, StatusType.SUCCESS);
     }
 }

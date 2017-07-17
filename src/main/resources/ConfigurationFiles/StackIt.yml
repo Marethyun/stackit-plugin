@@ -6,7 +6,6 @@
 
 StackIt:
     enabled: true
-    prefix: "&e[StackIt]"
     
     ssl:
         passphrase: "stackitssl" # CHANGE THIS
@@ -14,12 +13,6 @@ StackIt:
     # Plugin's maintenance system
     maintenance:
         enabled: false
-        messages:
-            api: "The StackIt API is currently disabled."
-            ingame:
-                fr: "&cStackIt est actuellement désactivé. Veuillez réessayer plus tard."
-                en: "&cStackIt is currently disabled. Please try again later."
-    
 
     api:
         # API port
@@ -47,12 +40,3 @@ StackIt:
         username: "stackit" # Username of the user able to access the database
         password: "stackit" # Password of the user able to access the database.
         port: 3306 # Database port
-
-
-
-
-    # Support of multiple language
-    internationalization:
-        forced: false # Force the use of a language
-        forced_language: "en"
-        default_language: "en"

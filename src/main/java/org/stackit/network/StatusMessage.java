@@ -5,6 +5,7 @@ public enum StatusMessage {
     // success
     SUCCESS("success"),
     ERROR("error"),
+    HELLO_WORLD("Hello, World !"),
 
     INVALID_TOKEN("The provided token is invalid"),
     BAD_REQUEST("Bad request"),
