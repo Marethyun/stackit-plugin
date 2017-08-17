@@ -24,6 +24,18 @@ repositories {
     jcenter()
     mavenCentral()
 
+    maven {
+        url "https://hub.spigotmc.org/nexus/content/repositories/snapshots/"
+    }
+
+    maven {
+        url "http://repo.md-5.net/content/groups/public/"
+    }
+
+    maven {
+        url = "https://oss.sonatype.org/content/repositories/snapshots/"
+    }
+
     flatDir {
         dirs '.'
     }
@@ -59,6 +71,8 @@ dependencies {
     implementation 'com.google.guava:guava:21.0'
     // Spigot API
     compileOnly name: 'spigot-1.8'
+
+    compileOnly "org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT"
     // JDBI
     compile 'org.jdbi:jdbi:2.78'
     compile name: 'spark-core-2.5.5'
