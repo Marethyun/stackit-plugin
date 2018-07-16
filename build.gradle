@@ -58,25 +58,13 @@ dependencies {
 
     // This dependency is used internally, and not exposed to consumers on their own compile classpath.
     implementation 'com.google.guava:guava:21.0'
-    // Spigot API
-    //compileOnly name: 'spigot-1.8'
 
-    compileOnly "org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT"
+    // Spigot 1.12.2
+    compileOnly "org.spigotmc:spigot-api:1.12.2-R0.1-SNAPSHOT"
     // JDBI
-    compile 'org.jdbi:jdbi:2.78'
-    compile name: 'spark-core-2.5.5'
-    // Use JUnit test framework
+    //compile 'org.jdbi:jdbi:2.78'
     testImplementation 'junit:junit:4.12'
     compile group: 'commons-io', name: 'commons-io', version: '2.4'
-
-    compile group: 'mysql', name: 'mysql-connector-java', version: '6.0.6'
-    compile 'org.apache.logging.log4j:log4j-api:2.7'
-    compile 'org.apache.logging.log4j:log4j-core:2.7'
-    compile 'org.apache.logging.log4j:log4j-1.2-api:2.2'
-    compile 'org.eclipse.jetty:jetty-server:9.3.6.v20151106'
-    compile 'org.eclipse.jetty:jetty-webapp:9.3.6.v20151106'
-    compile "org.eclipse.jetty.websocket:websocket-server:9.3.6.v20151106"
-    compile "org.eclipse.jetty.websocket:websocket-servlet:9.3.6.v20151106"
 }
 
 apply plugin: "com.github.johnrengelman.shadow"

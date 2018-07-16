@@ -1,9 +1,8 @@
  name: StackIt
- version: 2.10
- description: A powerful API for Minecraft 1.7-1.11
+ version: 3.0-alpha
+ description: A powerful API for Minecraft 1.7-1.12.2
  
- author: StackIt
- website: https://docs.uphoria.org/stackit/
+ author: Marethyun
  
  main: org.stackit.StackIt
  database: true
