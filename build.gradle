@@ -36,6 +36,16 @@ repositories {
         url = "https://oss.sonatype.org/content/repositories/snapshots/"
     }
 
+    // Private nexus repository
+
+    maven {
+        url "$nexusRepo"
+        credentials {
+            username "$nexusUser"
+            password "$nexusPassword"
+        }
+    }
+
     flatDir {
         dirs '.'
     }
@@ -58,6 +68,8 @@ dependencies {
 
     // This dependency is used internally, and not exposed to consumers on their own compile classpath.
     implementation 'com.google.guava:guava:21.0'
+
+    compile group: 'io.noctin', name: 'noctin-api', version: '1.0-SNAPSHOT'
 
     // Spigot 1.12.2
     compileOnly "org.spigotmc:spigot-api:1.12.2-R0.1-SNAPSHOT"

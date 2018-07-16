@@ -5,3 +5,4 @@
 stackit-plugin.iml
 .classpath
 move.bat
+gradle.properties
