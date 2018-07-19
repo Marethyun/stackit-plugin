@@ -1,42 +1,45 @@
-# StackIt Configuration File
-# A Powerful linking plugin for CubikCMS (1.7-1.11)
-
-# This is the main configuration file for the plugin. For the documentation of the plugin, please visit https://www.stackit.cf/docs/
-# MODIFY AT YOUR OWN RISK, MAKE SURE YOU KNOW FIELD USAGE BEFORE MODIFY IT
+# This is the main configuration file for StackIt plugin.
 
 StackIt:
+    # If you set this to 'false', the plugin will stop right after its initialization.
+    # It's recommended to safely disable the plugin by appending '.disabled' to the file extension
     enabled: true
-    
+
     ssl:
-        passphrase: "stackitssl" # CHANGE THIS
-    
-    # Plugin's maintenance system
-    maintenance:
         enabled: false
+        keystore: "keystore.jks"
+        passphrase: "secret"
 
     api:
         # API port
         port: 5446
-        # Tokens expiration (in milliseconds)
+        # Session expiration (in milliseconds)
         # Default to 12 seconds (12000 milliseconds)
         sessionexpire: 12000
         # API accounts under syntax:
         # username:password
         accounts:
             - "stackit:secret"
-        
-    # The values below will modify the credentials to connect to the database.
-    #
-    # COMPATIBLE WITH:
-    # - MySQL
+
+    # Data storing mode
+    # 'files' by default: stores data into serialized objects files
+    # 'database': stores the data into a database, MySQL ONLY is supported
+    storemode: "files"
+
+    # Fields required if you selected the 'database' storage mode
+    # StackIt only supports MySQL
     database:
-        dao:
-            queue: "org.stackit.database.dao.mysql.MysqlQueueDAO"
-            logs: "org.stackit.database.dao.mysql.MysqlLogsDAO"
-            tokens: "org.stackit.database.dao.mysql.MysqlTokensDAO"
-        type: "mysql" # Connection type (DAO must be loaded)
-        host: "localhost" # Hostname of the database
-        name: "stackit" # Database name
-        username: "stackit" # Username of the user able to access the database
-        password: "stackit" # Password of the user able to access the database.
-        port: 3306 # Database port
+        # The DBMS host address
+        host: '127.0.0.1'
+        # The DBMS Port
+        port: '3306'
+        # The DBMS account username
+        username: 'root'
+        # The DBMS account password
+        password: 'root'
+        # The database name
+        name: 'stackit'
+
+    # Bundles are StackIt extensions. As plugins they easily can steal your data.
+    # This is why you can enable or disable them here.
+    bundles: false

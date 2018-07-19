@@ -1,16 +1,22 @@
 package org.stackit;
 
+import io.noctin.configuration.YamlConfiguration;
 import io.noctin.http.HttpHandler;
 import io.noctin.http.HttpServer;
+import org.apache.commons.io.FileUtils;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.stackit.api.AuthenticationListener;
 import org.stackit.api.RootListener;
+import org.stackit.api.StackItException;
 import spark.Service;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.Socket;
-import java.net.SocketException;
-import java.net.UnknownHostException;
+import java.nio.charset.Charset;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class StackIt extends JavaPlugin {
 
@@ -19,37 +25,68 @@ public class StackIt extends JavaPlugin {
     private HttpServer server;
     private HttpHandler handler;
 
-    // TODO: REPLACE
-    private final int apiPort = 9600;
+    public static final String CONFIGURATION_FILE = "StackIt.yml";
+
+    public YamlConfiguration configuration;
+
+    private boolean disabling = false;
 
     @Override
     public void onLoad() {
-        instance = this;
+        try {
+            instance = this;
 
-        if (portInUse(apiPort)){
-            getServer().getPluginManager().disablePlugin(this);
-        } else {
+            Logger.getLogger("spark").setLevel(Level.ALL);
 
-            // TODO: LOAD PLUGIN CONFIGURATION (FROM YAML)
+            try {
 
-            Service service = Service.ignite();
-            service.port(apiPort);
+                // TODO: Write the configuration file if it does not exists
 
-            this.server = new HttpServer(service);
-            this.handler = this.server.getEventHandler();
+                String yaml = FileUtils.readFileToString(new File(this.getDataFolder() + File.separator + CONFIGURATION_FILE), Charset.defaultCharset());
+
+                this.configuration = new YamlConfiguration(yaml);
+
+                if (!this.configuration.areSet(ConfigNodes.toNodeArray())) throw new StackItException("Missing nodes in the configuration file");
+
+                int apiPort = this.configuration.getInt(ConfigNodes.API_PORT.getNode());
+
+                if (portInUse(apiPort)) throw new StackItException(String.format("The port %s is already in use", apiPort));
+
+                System.out.println(getDataFolder() + File.separator + "StackIt.yml");
+
+                Service service = Service.ignite();
+                service.port(apiPort);
+
+                this.server = new HttpServer(service);
+                this.handler = this.server.getEventHandler();
+            } catch (IOException forwarded) {
+                throw new StackItException(forwarded);
+            }
+        } catch (StackItException e){
+            e.printStackTrace();
+            Logger.getLogger(StackIt.class.getName()).warning("Exiting...");
+            this.disabling = true;
         }
     }
 
     @Override
     public void onEnable() {
-        this.handler.attach(new RootListener());
+        if (!disabling) {
+            this.handler.attach(new RootListener());
+            this.handler.attach(new AuthenticationListener());
 
-        this.server.run();
+            this.server.run();
+        } else {
+            this.getServer().getPluginManager().disablePlugin(this);
+        }
     }
 
     @Override
     public void onDisable() {
-        this.server.stop();
+        if (server != null) this.server.stop();
+        this.server = null;
+        this.handler = null;
+        instance = null;
     }
 
     public static StackIt getInstance(){
@@ -67,5 +104,9 @@ public class StackIt extends JavaPlugin {
         } catch (IOException ignored) {}
 
         return result;
+    }
+
+    public YamlConfiguration getConfiguration() {
+        return configuration;
     }
 }
