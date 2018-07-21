@@ -3,8 +3,9 @@ package org.stackit;
 import io.noctin.configuration.YamlConfiguration;
 import io.noctin.http.HttpHandler;
 import io.noctin.http.HttpServer;
+import io.noctin.logger.LogManager;
+import io.noctin.logger.Logger;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.stackit.api.AuthenticationListener;
@@ -16,11 +17,10 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.Socket;
-import java.net.URL;
 import java.nio.charset.Charset;
-import java.util.List;
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class StackIt extends JavaPlugin {
 
@@ -28,6 +28,7 @@ public class StackIt extends JavaPlugin {
     private static StackIt instance;
     private HttpServer server;
     private HttpHandler handler;
+    public static final Logger LOGGER = LogManager.getLogger();
 
     public static final String CONFIGURATION_FILE = "StackIt.yml";
 
@@ -38,8 +39,10 @@ public class StackIt extends JavaPlugin {
     @Override
     public void onLoad() {
         try {
+
+
+
             instance = this;
-            Logger.getLogger("spark").setLevel(Level.ALL);
 
             File config = new File(this.getDataFolder() + File.separator + CONFIGURATION_FILE);
 
@@ -115,5 +118,17 @@ public class StackIt extends JavaPlugin {
 
     public YamlConfiguration getConfiguration() {
         return configuration;
+    }
+
+    public LinkedList<Account> getAccounts(){
+        ArrayList<String> array = configuration.getStringArray(ConfigNodes.API_ACCOUNTS.getNode());
+
+        LinkedList<Account> accounts = new LinkedList<>();
+
+        for (String s : array) {
+            accounts.add(new Account(s));
+        }
+
+        return accounts;
     }
 }
