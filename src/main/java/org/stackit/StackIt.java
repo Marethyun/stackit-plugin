@@ -3,8 +3,7 @@ package org.stackit;
 import io.noctin.configuration.YamlConfiguration;
 import io.noctin.http.HttpHandler;
 import io.noctin.http.HttpServer;
-import io.noctin.logger.LogManager;
-import io.noctin.logger.Logger;
+import io.noctin.logger.NoctinLogger;
 import org.apache.commons.io.FileUtils;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -27,7 +26,8 @@ public class StackIt extends JavaPlugin {
     private static StackIt instance;
     private HttpServer server;
     private HttpHandler handler;
-    public static final Logger LOGGER = LogManager.getLogger();
+    public static final String LOG_MODEL = "[%%p%] %%l%: %%t%";
+    public static final NoctinLogger LOGGER = new NoctinLogger("StackIt", LOG_MODEL, LOG_MODEL, null);
 
     public static final String CONFIGURATION_FILE = "StackIt.yml";
 
@@ -36,8 +36,12 @@ public class StackIt extends JavaPlugin {
     @Override
     public void onLoad() {
         try {
+            LOGGER.setColorization(true);
 
-
+            Service.LOG.setColorization(true);
+            Service.LOG.setPrefix("StackIt/HTTP");
+            Service.LOG.setLogModel(LOG_MODEL);
+            Service.LOG.setPrefixModel(LOG_MODEL);
 
             instance = this;
 

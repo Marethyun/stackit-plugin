@@ -19,11 +19,16 @@ compileJava.options.encoding = 'UTF-8'
 
 // In this section you declare where to find the dependencies of your project
 repositories {
-    // Use jcenter for resolving your dependencies.
-    // You can declare any Maven/Ivy/file repository here.
-    jcenter()
-    mavenCentral()
 
+    // Private nexus repository
+
+    maven {
+        url "$nexusRepo"
+        credentials {
+            username "$nexusUser"
+            password "$nexusPassword"
+        }
+    }
     maven {
         url "https://hub.spigotmc.org/nexus/content/repositories/snapshots/"
     }
@@ -36,19 +41,14 @@ repositories {
         url = "https://oss.sonatype.org/content/repositories/snapshots/"
     }
 
-    // Private nexus repository
-
-    maven {
-        url "$nexusRepo"
-        credentials {
-            username "$nexusUser"
-            password "$nexusPassword"
-        }
-    }
-
     flatDir {
         dirs '.'
     }
+
+    // Use jcenter for resolving your dependencies.
+    // You can declare any Maven/Ivy/file repository here.
+    jcenter()
+    mavenCentral()
 }
 
 buildscript {
@@ -69,7 +69,7 @@ dependencies {
     // This dependency is used internally, and not exposed to consumers on their own compile classpath.
     implementation 'com.google.guava:guava:21.0'
 
-    compile group: 'io.noctin', name: 'noctin-api', version: '1.1-SNAPSHOT'
+    compile group: 'io.noctin', name: 'noctin-api', version: '1.2.2-SNAPSHOT'
 
     // Spigot 1.12.2
     compileOnly "org.spigotmc:spigot-api:1.12.2-R0.1-SNAPSHOT"
