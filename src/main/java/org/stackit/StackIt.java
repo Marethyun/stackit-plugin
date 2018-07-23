@@ -20,7 +20,6 @@ import java.net.Socket;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.logging.Level;
 
 public class StackIt extends JavaPlugin {
 
@@ -33,8 +32,6 @@ public class StackIt extends JavaPlugin {
     public static final String CONFIGURATION_FILE = "StackIt.yml";
 
     public YamlConfiguration configuration;
-
-    private boolean disabling = false;
 
     @Override
     public void onLoad() {
