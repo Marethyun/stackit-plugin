@@ -1,8 +1,6 @@
 package org.stackit.api;
 
-import io.noctin.configuration.Configuration;
 import io.noctin.configuration.JsonConfiguration;
-import io.noctin.events.After;
 import io.noctin.events.Before;
 import io.noctin.events.Listener;
 import io.noctin.events.Trigger;

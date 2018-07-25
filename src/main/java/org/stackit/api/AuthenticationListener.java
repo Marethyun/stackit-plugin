@@ -27,7 +27,6 @@ public class AuthenticationListener implements Listener {
         if (e.request.session().attribute(SESSION_ATTRIBUTE_NAME) == null){
 
             try {
-
                 JsonConfiguration configuration = new JsonConfiguration(e.request.body());
 
                 if (configuration.areSet("username", "password")) {
@@ -56,7 +55,7 @@ public class AuthenticationListener implements Listener {
                 } else {
                     headers.status(HTTPStatus.BAD_REQUEST);
                 }
-            } catch (NoctinException exception){
+            } catch (Exception exception){
                 headers.message(exception.getMessage());
                 headers.status(HTTPStatus.BAD_REQUEST);
             }

@@ -66,7 +66,7 @@ public class MainListener implements Listener {
      * Returns banned players UUIDs
      * @param e GET /banned
      */
-    @Trigger @EndPoint("/banned")
+    @Trigger @EndPoint("/banned") @Proxy(AuthProxy.class) @Before(BeforeAPI.class)
     public void bannedPlayers(HttpGetEvent e){
         JsonConfiguration configuration = JsonConfiguration.createBlank();
 
