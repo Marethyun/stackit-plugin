@@ -9,7 +9,6 @@
 // Apply the java-library plugin to add support for Java Library
 apply plugin: 'java-library'
 
-
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
 }
@@ -21,7 +20,6 @@ compileJava.options.encoding = 'UTF-8'
 repositories {
 
     // Private nexus repository
-
     maven {
         url "$nexusRepo"
         credentials {
@@ -69,7 +67,7 @@ dependencies {
     // This dependency is used internally, and not exposed to consumers on their own compile classpath.
     implementation 'com.google.guava:guava:21.0'
 
-    compile group: 'io.noctin', name: 'noctin-api', version: '1.2.2-SNAPSHOT'
+    compile group: 'io.noctin', name: 'noctin-api', version: '1.2.3-SNAPSHOT'
 
     // Spigot 1.12.2
     compileOnly "org.spigotmc:spigot-api:1.12.2-R0.1-SNAPSHOT"
