@@ -1,7 +1,6 @@
 /.gradle/
 /.idea/
 /build/
-/out/
 stackit-plugin.iml
 .classpath
 move.bat
