@@ -8,6 +8,7 @@ import org.apache.commons.io.FileUtils;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.stackit.api.AuthenticationListener;
+import org.stackit.api.MainListener;
 import org.stackit.api.RootListener;
 import org.stackit.api.StackItException;
 import spark.Service;
@@ -22,14 +23,15 @@ import java.util.LinkedList;
 
 public class StackIt extends JavaPlugin {
 
+    public static final String LOG_MODEL = "%%l%: %%t%";
+    public static final String PREFIX_MODEL = "[%%p%] %%l%: %%t%";
+    public static final NoctinLogger LOGGER = new NoctinLogger("StackIt", LOG_MODEL, PREFIX_MODEL, null);
+    public static final String CONFIGURATION_FILE = "StackIt.yml";
+
     public final PluginDescriptionFile description = getDescription();
     private static StackIt instance;
     private HttpServer server;
     private HttpHandler handler;
-    public static final String LOG_MODEL = "[%%p%] %%l%: %%t%";
-    public static final NoctinLogger LOGGER = new NoctinLogger("StackIt", LOG_MODEL, LOG_MODEL, null);
-
-    public static final String CONFIGURATION_FILE = "StackIt.yml";
 
     public YamlConfiguration configuration;
 
@@ -57,7 +59,6 @@ public class StackIt extends JavaPlugin {
                 while ((i = in.read()) != -1){
                     yaml += (char) i;
                 }
-
             } else {
                 yaml = FileUtils.readFileToString(config, Charset.defaultCharset());
             }
@@ -77,7 +78,6 @@ public class StackIt extends JavaPlugin {
             // Initialize the HTTP stuff
             this.server = new HttpServer(service);
             this.handler = this.server.getEventHandler();
-            System.out.println("");
         } catch (Exception e){
             e.printStackTrace();
             throw new StackItException(e);
@@ -88,6 +88,7 @@ public class StackIt extends JavaPlugin {
     public void onEnable() {
         this.handler.attach(new RootListener());
         this.handler.attach(new AuthenticationListener());
+        this.handler.attach(new MainListener());
 
         this.server.run();
     }
