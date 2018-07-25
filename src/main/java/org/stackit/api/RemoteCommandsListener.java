@@ -1,6 +1,5 @@
 package org.stackit.api;
 
-import io.noctin.NoctinException;
 import io.noctin.configuration.JsonConfiguration;
 import io.noctin.events.Before;
 import io.noctin.events.Listener;
