@@ -81,4 +81,24 @@ public class MainListener implements Listener {
 
         e.render(new RestEngine(configuration).render());
     }
+
+    /**
+     * Returns whitelisted players UUIDs
+     * @param e GET /whitelist
+     */
+    @Trigger @EndPoint("/whitelist") @Proxy(AuthProxy.class) @Before(BeforeAPI.class)
+    public void whitelistedPlayers(HttpGetEvent e){
+        JsonConfiguration configuration = JsonConfiguration.createBlank();
+
+        LinkedList<UUID> uniqueIds = new LinkedList<>();
+
+        for (OfflinePlayer offlinePlayer : server.getWhitelistedPlayers()) {
+            uniqueIds.add(offlinePlayer.getUniqueId());
+        }
+
+        configuration.set("count", uniqueIds.size());
+        configuration.set("whitelisted", uniqueIds);
+
+        e.render(new RestEngine(configuration).render());
+    }
 }
