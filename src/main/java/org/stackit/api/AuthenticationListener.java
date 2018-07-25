@@ -2,6 +2,7 @@ package org.stackit.api;
 
 import io.noctin.NoctinException;
 import io.noctin.configuration.JsonConfiguration;
+import io.noctin.events.Before;
 import io.noctin.events.Listener;
 import io.noctin.events.Trigger;
 import io.noctin.http.EndPoint;
@@ -19,7 +20,7 @@ public class AuthenticationListener implements Listener {
 
     public static final String SESSION_ATTRIBUTE_NAME = "remote_id";
 
-    @Trigger @EndPoint("/auth")
+    @Trigger @EndPoint("/auth") @Before(BeforeAPI.class)
     public void authenticate(HttpPostEvent e){
         JsonHeaders headers = new JsonHeaders();
 

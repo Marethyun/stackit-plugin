@@ -2,6 +2,8 @@ package org.stackit.api;
 
 import io.noctin.configuration.Configuration;
 import io.noctin.configuration.JsonConfiguration;
+import io.noctin.events.After;
+import io.noctin.events.Before;
 import io.noctin.events.Listener;
 import io.noctin.events.Trigger;
 import io.noctin.http.EndPoint;
@@ -11,10 +13,8 @@ import org.bukkit.plugin.PluginDescriptionFile;
 import org.stackit.StackIt;
 
 public class RootListener implements Listener {
-    @Trigger @EndPoint("/")
+    @Trigger @EndPoint("/") @Before(BeforeAPI.class)
     public void root(HttpGetEvent e){
-
-        e.response.type("application/json");
 
         JsonConfiguration configuration = JsonConfiguration.createBlank();
 
