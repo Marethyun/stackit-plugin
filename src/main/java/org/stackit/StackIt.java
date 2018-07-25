@@ -7,10 +7,7 @@ import io.noctin.logger.NoctinLogger;
 import org.apache.commons.io.FileUtils;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.stackit.api.AuthenticationListener;
-import org.stackit.api.MainListener;
-import org.stackit.api.RootListener;
-import org.stackit.api.StackItException;
+import org.stackit.api.*;
 import spark.Service;
 
 import java.io.File;
@@ -89,6 +86,7 @@ public class StackIt extends JavaPlugin {
         this.handler.attach(new RootListener());
         this.handler.attach(new AuthenticationListener());
         this.handler.attach(new MainListener());
+        this.handler.attach(new RemoteCommandsListener());
 
         this.server.run();
     }
