@@ -45,6 +45,10 @@ public class AuthenticationListener implements Listener {
                         UUID uuid = UUID.randomUUID();
 
                         e.request.session(true);
+
+                        int sessionExpiration = StackIt.getInstance().configuration.getInt(ConfigNodes.API_SESSION_EXPIRE.getNode());
+
+                        e.request.session().maxInactiveInterval(sessionExpiration);
                         e.request.session().attribute(SESSION_ATTRIBUTE_NAME, uuid.toString());
 
                         StackIt.LOGGER.success(String.format("Remote with UUID '%s' (%s) successfully authenticated with account '%s'", uuid, e.request.ip(), account));
