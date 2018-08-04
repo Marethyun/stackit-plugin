@@ -6,6 +6,7 @@ import io.noctin.http.HttpHandler;
 import io.noctin.http.HttpServer;
 import io.noctin.logger.NoctinLogger;
 import org.apache.commons.io.FileUtils;
+import org.bukkit.ChatColor;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.stackit.api.*;
@@ -21,6 +22,8 @@ import java.util.LinkedList;
 
 public final class StackIt extends JavaPlugin {
 
+    public static final String PREFIX = ChatColor.AQUA + "[StackIt] ";
+
     public static final String LOG_MODEL = "%%l%: %%t%";
     public static final String PREFIX_MODEL = "[%%p%] %%l%: %%t%";
     public static final NoctinLogger LOGGER = new NoctinLogger("StackIt", LOG_MODEL, PREFIX_MODEL, null);
@@ -34,6 +37,7 @@ public final class StackIt extends JavaPlugin {
     public YamlConfiguration configuration;
 
     private StackItCommand command = new StackItCommand();
+    private Bundler bundler;
 
     @Override
     public void onLoad() {
@@ -92,6 +96,8 @@ public final class StackIt extends JavaPlugin {
             // Initialize the HTTP stuff
             this.server = new HttpServer(service);
             this.handler = this.server.getEventHandler();
+
+            this.bundler = new Bundler(this.configuration.getBoolean(ConfigNodes.BUNDLES.getNode()), this, this.handler, this.command);
         } catch (StackItException e){
             e.printStackTrace();
             throw e;
@@ -186,5 +192,17 @@ public final class StackIt extends JavaPlugin {
         }
 
         return file;
+    }
+
+    public Bundler getBundler() {
+        return bundler;
+    }
+
+    /**
+     * Just a hook of the previous getter
+     * @return The StackIt bundler
+     */
+    public static Bundler bundler(){
+        return StackIt.getInstance().getBundler();
     }
 }

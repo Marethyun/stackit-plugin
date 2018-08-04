@@ -9,9 +9,10 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
+import static org.stackit.StackIt.PREFIX;
+
 public final class StackItCommand implements CommandExecutor {
 
-    public static final String PREFIX = ChatColor.AQUA + "[StackIt] ";
     public static final String DEFAULT_MESSAGE = PREFIX +  "Hey ! The StackIt main command does nothing unless you specify some arguments..";
     public static final String PERMISSION_MISSING = PREFIX + ChatColor.RED + "You don't have the permission to perform this command...";
 
