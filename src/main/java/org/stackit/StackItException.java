@@ -1,4 +1,4 @@
-package org.stackit.api;
+package org.stackit;
 
 public class StackItException extends RuntimeException {
     public StackItException() {
