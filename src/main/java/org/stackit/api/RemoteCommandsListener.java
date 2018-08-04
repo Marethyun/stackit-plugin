@@ -14,7 +14,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Server;
 import org.stackit.StackIt;
 
-public class RemoteCommandsListener implements Listener {
+public final class RemoteCommandsListener implements Listener {
 
     private static Server server = StackIt.getInstance().getServer();
 

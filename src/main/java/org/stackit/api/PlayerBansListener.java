@@ -23,7 +23,7 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.Set;
 
-public class PlayerBansListener implements Listener {
+public final class PlayerBansListener implements Listener {
 
     /**
      * Returns banned players UUIDs

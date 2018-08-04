@@ -9,7 +9,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
-public class StackItCommand implements CommandExecutor {
+public final class StackItCommand implements CommandExecutor {
 
     public static final String PREFIX = ChatColor.AQUA + "[StackIt] ";
     public static final String DEFAULT_MESSAGE = PREFIX +  "Hey ! The StackIt main command does nothing unless you specify some arguments..";

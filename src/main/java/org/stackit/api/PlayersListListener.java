@@ -14,7 +14,7 @@ import org.stackit.StackIt;
 
 import java.util.LinkedList;
 
-public class PlayersListListener implements Listener{
+public final class PlayersListListener implements Listener{
 
     private static Server server = StackIt.getInstance().getServer();
 

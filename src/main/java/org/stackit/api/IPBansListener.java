@@ -22,7 +22,7 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.Set;
 
-public class IPBansListener implements Listener {
+public final class IPBansListener implements Listener {
     @Trigger
     @EndPoint("/bannedips") @Proxy(AuthProxy.class) @Before(ContentType.class)
     public void get(HttpGetEvent e){

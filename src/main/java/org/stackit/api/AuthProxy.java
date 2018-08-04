@@ -7,7 +7,7 @@ import io.noctin.network.http.server.HTTPStatus;
 import io.noctin.network.http.server.renderer.JsonHeaders;
 import io.noctin.network.http.server.renderer.RestEngine;
 
-public class AuthProxy extends EventProxy {
+public final class AuthProxy extends EventProxy {
     @Override
     public boolean forward(Event event) {
 

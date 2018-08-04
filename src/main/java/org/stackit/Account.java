@@ -1,6 +1,6 @@
 package org.stackit;
 
-public class Account {
+public final class Account {
 
     public static final String ID_SEPRATOR = ":";
 

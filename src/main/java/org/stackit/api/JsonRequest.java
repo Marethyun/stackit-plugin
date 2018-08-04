@@ -10,7 +10,7 @@ import io.noctin.network.http.server.HTTPStatus;
 import io.noctin.network.http.server.renderer.JsonHeaders;
 import io.noctin.network.http.server.renderer.RestEngine;
 
-public class JsonRequest extends EventProxy {
+public final class JsonRequest extends EventProxy {
 
     @Override
     public boolean forward(Event event) {

@@ -19,7 +19,7 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-public class StackIt extends JavaPlugin {
+public final class StackIt extends JavaPlugin {
 
     public static final String LOG_MODEL = "%%l%: %%t%";
     public static final String PREFIX_MODEL = "[%%p%] %%l%: %%t%";

@@ -17,7 +17,7 @@ import org.stackit.StackIt;
 import java.util.LinkedList;
 import java.util.UUID;
 
-public class AuthenticationListener implements Listener {
+public final class AuthenticationListener implements Listener {
 
     public static final String SESSION_ATTRIBUTE_NAME = "remote_id";
 

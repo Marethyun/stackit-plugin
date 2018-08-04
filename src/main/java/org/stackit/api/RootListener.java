@@ -12,7 +12,7 @@ import org.bukkit.Server;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.stackit.StackIt;
 
-public class RootListener implements Listener {
+public final class RootListener implements Listener {
 
     private static Server server = StackIt.getInstance().getServer();
 

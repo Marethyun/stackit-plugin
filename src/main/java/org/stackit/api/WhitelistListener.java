@@ -20,7 +20,7 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.UUID;
 
-public class WhitelistListener implements Listener {
+public final class WhitelistListener implements Listener {
 
     private static Server server = StackIt.getInstance().getServer();
 
