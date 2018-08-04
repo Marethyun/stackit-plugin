@@ -13,14 +13,14 @@ public class AuthProxy extends EventProxy {
 
         HttpEvent e = (HttpEvent) event;
 
+        e.response.type(ContentType.JSON_CONTENT_TYPE);
+
         if (e.request.session().attribute(AuthenticationListener.SESSION_ATTRIBUTE_NAME) == null){
 
             JsonHeaders headers = new JsonHeaders();
-
             headers.status(HTTPStatus.UNAUTHORIZED);
 
             e.render(new RestEngine(headers).render());
-
             return false;
         }
 
