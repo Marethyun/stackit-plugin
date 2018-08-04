@@ -4,7 +4,7 @@ import io.noctin.events.Event;
 import io.noctin.events.TriggerCallback;
 import io.noctin.http.HttpEvent;
 
-public class BeforeAPI extends TriggerCallback {
+public class ContentType extends TriggerCallback {
 
     public static final String JSON_CONTENT_TYPE = "application/json";
 
