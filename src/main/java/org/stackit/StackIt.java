@@ -1,5 +1,6 @@
 package org.stackit;
 
+import io.noctin.configuration.ErroneousConfigException;
 import io.noctin.configuration.YamlConfiguration;
 import io.noctin.http.HttpHandler;
 import io.noctin.http.HttpServer;
@@ -44,37 +45,54 @@ public class StackIt extends JavaPlugin {
 
             instance = this;
 
-            File config = new File(this.getDataFolder() + File.separator + CONFIGURATION_FILE);
+            File configFile = this.resolveFile(CONFIGURATION_FILE);
 
-            String yaml = "";
-
-            if (!config.exists()){
-                // Read the configuration file from classPath
-                InputStream in = getClass().getClassLoader().getResourceAsStream(CONFIGURATION_FILE);
-
-                int i;
-                while ((i = in.read()) != -1){
-                    yaml += (char) i;
-                }
-            } else {
-                yaml = FileUtils.readFileToString(config, Charset.defaultCharset());
-            }
+            String yaml = FileUtils.readFileToString(configFile, Charset.defaultCharset());
 
             this.configuration = new YamlConfiguration(yaml);
 
-            if (!this.configuration.areSet(ConfigNodes.toNodeArray())) throw new StackItException("Missing nodes in the configuration file");
+            if (!this.configuration.areSet(ConfigNodes.toNodeArray()))
+                throw new StackItException("Missing nodes in the configuration file");
 
             int port = this.configuration.getInt(ConfigNodes.API_PORT.getNode());
 
             if (portInUse(port)) throw new StackItException(String.format("The port %s is already in use", port));
 
+
             // Initialize the spark instance
             Service service = Service.ignite();
             service.port(port);
 
+            // SSL/TLS Encryption
+            if (this.configuration.getBoolean(ConfigNodes.SSL_ENABLED.getNode())) {
+                String keyStorePath = this.configuration.getString(ConfigNodes.SSL_KEYSTORE_PATH.getNode());
+                String trustStorePath = this.configuration.getString(ConfigNodes.SSL_KEYSTORE_PATH.getNode());
+
+                String keyStorePass = this.configuration.getString(ConfigNodes.SSL_KEYSTORE_PASSPHRASE.getNode());
+                String trustStorePass = this.configuration.getString(ConfigNodes.SSL_TRUST_STORE_PASSPHRASE.getNode());
+
+                if (keyStorePath == null) {
+                    throw new ErroneousConfigException("Keystore path isn't filled in configuration");
+                }
+
+                if (trustStorePath.isEmpty()) {
+                    LOGGER.warn("Trust store location not filled, clients will not be able to confirm certificates validity");
+                    trustStorePath = null;
+                    trustStorePass = null;
+                }
+
+                File keyStore = resolveFile(keyStorePath);
+
+                service.secure(keyStore.getAbsolutePath(), keyStorePass, trustStorePath, trustStorePass);
+
+            }
+
             // Initialize the HTTP stuff
             this.server = new HttpServer(service);
             this.handler = this.server.getEventHandler();
+        } catch (StackItException e){
+            e.printStackTrace();
+            throw e;
         } catch (Exception e){
             e.printStackTrace();
             throw new StackItException(e);
@@ -85,8 +103,11 @@ public class StackIt extends JavaPlugin {
     public void onEnable() {
         this.handler.attach(new RootListener());
         this.handler.attach(new AuthenticationListener());
-        this.handler.attach(new MainListener());
         this.handler.attach(new RemoteCommandsListener());
+        this.handler.attach(new PlayerBansListener());
+        this.handler.attach(new IPBansListener());
+        this.handler.attach(new WhitelistListener());
+        this.handler.attach(new PlayersListListener());
 
         this.server.run();
     }
@@ -130,5 +151,35 @@ public class StackIt extends JavaPlugin {
         }
 
         return accounts;
+    }
+
+    /**
+     * Resolve a file: if it doesn't exists in datafolder, just create it from the template in path
+     * Returns the file content anyway
+     * @param fileName The file name
+     */
+    private File resolveFile(String fileName) {
+        File file = new File(this.getDataFolder(), fileName);
+
+        if (!file.exists()){
+            try (InputStream stream = getClass().getResourceAsStream('/' + fileName)){
+                System.out.println(fileName);
+
+                String content = "";
+
+                int i;
+
+                while ((i = stream.read()) != -1){
+                    content += (char) i;
+                }
+
+                FileUtils.writeStringToFile(file, content, Charset.defaultCharset());
+            } catch (Exception e){
+                e.printStackTrace();
+                throw new StackItException(e);
+            }
+        }
+
+        return file;
     }
 }
