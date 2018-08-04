@@ -1,9 +1,9 @@
 package org.stackit.api;
 
-import io.noctin.NoctinException;
 import io.noctin.configuration.JsonConfiguration;
 import io.noctin.events.Before;
 import io.noctin.events.Listener;
+import io.noctin.events.Proxy;
 import io.noctin.events.Trigger;
 import io.noctin.http.EndPoint;
 import io.noctin.http.HttpPostEvent;
@@ -11,6 +11,7 @@ import io.noctin.network.http.server.HTTPStatus;
 import io.noctin.network.http.server.renderer.JsonHeaders;
 import io.noctin.network.http.server.renderer.RestEngine;
 import org.stackit.Account;
+import org.stackit.ConfigNodes;
 import org.stackit.StackIt;
 
 import java.util.LinkedList;
@@ -20,19 +21,20 @@ public class AuthenticationListener implements Listener {
 
     public static final String SESSION_ATTRIBUTE_NAME = "remote_id";
 
-    @Trigger @EndPoint("/auth") @Before(BeforeAPI.class)
+    @Trigger
+    @EndPoint("/auth") @Proxy(JsonRequest.class) @Before(ContentType.class)
     public void authenticate(HttpPostEvent e){
         JsonHeaders headers = new JsonHeaders();
 
         if (e.request.session().attribute(SESSION_ATTRIBUTE_NAME) == null){
 
             try {
-                JsonConfiguration configuration = new JsonConfiguration(e.request.body());
+                JsonConfiguration body = new JsonConfiguration(e.request.body());
 
-                if (configuration.areSet("username", "password")) {
+                if (body.areSet("username", "password")) {
 
-                    String username = configuration.getString("username");
-                    String password = configuration.getString("password");
+                    String username = body.getString("username");
+                    String password = body.getString("password");
 
                     Account account = new Account(username, password);
 
