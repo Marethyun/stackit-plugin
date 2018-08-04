@@ -33,6 +33,8 @@ public class StackIt extends JavaPlugin {
 
     public YamlConfiguration configuration;
 
+    private StackItCommand command = new StackItCommand();
+
     @Override
     public void onLoad() {
         try {
@@ -101,6 +103,9 @@ public class StackIt extends JavaPlugin {
 
     @Override
     public void onEnable() {
+
+        this.getCommand("stackit").setExecutor(this.command);
+
         this.handler.attach(new RootListener());
         this.handler.attach(new AuthenticationListener());
         this.handler.attach(new RemoteCommandsListener());
