@@ -18,7 +18,7 @@ public class RemoteCommandsListener implements Listener {
 
     private static Server server = StackIt.getInstance().getServer();
 
-    @Trigger @EndPoint("/command") @Proxy(AuthProxy.class) @Before(BeforeAPI.class)
+    @Trigger @EndPoint("/command") @Proxy({AuthProxy.class, JsonRequest.class}) @Before(ContentType.class)
     public void execute(HttpPostEvent e){
 
         JsonHeaders headers = new JsonHeaders();
