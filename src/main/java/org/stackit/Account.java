@@ -1,7 +1,5 @@
 package org.stackit;
 
-import org.stackit.api.StackItException;
-
 public class Account {
 
     public static final String ID_SEPRATOR = ":";
