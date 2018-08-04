@@ -5,41 +5,36 @@ StackIt:
     # It's recommended to safely disable the plugin by appending '.disabled' to the file extension
     enabled: true
 
-    ssl:
-        enabled: false
-        keystore: "keystore.jks"
-        passphrase: "secret"
+    # Bundles are StackIt extensions. As plugins they easily can steal your data.
+    # This is why you can enable or disable them here.
+    bundles: false
+
+    # Whether you want to send generic informations to the OPs players when they join the server
+    notify-ops: true
 
     api:
         # API port
         port: 5446
-        # Session expiration (in milliseconds)
-        # Default to 12 seconds (12000 milliseconds)
-        sessionexpire: 12000
+        # Session expiration (in seconds)
+        # Default to 12 seconds
+        sessionexpire: 12
         # API accounts under syntax:
         # username:password
         accounts:
             - "stackit:secret"
 
-    # Data storing mode
-    # 'files' by default: stores data into serialized objects files
-    # 'database': stores the data into a database, MySQL ONLY is supported
-    storemode: "files"
+    ssl:
+        # Is encryption enabled ?
+        enabled: false
 
-    # Fields required if you selected the 'database' storage mode
-    # StackIt only supports MySQL
-    database:
-        # The DBMS host address
-        host: '127.0.0.1'
-        # The DBMS Port
-        port: '3306'
-        # The DBMS account username
-        username: 'root'
-        # The DBMS account password
-        password: 'root'
-        # The database name
-        name: 'stackit'
+        # Keystore info
+        keystore:
+            path: "keystore.p12"
+            passphrase: "f9a0cba1846db32b213053b2cefeac10"
 
-    # Bundles are StackIt extensions. As plugins they easily can steal your data.
-    # This is why you can enable or disable them here.
-    bundles: false
+        # Truststore info
+        # By default, the fields are set blank, assuming your SSL certificate
+        # has been signed by a certificate authority
+        truststore:
+            path: ""
+            passphrase: ""
