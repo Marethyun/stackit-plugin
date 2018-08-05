@@ -2,6 +2,7 @@ package org.stackit;
 
 import io.noctin.configuration.ErroneousConfigException;
 import io.noctin.configuration.YamlConfiguration;
+import io.noctin.events.EntityHandler;
 import io.noctin.http.HttpHandler;
 import io.noctin.http.HttpServer;
 import org.apache.commons.io.FileUtils;
@@ -31,7 +32,7 @@ public final class StackIt extends JavaPlugin {
 
     public YamlConfiguration configuration;
 
-    private StackItCommand command = new StackItCommand();
+    private StackItCommand command = new StackItCommand(this);
     private Bundler bundler;
 
     @Override
@@ -86,7 +87,7 @@ public final class StackIt extends JavaPlugin {
             this.server = new HttpServer(service);
             this.handler = this.server.getEventHandler();
 
-            this.bundler = new Bundler(this.configuration.getBoolean(ConfigNodes.BUNDLES.getNode()), this, this.handler, this.command);
+            this.bundler = new Bundler(this);
         } catch (StackItException e){
             e.printStackTrace();
             throw e;
@@ -120,7 +121,7 @@ public final class StackIt extends JavaPlugin {
         instance = null;
     }
 
-    public static StackIt getInstance(){
+    private static StackIt getInstance(){
         return instance;
     }
 
@@ -197,5 +198,13 @@ public final class StackIt extends JavaPlugin {
 
     public StackItLogger logger() {
         return logger;
+    }
+
+    public EntityHandler getHandler() {
+        return handler;
+    }
+
+    public StackItCommand getCommand() {
+        return command;
     }
 }

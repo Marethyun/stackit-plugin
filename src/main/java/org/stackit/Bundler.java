@@ -4,31 +4,31 @@ import io.noctin.events.EntityHandler;
 
 import java.util.LinkedList;
 
-import static org.stackit.StackIt.PREFIX;
+public final class Bundler extends StackItContainer {
 
-public final class Bundler {
+    private StackItLogger LOGGER = pluginInstance.logger();
 
-    public static final String BUNDLE_ENABLED_MESSAGE = PREFIX + "Bundle %s successfully enabled";
+    public static final String BUNDLE_ENABLED_MESSAGE = "Bundle %s successfully enabled";
 
     private final boolean enabled;
-    private final StackIt mainPlugin;
     private final EntityHandler handler;
     private final StackItCommand command;
 
     private final LinkedList<StackItBundle> bundles = new LinkedList<>();
 
-    public Bundler(boolean enabled, StackIt mainPlugin, EntityHandler handler, StackItCommand command) {
-        this.enabled = enabled;
-        this.mainPlugin = mainPlugin;
-        this.handler = handler;
-        this.command = command;
+    public Bundler(StackIt pluginInstance) {
+        super(pluginInstance);
+
+        this.enabled = pluginInstance.getConfiguration().getBoolean(ConfigNodes.BUNDLES.getNode());
+        this.handler = pluginInstance.getHandler();
+        this.command = pluginInstance.getCommand();
     }
+
 
     public void registerBundle(StackItBundle bundle) throws BundlerDisabledException{
         if (this.enabled){
             bundles.add(bundle);
-
-            StackIt.LOGGER.success(String.format(BUNDLE_ENABLED_MESSAGE, bundle.getName()));
+            LOGGER.success(String.format(BUNDLE_ENABLED_MESSAGE, bundle.getName()));
         } else {
             throw new BundlerDisabledException();
         }

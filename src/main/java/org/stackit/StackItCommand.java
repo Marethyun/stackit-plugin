@@ -9,34 +9,40 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
-import static org.stackit.StackIt.PREFIX;
+public final class StackItCommand extends StackItContainer implements CommandExecutor {
 
-public final class StackItCommand implements CommandExecutor {
+    private StackItLogger logger;
 
-    public static final String DEFAULT_MESSAGE = PREFIX +  "Hey ! The StackIt main command does nothing unless you specify some arguments..";
-    public static final String PERMISSION_MISSING = PREFIX + ChatColor.RED + "You don't have the permission to perform this command...";
+    public static final String DEFAULT_MESSAGE = "Hey ! The StackIt main command does nothing unless you specify some arguments..";
+    public static final String PERMISSION_MISSING = "You don't have the permission to perform this command...";
 
     private final HashMap<String, StackItCommand.Option> registeredOptions = new LinkedHashMap<>();
 
+    public StackItCommand(StackIt pluginInstance) {
+        super(pluginInstance);
+    }
+
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+
+        this.logger = new StackItLogger(pluginInstance, sender);
 
         if (sender.hasPermission(StackItPermissions.STACKIT_COMMAND.getPermission())){
             if (args.length > 0){
                 StackItCommand.Option option = registeredOptions.get(args[1]);
 
                 if (option == null) {
-                    sender.sendMessage(DEFAULT_MESSAGE);
-                    sender.sendMessage(PREFIX + "Usage: " + command.getUsage());
+                    logger.info(DEFAULT_MESSAGE);
+                    logger.info("Usage: " + command.getUsage());
                 } else {
                     return option.onCommand(sender, command, label, Arrays.copyOfRange(args, 1, args.length));
                 }
             } else {
-                sender.sendMessage(DEFAULT_MESSAGE);
-                sender.sendMessage(PREFIX + "Usage: " + command.getUsage());
+                logger.info(DEFAULT_MESSAGE);
+                logger.info("Usage: " + command.getUsage());
             }
         } else {
-            sender.sendMessage(PERMISSION_MISSING);
+            logger.error(PERMISSION_MISSING);
         }
         return true;
     }
