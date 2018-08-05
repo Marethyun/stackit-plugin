@@ -10,16 +10,20 @@ import io.noctin.http.HttpPostEvent;
 import io.noctin.network.http.server.HTTPStatus;
 import io.noctin.network.http.server.renderer.JsonHeaders;
 import io.noctin.network.http.server.renderer.RestEngine;
-import org.stackit.Account;
-import org.stackit.ConfigNodes;
-import org.stackit.StackIt;
+import org.stackit.*;
 
 import java.util.LinkedList;
 import java.util.UUID;
 
-public final class AuthenticationListener implements Listener {
+public final class AuthenticationListener extends StackItContainer implements Listener {
 
     public static final String SESSION_ATTRIBUTE_NAME = "remote_id";
+
+    private final StackItLogger LOGGER = pluginInstance.logger();
+
+    public AuthenticationListener(StackIt pluginInstance) {
+        super(pluginInstance);
+    }
 
     @Trigger
     @EndPoint("/auth") @Proxy(JsonRequest.class) @Before(ContentType.class)
@@ -38,7 +42,7 @@ public final class AuthenticationListener implements Listener {
 
                     Account account = new Account(username, password);
 
-                    LinkedList<Account> accounts = StackIt.getInstance().getAccounts();
+                    LinkedList<Account> accounts = pluginInstance.getAccounts();
 
                     if (accounts.contains(account)){
 
@@ -46,16 +50,16 @@ public final class AuthenticationListener implements Listener {
 
                         e.request.session(true);
 
-                        int sessionExpiration = StackIt.getInstance().configuration.getInt(ConfigNodes.API_SESSION_EXPIRE.getNode());
+                        int sessionExpiration = pluginInstance.configuration.getInt(ConfigNodes.API_SESSION_EXPIRE.getNode());
 
                         e.request.session().maxInactiveInterval(sessionExpiration);
                         e.request.session().attribute(SESSION_ATTRIBUTE_NAME, uuid.toString());
 
-                        StackIt.LOGGER.success(String.format("Remote with UUID '%s' (%s) successfully authenticated with account '%s'", uuid, e.request.ip(), account));
+                        LOGGER.success(String.format("Remote with UUID '%s' (%s) successfully authenticated with account '%s'", uuid, e.request.ip(), account));
 
                         headers.message("Remote successfully authenticated, session created");
                     } else {
-                        StackIt.LOGGER.warn(String.format("Remote with ip '%s' tried to authenticate with invalid account '%s'", e.request.ip(), account));
+                        LOGGER.warn(String.format("Remote with ip '%s' tried to authenticate with invalid account '%s'", e.request.ip(), account));
                         headers.status(HTTPStatus.UNAUTHORIZED);
                     }
                 } else {

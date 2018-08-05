@@ -2,11 +2,10 @@ package org.stackit;
 
 import io.noctin.configuration.ErroneousConfigException;
 import io.noctin.configuration.YamlConfiguration;
+import io.noctin.events.EntityHandler;
 import io.noctin.http.HttpHandler;
 import io.noctin.http.HttpServer;
-import io.noctin.logger.NoctinLogger;
 import org.apache.commons.io.FileUtils;
-import org.bukkit.ChatColor;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.stackit.api.*;
@@ -22,11 +21,8 @@ import java.util.LinkedList;
 
 public final class StackIt extends JavaPlugin {
 
-    public static final String PREFIX = ChatColor.AQUA + "[StackIt] ";
+    private final StackItLogger logger = new StackItLogger(this, getServer().getConsoleSender());
 
-    public static final String LOG_MODEL = "%%l%: %%t%";
-    public static final String PREFIX_MODEL = "[%%p%] %%l%: %%t%";
-    public static final NoctinLogger LOGGER = new NoctinLogger("StackIt", LOG_MODEL, PREFIX_MODEL, null);
     public static final String CONFIGURATION_FILE = "StackIt.yml";
 
     public final PluginDescriptionFile description = getDescription();
@@ -36,18 +32,12 @@ public final class StackIt extends JavaPlugin {
 
     public YamlConfiguration configuration;
 
-    private StackItCommand command = new StackItCommand();
+    private StackItCommand command = new StackItCommand(this);
     private Bundler bundler;
 
     @Override
     public void onLoad() {
         try {
-            LOGGER.setColorization(true);
-
-            Service.LOG.setColorization(true);
-            Service.LOG.setPrefix("StackIt/HTTP");
-            Service.LOG.setLogModel(LOG_MODEL);
-            Service.LOG.setPrefixModel(LOG_MODEL);
 
             instance = this;
 
@@ -82,7 +72,7 @@ public final class StackIt extends JavaPlugin {
                 }
 
                 if (trustStorePath.isEmpty()) {
-                    LOGGER.warn("Trust store location not filled, clients will not be able to confirm certificates validity");
+                    logger.warn("Trust store location not filled, clients will not be able to confirm certificates validity");
                     trustStorePath = null;
                     trustStorePass = null;
                 }
@@ -97,7 +87,7 @@ public final class StackIt extends JavaPlugin {
             this.server = new HttpServer(service);
             this.handler = this.server.getEventHandler();
 
-            this.bundler = new Bundler(this.configuration.getBoolean(ConfigNodes.BUNDLES.getNode()), this, this.handler, this.command);
+            this.bundler = new Bundler(this);
         } catch (StackItException e){
             e.printStackTrace();
             throw e;
@@ -112,13 +102,13 @@ public final class StackIt extends JavaPlugin {
 
         this.getCommand("stackit").setExecutor(this.command);
 
-        this.handler.attach(new RootListener());
-        this.handler.attach(new AuthenticationListener());
-        this.handler.attach(new RemoteCommandsListener());
-        this.handler.attach(new PlayerBansListener());
-        this.handler.attach(new IPBansListener());
-        this.handler.attach(new WhitelistListener());
-        this.handler.attach(new PlayersListListener());
+        this.handler.attach(new RootListener(this));
+        this.handler.attach(new AuthenticationListener(this));
+        this.handler.attach(new RemoteCommandsListener(this));
+        this.handler.attach(new PlayerBansListener(this));
+        this.handler.attach(new IPBansListener(this));
+        this.handler.attach(new WhitelistListener(this));
+        this.handler.attach(new PlayersListListener(this));
 
         this.server.run();
     }
@@ -131,7 +121,7 @@ public final class StackIt extends JavaPlugin {
         instance = null;
     }
 
-    public static StackIt getInstance(){
+    private static StackIt getInstance(){
         return instance;
     }
 
@@ -204,5 +194,17 @@ public final class StackIt extends JavaPlugin {
      */
     public static Bundler bundler(){
         return StackIt.getInstance().getBundler();
+    }
+
+    public StackItLogger logger() {
+        return logger;
+    }
+
+    public EntityHandler getHandler() {
+        return handler;
+    }
+
+    public StackItCommand getCommand() {
+        return command;
     }
 }

@@ -17,12 +17,21 @@ import org.bukkit.BanList;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.stackit.StackIt;
+import org.stackit.StackItContainer;
+import org.stackit.StackItLogger;
 
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.Set;
 
-public final class IPBansListener implements Listener {
+public final class IPBansListener extends StackItContainer implements Listener {
+
+    private final StackItLogger LOGGER = pluginInstance.logger();
+
+    public IPBansListener(StackIt pluginInstance) {
+        super(pluginInstance);
+    }
+
     @Trigger
     @EndPoint("/bannedips") @Proxy(AuthProxy.class) @Before(ContentType.class)
     public void get(HttpGetEvent e){
@@ -87,7 +96,7 @@ public final class IPBansListener implements Listener {
                 }
             }
 
-            StackIt.LOGGER.success(String.format("Remote with UUID '%s' Successfully banned ip address '%s'", e.request.session().attribute(AuthenticationListener.SESSION_ATTRIBUTE_NAME), ipAddress));
+            LOGGER.success(String.format("Remote with UUID '%s' Successfully banned ip address '%s'", e.request.session().attribute(AuthenticationListener.SESSION_ATTRIBUTE_NAME), ipAddress));
 
         } else {
             headers.status(HTTPStatus.BAD_REQUEST);
@@ -107,7 +116,7 @@ public final class IPBansListener implements Listener {
 
             Bukkit.getBanList(BanList.Type.IP).pardon(ipAddress);
 
-            StackIt.LOGGER.success(String.format("Remote with UUID '%s' Successfully unbanned ip address '%s'", e.request.session().attribute(AuthenticationListener.SESSION_ATTRIBUTE_NAME), ipAddress));
+            LOGGER.success(String.format("Remote with UUID '%s' Successfully unbanned ip address '%s'", e.request.session().attribute(AuthenticationListener.SESSION_ATTRIBUTE_NAME), ipAddress));
 
         } else {
             headers.status(HTTPStatus.BAD_REQUEST);
