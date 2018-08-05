@@ -49,17 +49,6 @@ repositories {
     mavenCentral()
 }
 
-buildscript {
-    repositories {
-        maven {
-            url "https://plugins.gradle.org/m2/"
-        }
-    }
-    dependencies {
-        classpath "com.github.jengelman.gradle.plugins:shadow:1.2.4"
-    }
-}
-
 dependencies {
     // This dependency is exported to consumers, that is to say found on their compile classpath.
     api 'org.apache.commons:commons-math3:3.6.1'
@@ -75,6 +64,17 @@ dependencies {
     //compile 'org.jdbi:jdbi:2.78'
     testImplementation 'junit:junit:4.12'
     compile group: 'commons-io', name: 'commons-io', version: '2.4'
+}
+
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "com.github.jengelman.gradle.plugins:shadow:1.2.4"
+    }
 }
 
 apply plugin: "com.github.johnrengelman.shadow"
