@@ -5,7 +5,6 @@
  author: Marethyun
  
  main: org.stackit.StackIt
- database: true
  
  commands:
      stackit:
