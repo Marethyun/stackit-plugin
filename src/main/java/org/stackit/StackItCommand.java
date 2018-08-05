@@ -1,6 +1,5 @@
 package org.stackit;
 
-import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -25,7 +24,7 @@ public final class StackItCommand extends StackItContainer implements CommandExe
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
-        this.logger = new StackItLogger(pluginInstance, sender);
+        this.logger = new StackItLogger(sender);
 
         if (sender.hasPermission(StackItPermissions.STACKIT_COMMAND.getPermission())){
             if (args.length > 0){

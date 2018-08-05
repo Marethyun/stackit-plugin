@@ -1,25 +1,22 @@
 package org.stackit;
 
 import org.bukkit.ChatColor;
-import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
 
 import static org.stackit.StackItLogger.LevelColors.*;
 
-public final class StackItLogger extends StackItContainer {
+public final class StackItLogger {
 
-    private final String prefix;
-    private final Server server = this.pluginInstance.getServer();
     private final CommandSender sender;
+    private final String prefix;
 
-    public StackItLogger(StackIt pluginInstance, CommandSender sender, String prefix) {
-        super(pluginInstance);
+    public StackItLogger(CommandSender sender, String prefix) {
         this.sender = sender;
         this.prefix = prefix;
     }
 
-    public StackItLogger(StackIt pluginInstance, CommandSender sender) {
-        this(pluginInstance, sender, ChatColor.AQUA + "[StackIt] ");
+    public StackItLogger(CommandSender sender) {
+        this(sender, ChatColor.AQUA + "[StackIt] ");
     }
 
     public void info(Object message){

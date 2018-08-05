@@ -21,7 +21,7 @@ import java.util.LinkedList;
 
 public final class StackIt extends JavaPlugin {
 
-    private final StackItLogger logger = new StackItLogger(this, getServer().getConsoleSender());
+    private final StackItLogger logger = new StackItLogger(getServer().getConsoleSender());
 
     public static final String CONFIGURATION_FILE = "StackIt.yml";
 
