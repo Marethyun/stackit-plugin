@@ -8,7 +8,7 @@ public final class Bundler extends StackItContainer {
 
     private StackItLogger LOGGER = pluginInstance.logger();
 
-    public static final String BUNDLE_ENABLED_MESSAGE = "Bundle %s successfully enabled";
+    public static final String BUNDLE_ENABLED_MESSAGE = "Bundle '%s' successfully registered";
 
     private final boolean enabled;
     private final EntityHandler handler;
