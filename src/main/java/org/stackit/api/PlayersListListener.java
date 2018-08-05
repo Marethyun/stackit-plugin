@@ -11,12 +11,17 @@ import io.noctin.network.http.server.renderer.RestEngine;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.stackit.StackIt;
+import org.stackit.StackItContainer;
 
 import java.util.LinkedList;
 
-public final class PlayersListListener implements Listener{
+public final class PlayersListListener extends StackItContainer implements Listener{
 
-    private static Server server = StackIt.getInstance().getServer();
+    private Server server = this.pluginInstance.getServer();
+
+    public PlayersListListener(StackIt pluginInstance) {
+        super(pluginInstance);
+    }
 
     /**
      * Returns online players UUIDs

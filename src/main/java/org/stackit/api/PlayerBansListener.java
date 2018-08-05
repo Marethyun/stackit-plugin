@@ -18,12 +18,20 @@ import org.bukkit.Bukkit;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.stackit.StackIt;
+import org.stackit.StackItContainer;
+import org.stackit.StackItLogger;
 
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.Set;
 
-public final class PlayerBansListener implements Listener {
+public final class PlayerBansListener extends StackItContainer implements Listener {
+
+    private final StackItLogger LOGGER = pluginInstance.logger();
+
+    public PlayerBansListener(StackIt pluginInstance) {
+        super(pluginInstance);
+    }
 
     /**
      * Returns banned players UUIDs
@@ -90,11 +98,11 @@ public final class PlayerBansListener implements Listener {
             for (Player p : Bukkit.getOnlinePlayers()){
                 if (p.getDisplayName().equals(playerName)){
                     // Synchronous kick
-                    Bukkit.getScheduler().runTask(StackIt.getInstance(), () -> p.kickPlayer(reason));
+                    Bukkit.getScheduler().runTask(pluginInstance, () -> p.kickPlayer(reason));
                 }
             }
 
-            StackIt.LOGGER.success(String.format("Remote with UUID '%s' Successfully banned player '%s'", e.request.session().attribute(AuthenticationListener.SESSION_ATTRIBUTE_NAME), playerName));
+            LOGGER.success(String.format("Remote with UUID '%s' Successfully banned player '%s'", e.request.session().attribute(AuthenticationListener.SESSION_ATTRIBUTE_NAME), playerName));
 
         } else {
             headers.status(HTTPStatus.BAD_REQUEST);
@@ -114,7 +122,7 @@ public final class PlayerBansListener implements Listener {
 
             Bukkit.getBanList(BanList.Type.NAME).pardon(playerName);
 
-            StackIt.LOGGER.success(String.format("Remote with UUID '%s' Successfully unbanned player '%s'", e.request.session().attribute(AuthenticationListener.SESSION_ATTRIBUTE_NAME), playerName));
+            LOGGER.success(String.format("Remote with UUID '%s' Successfully unbanned player '%s'", e.request.session().attribute(AuthenticationListener.SESSION_ATTRIBUTE_NAME), playerName));
 
         } else {
             headers.status(HTTPStatus.BAD_REQUEST);

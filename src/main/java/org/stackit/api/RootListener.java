@@ -11,17 +11,22 @@ import io.noctin.network.http.server.renderer.RestEngine;
 import org.bukkit.Server;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.stackit.StackIt;
+import org.stackit.StackItContainer;
 
-public final class RootListener implements Listener {
+public final class RootListener extends StackItContainer implements Listener {
 
-    private static Server server = StackIt.getInstance().getServer();
+    private Server server = this.pluginInstance.getServer();
+
+    public RootListener(StackIt pluginInstance) {
+        super(pluginInstance);
+    }
 
     @Trigger @EndPoint("/") @Before(ContentType.class)
     public void root(HttpGetEvent e){
 
         JsonConfiguration configuration = JsonConfiguration.createBlank();
 
-        PluginDescriptionFile description = StackIt.getInstance().description;
+        PluginDescriptionFile description = pluginInstance.description;
 
         configuration.set("stackit-version", description.getVersion());
 

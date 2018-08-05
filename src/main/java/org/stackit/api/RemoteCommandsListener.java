@@ -13,10 +13,18 @@ import io.noctin.network.http.server.renderer.RestEngine;
 import org.bukkit.Bukkit;
 import org.bukkit.Server;
 import org.stackit.StackIt;
+import org.stackit.StackItContainer;
+import org.stackit.StackItLogger;
 
-public final class RemoteCommandsListener implements Listener {
+public final class RemoteCommandsListener extends StackItContainer implements Listener {
 
-    private static Server server = StackIt.getInstance().getServer();
+    private Server server = this.pluginInstance.getServer();
+
+    private final StackItLogger LOGGER = pluginInstance.logger();
+
+    public RemoteCommandsListener(StackIt pluginInstance) {
+        super(pluginInstance);
+    }
 
     @Trigger @EndPoint("/command") @Proxy({AuthProxy.class, JsonRequest.class}) @Before(ContentType.class)
     public void execute(HttpPostEvent e){
@@ -34,7 +42,7 @@ public final class RemoteCommandsListener implements Listener {
 
                 configuration.set("success", success);
 
-                StackIt.LOGGER.warn(String.format("Remote with UUID '%s' issued command '%s' (success: %s)", e.request.session().attribute(AuthenticationListener.SESSION_ATTRIBUTE_NAME), command, success));
+                LOGGER.warn(String.format("Remote with UUID '%s' issued command '%s' (success: %s)", e.request.session().attribute(AuthenticationListener.SESSION_ATTRIBUTE_NAME), command, success));
             } else {
                 headers.status(HTTPStatus.BAD_REQUEST);
             }

@@ -15,14 +15,22 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.stackit.StackIt;
+import org.stackit.StackItContainer;
+import org.stackit.StackItLogger;
 
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.UUID;
 
-public final class WhitelistListener implements Listener {
+public final class WhitelistListener extends StackItContainer implements Listener {
 
-    private static Server server = StackIt.getInstance().getServer();
+    private Server server = this.pluginInstance.getServer();
+
+    private final StackItLogger LOGGER = pluginInstance.logger();
+
+    public WhitelistListener(StackIt pluginInstance) {
+        super(pluginInstance);
+    }
 
     /**
      * Returns whitelisted players UUIDs
@@ -62,7 +70,7 @@ public final class WhitelistListener implements Listener {
 
             Bukkit.getOfflinePlayer(playerName).setWhitelisted(true);
 
-            StackIt.LOGGER.success(String.format("Remote with UUID '%s' successfully whitelisted player %s", e.request.session().attribute(AuthenticationListener.SESSION_ATTRIBUTE_NAME), playerName));
+            LOGGER.success(String.format("Remote with UUID '%s' successfully whitelisted player %s", e.request.session().attribute(AuthenticationListener.SESSION_ATTRIBUTE_NAME), playerName));
         } else {
             headers.status(HTTPStatus.BAD_REQUEST);
         }
@@ -86,7 +94,7 @@ public final class WhitelistListener implements Listener {
 
             Bukkit.getOfflinePlayer(playerName).setWhitelisted(false);
 
-            StackIt.LOGGER.success(String.format("Remote with UUID '%s' successfully un-whitelisted player %s", e.request.session().attribute(AuthenticationListener.SESSION_ATTRIBUTE_NAME), playerName));
+            LOGGER.success(String.format("Remote with UUID '%s' successfully un-whitelisted player %s", e.request.session().attribute(AuthenticationListener.SESSION_ATTRIBUTE_NAME), playerName));
         } else {
             headers.status(HTTPStatus.BAD_REQUEST);
         }
@@ -105,7 +113,7 @@ public final class WhitelistListener implements Listener {
 
             Bukkit.setWhitelist(enabled);
 
-            StackIt.LOGGER.success(String.format("Remote with UUID '%s' successfully %s the whitelist", e.request.session().attribute(AuthenticationListener.SESSION_ATTRIBUTE_NAME), enabled ? "enabled" : "disabled"));
+            LOGGER.success(String.format("Remote with UUID '%s' successfully %s the whitelist", e.request.session().attribute(AuthenticationListener.SESSION_ATTRIBUTE_NAME), enabled ? "enabled" : "disabled"));
         } else {
             headers.status(HTTPStatus.BAD_REQUEST);
         }
