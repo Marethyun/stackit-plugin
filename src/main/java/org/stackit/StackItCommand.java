@@ -50,7 +50,7 @@ public final class StackItCommand extends StackItContainer implements CommandExe
         this.registeredOptions.put(option.getLabel(), option);
     }
 
-    public abstract class Option implements CommandExecutor {
+    public static abstract class Option implements CommandExecutor {
         protected String label;
         protected String description = "(No description)";
         protected String usage = "(No usage)";
