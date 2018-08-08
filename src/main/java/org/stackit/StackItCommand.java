@@ -34,7 +34,11 @@ public final class StackItCommand extends StackItContainer implements CommandExe
                     logger.info(DEFAULT_MESSAGE);
                     logger.info("Usage: " + command.getUsage());
                 } else {
-                    return option.onCommand(sender, command, label, Arrays.copyOfRange(args, 1, args.length));
+                    if (sender.hasPermission(option.getPermission())){
+                        logger.error(PERMISSION_MISSING);
+                    } else {
+                        return option.onCommand(sender, command, label, Arrays.copyOfRange(args, 1, args.length));
+                    }
                 }
             } else {
                 logger.info(DEFAULT_MESSAGE);
