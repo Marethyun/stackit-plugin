@@ -13,7 +13,7 @@ public final class StackItCommand extends StackItContainer implements CommandExe
     private StackItLogger logger;
 
     public static final String DEFAULT_MESSAGE = "Hey ! The StackIt main command does nothing unless you specify some arguments..";
-    public static final String PERMISSION_MISSING = "You don't have the permission to perform this command...";
+    public static final String PERMISSION_MISSING = "You don't have the permission to perform this command (%s)";
 
     private final HashMap<String, StackItCommand.Option> registeredOptions = new LinkedHashMap<>();
 
@@ -34,8 +34,8 @@ public final class StackItCommand extends StackItContainer implements CommandExe
                     logger.info(DEFAULT_MESSAGE);
                     logger.info("Usage: " + command.getUsage());
                 } else {
-                    if (sender.hasPermission(option.getPermission())){
-                        logger.error(PERMISSION_MISSING);
+                    if (!sender.hasPermission(option.getPermission())){
+                        logger.error(String.format(PERMISSION_MISSING, option.getPermission()));
                     } else {
                         return option.onCommand(sender, command, label, Arrays.copyOfRange(args, 1, args.length));
                     }
@@ -45,7 +45,7 @@ public final class StackItCommand extends StackItContainer implements CommandExe
                 logger.info("Usage: " + command.getUsage());
             }
         } else {
-            logger.error(PERMISSION_MISSING);
+            logger.error(String.format(PERMISSION_MISSING, StackItPermissions.STACKIT_COMMAND.getPermission()));
         }
         return true;
     }
