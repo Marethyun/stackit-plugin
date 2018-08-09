@@ -8,7 +8,7 @@ public final class Bundler extends StackItContainer {
 
     private StackItLogger LOGGER = pluginInstance.logger();
 
-    public static final String BUNDLE_ENABLED_MESSAGE = "Bundle '%s' successfully registered";
+    public static final String BUNDLE_ENABLED_MESSAGE = "Bundle '%s' (%s) successfully registered";
 
     private final boolean enabled;
     private final EntityHandler handler;
@@ -28,7 +28,7 @@ public final class Bundler extends StackItContainer {
     public void registerBundle(StackItBundle bundle) throws BundlerDisabledException{
         if (this.enabled){
             bundles.add(bundle);
-            LOGGER.success(String.format(BUNDLE_ENABLED_MESSAGE, bundle.getName()));
+            LOGGER.success(String.format(BUNDLE_ENABLED_MESSAGE, bundle.getName(), bundle));
         } else {
             throw new BundlerDisabledException();
         }
@@ -44,7 +44,8 @@ public final class Bundler extends StackItContainer {
     public void registerCommandOption(StackItBundle bundle, StackItCommand.Option option){
         if (bundles.contains(bundle)){
             this.command.registerOption(option);
+        } else {
+            throw new BundleViolationException();
         }
-        throw new BundleViolationException();
     }
 }
