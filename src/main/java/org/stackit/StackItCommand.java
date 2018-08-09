@@ -28,7 +28,7 @@ public final class StackItCommand extends StackItContainer implements CommandExe
 
         if (sender.hasPermission(StackItPermissions.STACKIT_COMMAND.getPermission())){
             if (args.length > 0){
-                StackItCommand.Option option = registeredOptions.get(args[1]);
+                StackItCommand.Option option = registeredOptions.get(args[0]);
 
                 if (option == null) {
                     logger.info(DEFAULT_MESSAGE);
